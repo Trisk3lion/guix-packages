@@ -11,7 +11,7 @@
 (define-public babashka
   (package
    (name "babashka")
-   (version "0.7.8")
+   (version "1.0.169")
    (source (origin
             (method url-fetch)
             (uri
