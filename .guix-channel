@@ -1,3 +1,10 @@
+;; -*- mode: scheme; -*-
+
 (channel
  (version 0)
- (directory "trisk"))
+ (directory "trisk")
+ (url "https://github.com/Trisk3lion/guix-packages")
+ (dependencies
+   (channel
+    (name nonguix)
+    (url "https://gitlab.com/nonguix/nonguix.git"))))
