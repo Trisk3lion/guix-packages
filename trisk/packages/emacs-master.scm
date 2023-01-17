@@ -1,4 +1,4 @@
-(define-module (trisk packages emacs)
+(define-module (trisk packages emacs-master)
   #:use-module (gnu packages)   ;; search-patches
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages webkit)
