@@ -2,7 +2,7 @@
   #:use-module (gnu packages)   ;; search-patches
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages webkit)
-  #:use-module (gnu packages text-editors) ;; tree-sitter
+  #:use-module (gnu packages tree-sitter)
   #:use-module (gnu packages sqlite)
   #:use-module (gnu packages autotools)
   #:use-module (guix packages)
@@ -12,12 +12,12 @@
   #:use-module (ice-9 regex))
 
 (define-public trisk-emacs-master
-  (let ((commit "3fcbb865853d7c364cf7c2986ead9e258f449f97")
+  (let ((commit "8797e514ab68c12ed05d3af88e6baba64bf08f4d")
         (revision "2"))
     (package
       (inherit emacs)
       (name "emacs-master")
-      (version (git-version "29.0.50" revision commit))
+      (version (git-version "30.0.50" revision commit))
       (source
        (origin
          (inherit (package-source emacs))
@@ -31,7 +31,7 @@
                                   "emacs-native-comp-driver-options.patch"))
          (sha256
           (base32
-           "0dyfv1cbi5c10wvh22vicaxl2bj8kh7im30122zln3xx61fpwg50"))))
+           "02bklz116d6bis6xhgvma23s7p4phy2p9clnwf30h23a3wbj3qxk"))))
       (arguments
        (substitute-keyword-arguments (package-arguments emacs)
          ((#:configure-flags flags #~'())
