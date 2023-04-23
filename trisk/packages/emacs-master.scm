@@ -12,8 +12,8 @@
   #:use-module (ice-9 regex))
 
 (define-public trisk-emacs-master
-  (let ((commit "bc61a1afdd6c3ba8a605ed46ae97b1e36b40f951")
-        (revision "2.1"))
+  (let ((commit "2e85ac2b270700608776ba28ecf41fc8d184db12")
+        (revision "2.2"))
     (package
       (inherit emacs)
       (name "emacs-master")
@@ -31,7 +31,7 @@
                                   "emacs-native-comp-driver-options.patch"))
          (sha256
           (base32
-           "0r14r7y6nddsbcs3wvl75nnngn79wdszxha2ra09bbwvrls9fbip"))))
+           "0w4vzwiadg2czr8wd9dd3x0axb0nj6yzr6b82wjzpx0iwwzk60rf"))))
       (arguments
        (substitute-keyword-arguments (package-arguments emacs)
          ((#:configure-flags flags #~'())
