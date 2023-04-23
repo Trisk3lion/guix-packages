@@ -1,0 +1,3 @@
+* Trisk Guix Channel
+
+This is my Guix channel!
