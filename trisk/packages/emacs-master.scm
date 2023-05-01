@@ -13,7 +13,7 @@
 
 (define-public trisk-emacs-master
   (let ((commit "2e85ac2b270700608776ba28ecf41fc8d184db12")
-        (revision "2.2"))
+        (revision "0"))
     (package
       (inherit emacs-next)
       (name "emacs-master")
