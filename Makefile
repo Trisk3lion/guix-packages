@@ -1,5 +1,5 @@
 build-emacs:
-	guix build --load-path=. emacs-master
+	guix build --load-path=. trisk-emacs-master
 
 build-babashka:
 	guix build --load-path=. babashka
