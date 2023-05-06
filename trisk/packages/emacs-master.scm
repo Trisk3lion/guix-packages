@@ -12,7 +12,7 @@
   #:use-module (ice-9 regex))
 
 (define-public trisk-emacs-master
-  (let ((commit "f6476f8536853bd3e5577c76f619c7a9710cc46a")
+  (let ((commit "9b66a64d9c2c7ae2b155bf209ad735383070822e")
         (revision "0"))
     (package
       (inherit emacs-next)
@@ -30,7 +30,7 @@
                                 "emacs-fix-scheme-indent-function.patch"))
          (sha256
           (base32
-           "1fq5xip4zdrdc36gz9q0ax4r75lnz4rpvp5j85xw8dwbjprvqfg9"))))
+           "1drc0x5ib9irhi7myp9lmjzhwl5ibdwrs3lxbsg07kh8n2dgmkhg"))))
       (arguments
        (substitute-keyword-arguments (package-arguments emacs-next)
          ((#:configure-flags flags #~'())
