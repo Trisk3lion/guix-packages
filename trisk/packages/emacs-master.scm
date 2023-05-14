@@ -42,7 +42,7 @@
         (revision "0"))
     (package
       (inherit emacs-next-pgtk)
-      (name "trisk-emacs-master")
+      (name "trisk-emacs-pgtk")
       (version (git-version "30.0.50" revision commit))
       (source
        (origin
