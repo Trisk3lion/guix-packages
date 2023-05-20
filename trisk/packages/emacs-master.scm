@@ -10,7 +10,7 @@
   #:use-module (ice-9 regex))
 
 (define-public trisk-emacs-master
-  (let ((commit "a7dcc0d55c641d3a16ed64528e726fb297726cbf")
+  (let ((commit "6cb963b73c3768958e13e96b2534d1e99239a3ff")
         (revision "0"))
     (package
       (inherit emacs-next-tree-sitter)
@@ -26,7 +26,7 @@
          (file-name (git-file-name name version))
          (sha256
           (base32
-           "1agsxgnxkr8kffpka8nl7yjz4004505jy54lxfshmb22qlwbhksz"))))
+           "198l6f5wmi5p4b83sdswf7kfbnfw94fk7p49vdfmk7i21lrspa0x"))))
       (arguments
        (substitute-keyword-arguments (package-arguments emacs-next-tree-sitter)
          ((#:configure-flags flags #~'())
@@ -38,7 +38,7 @@
       (description "The one and true editor!"))))
 
 (define-public trisk-emacs-pgtk
-  (let ((commit "a7dcc0d55c641d3a16ed64528e726fb297726cbf")
+  (let ((commit "6cb963b73c3768958e13e96b2534d1e99239a3ff")
         (revision "0"))
     (package
       (inherit emacs-next-pgtk)
@@ -53,13 +53,6 @@
                (commit commit)))
          (sha256
           (base32
-           "1agsxgnxkr8kffpka8nl7yjz4004505jy54lxfshmb22qlwbhksz"))))
-      (arguments
-       (substitute-keyword-arguments (package-arguments emacs-next-pgtk)
-         ((#:configure-flags flags #~'())
-          #~(cons* "--with-xwidgets" #$flags))))
-      (inputs
-       (modify-inputs (package-inputs emacs-next-pgtk)
-         (prepend webkitgtk-with-libsoup2 libxcomposite)))
+           "198l6f5wmi5p4b83sdswf7kfbnfw94fk7p49vdfmk7i21lrspa0x"))))
       (synopsis "Emacs text editor, built from latest Git with --pgtk.")
       (description "The one and true editor!"))))
