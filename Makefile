@@ -9,3 +9,6 @@ build-babashka:
 
 build-clj-kondo:
 	guix build --load-path=. clj-kondo
+
+build-tailscale:
+	guix build --load-path=. tailscale
