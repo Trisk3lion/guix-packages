@@ -10,13 +10,13 @@
 (define-public clj-kondo
   (package
    (name "clj-kondo")
-   (version "2023.04.14")
+   (version "2023.05.26")
    (source (origin
             (method url-fetch)
             (uri (string-append "https://github.com/clj-kondo/clj-kondo/releases/download/v" version "/clj-kondo-" version "-linux-amd64.zip"))
             (sha256
              (base32
-              "1w92a5zl307crc1xbbk6l286lbnnnc424qqn6rajmgls2vjg70xy"))))
+              "1fkksl7jl2vnzkygwgqmjpqsvrf0j94i00dp5y2yhm2kipla68fd"))))
    (build-system binary-build-system)
    (supported-systems '("x86_64-linux" "i686-linux"))
    (arguments
