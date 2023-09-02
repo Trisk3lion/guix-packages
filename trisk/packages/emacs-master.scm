@@ -12,7 +12,7 @@
   #:use-module (trisk packages))
 
 (define-public trisk-emacs-master
-  (let ((commit "f893ace8352d39c95048b143bf01d35973343ea0")
+  (let ((commit "3dac48d1b73794d2379e233f11736d0279b0733c")
         (revision "0"))
     (package
       (inherit emacs-next-tree-sitter)
@@ -23,9 +23,11 @@
          (inherit (package-source emacs-next-tree-sitter))
          (patches
           (append (search-patches "emacs-native-comp-driver-v2.patch")
+                  (search-patches "exec-path-nil.patch")
                   (filter
                    (lambda (f)
-                     (not (string-match "emacs-native-comp-driver-options\\.patch" f)))
+                     (not (or (string-match "emacs-native-comp-driver-options\\.patch" f)
+                              (string-match "emacs-exec-path\\.patch" f))))
                    (origin-patches (package-source emacs-next-tree-sitter)))))
          (method git-fetch)
          (uri (git-reference
@@ -34,7 +36,7 @@
          (file-name (git-file-name name version))
          (sha256
           (base32
-           "1q1z1385c8av0jii28vbvqn0wk8hiaiajys454vcy69gf52acc99"))))
+           "10nrlamlk8cdm7n5n18z6h6gcm94997cg2ll4hzwpfdj0x1623r6"))))
       (arguments
        (substitute-keyword-arguments (package-arguments emacs-next-tree-sitter)
          ((#:configure-flags flags #~'())
@@ -46,7 +48,7 @@
       (description "The one and true editor!"))))
 
 (define-public trisk-emacs-pgtk
-  (let ((commit "f893ace8352d39c95048b143bf01d35973343ea0")
+  (let ((commit "3dac48d1b73794d2379e233f11736d0279b0733c")
         (revision "0"))
     (package
       (inherit emacs-next-pgtk)
@@ -57,9 +59,11 @@
          (inherit (package-source emacs-next-pgtk))
          (patches
           (append (search-patches "emacs-native-comp-driver-v2.patch")
+                  (search-patches "exec-path-nil.patch")
                   (filter
                    (lambda (f)
-                     (not (string-match "emacs-native-comp-driver-options\\.patch" f)))
+                     (not (or (string-match "emacs-native-comp-driver-options\\.patch" f)
+                              (string-match "emacs-exec-path\\.patch" f))))
                    (origin-patches (package-source emacs-next-pgtk)))))
          (method git-fetch)
          (uri (git-reference
@@ -67,6 +71,6 @@
                (commit commit)))
          (sha256
           (base32
-           "1q1z1385c8av0jii28vbvqn0wk8hiaiajys454vcy69gf52acc99"))))
+           "10nrlamlk8cdm7n5n18z6h6gcm94997cg2ll4hzwpfdj0x1623r6"))))
       (synopsis "Emacs text editor, built from latest Git with --pgtk.")
       (description "The one and true editor!"))))
