@@ -13,7 +13,7 @@
 
 (define-public trisk-emacs-master
   (let ((commit "94431c0d2f645ff509af2fc841fa264492c8ac93")
-        (revision "0"))
+        (revision "1"))
     (package
       (inherit emacs-next-tree-sitter)
       (name "trisk-emacs-master")
@@ -49,7 +49,7 @@
 
 (define-public trisk-emacs-pgtk
   (let ((commit "94431c0d2f645ff509af2fc841fa264492c8ac93")
-        (revision "0"))
+        (revision "1"))
     (package
       (inherit emacs-next-pgtk)
       (name "trisk-emacs-pgtk")
