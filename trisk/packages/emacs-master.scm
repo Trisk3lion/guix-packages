@@ -12,8 +12,8 @@
   #:use-module (trisk packages))
 
 (define-public trisk-emacs-master
-  (let ((commit "94431c0d2f645ff509af2fc841fa264492c8ac93")
-        (revision "1"))
+  (let ((commit "d55a106f0afc31bf35257e1e2090234295052f23")
+        (revision "2"))
     (package
       (inherit emacs-next-tree-sitter)
       (name "trisk-emacs-master")
@@ -36,7 +36,7 @@
          (file-name (git-file-name name version))
          (sha256
           (base32
-           "0pzd57nx7wzq1l302rs71vdsrvslwcdhxn8kpmg1cif4vji5fvjv"))))
+           "1ilnnpwmv0xab51pp9f12rdr61gb0k5hxv7mgsazji9037bx1628"))))
       (arguments
        (substitute-keyword-arguments (package-arguments emacs-next-tree-sitter)
          ((#:configure-flags flags #~'())
@@ -48,8 +48,8 @@
       (description "The one and true editor!"))))
 
 (define-public trisk-emacs-pgtk
-  (let ((commit "94431c0d2f645ff509af2fc841fa264492c8ac93")
-        (revision "1"))
+  (let ((commit "d55a106f0afc31bf35257e1e2090234295052f23")
+        (revision "2"))
     (package
       (inherit emacs-next-pgtk)
       (name "trisk-emacs-pgtk")
@@ -71,6 +71,6 @@
                (commit commit)))
          (sha256
           (base32
-           "0pzd57nx7wzq1l302rs71vdsrvslwcdhxn8kpmg1cif4vji5fvjv"))))
+           "1ilnnpwmv0xab51pp9f12rdr61gb0k5hxv7mgsazji9037bx1628"))))
       (synopsis "Emacs text editor, built from latest Git with --pgtk.")
       (description "The one and true editor!"))))
