@@ -31,7 +31,7 @@
         (append (search-patches  "emacs-native-comp-driver-v2.patch")
         (filter
          (lambda (f)
-           (or (not (string-match "emacs-native-comp-driver-options" f)
+           (or (not (string-match "emacs-native-comp-driver-options\\.patch" f)
                     (string-match "emacs-exec-path\\.patch" f))))
          (origin-patches (package-source emacs-next)))))
          (sha256 (base32 emacs-git-hash))))
@@ -60,11 +60,11 @@
         (append (search-patches "emacs-native-comp-driver-v2.patch")
                 (filter
                  (lambda (f)
-                   (not (or (string-match "emacs-native-comp-driver-options\\.patch" f)
+                   (not (or (string-match "emacs-next-native-comp-driver-options\\.patch" f)
                             (string-match "emacs-exec-path\\.patch" f))))
                  (origin-patches (package-source emacs-next-pgtk-xwidgets)))))
        (sha256 (base32 emacs-git-hash))))
-    (arguments (package-arguments emacs-next-pgtk))
+    (arguments (package-arguments emacs-next-pgtk-xwidgets))
     (inputs (package-inputs emacs-next-pgtk-xwidgets))
     (synopsis "Emacs text editor, built from latest Git with --pgtk.")
     (description "The one and true editor!")))
