@@ -1,8 +1,10 @@
-diff --git a/lisp/emacs-lisp/comp.el b/lisp/emacs-lisp/comp.el
-index 576cd26dba7..27e68041a86 100644
+'emacs' package definition (which 'emacs-next' inherit, which we
+inherit) is hardcoded to substitute
+"(defcustom native-comp-driver-options nil" to its appropiate value.
+
 --- a/lisp/emacs-lisp/comp.el
 +++ b/lisp/emacs-lisp/comp.el
-@@ -186,9 +186,7 @@ and above."
+@@ -203,9 +203,7 @@ and above."
    :type '(repeat string)
    :version "28.1")
  
@@ -13,3 +15,6 @@ index 576cd26dba7..27e68041a86 100644
    "Options passed verbatim to the native compiler's back-end driver.
  Note that not all options are meaningful; typically only the options
  affecting the assembler and linker are likely to be useful.
+-- 
+2.38.0
+

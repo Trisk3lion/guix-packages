@@ -12,3 +12,6 @@ build-clj-kondo:
 
 build-tailscale:
 	guix build --load-path=. tailscale
+
+update:
+	emacs --script update-packages.el
