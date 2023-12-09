@@ -71,4 +71,8 @@
       (replace-match emacs-time nil nil nil 1))
     (write-region nil nil file)))
 
+(message "Pushing to git..")
+(shell-command (concat "git commit -am \"Updated emacs: "
+                       emacs-latest-commit "\" && git push"))
+
 (message "Done!")
