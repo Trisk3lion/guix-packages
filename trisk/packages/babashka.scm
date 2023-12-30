@@ -7,10 +7,13 @@
   #:use-module (gnu packages compression)
   #:use-module (nonguix build-system binary))
 
+(define babashka-git-version "1.3.186")
+(define babashka-git-hash "039ak593vmqrw3yhglfdh8rmvwj2aznwqfy6yvfca1wlk1827c3l")
+
 (define-public babashka
   (package
    (name "babashka")
-   (version "1.3.181")
+   (version babashka-git-version)
    (source (origin
             (method url-fetch)
             (uri
@@ -18,8 +21,7 @@
               "https://github.com/babashka/babashka/releases/download/v"
               version "/babashka-" version "-linux-amd64.tar.gz"))
             (sha256
-             (base32
-              "17nihsf1w6rk3ydimvk2vx6w65zjb95zadyrlrnz9s609zqlz6q2"))))
+             (base32 babashka-git-hash))))
    (build-system binary-build-system)
    (supported-systems '("x86_64-linux" "i686-linux"))
    (arguments
