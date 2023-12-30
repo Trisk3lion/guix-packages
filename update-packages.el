@@ -27,12 +27,13 @@
           '((body . 1) (div . 1) (div . 1) (table . 1) (tr . 3) (td . 1) (a . 1))
           :initial-value xml)))
 
+;; 231230: Fick ändra från libxml-parse-xml-region till xml-parse-region och lägga till en car, för att började endast ge tilbbaka nil vid parsning
 (defun kh/emacs-get-commit ()
   (let ((xml (with-current-buffer
                  (url-retrieve-synchronously "https://git.savannah.gnu.org/cgit/emacs.git/commit/")
                (goto-char url-http-end-of-headers)
-               (libxml-parse-xml-region (point) (point-max)))))
-    (kh/commit-from-xml xml)))
+               (xml-parse-region (point) (point-max)))))
+    (kh/commit-from-xml (car xml))))
 
 (defun kh/emacs-master-hash (url)
   (let* ((file (make-temp-file "emacs-"))
@@ -48,6 +49,7 @@
 
 (message "Getting newest emacs commit...")
 (setq emacs-latest-commit (kh/emacs-get-commit))
+(message "Commit: "emacs-latest-commit)
 
 (message "Calculating hash of emacs source...")
 (setq emacs-latest-hash
