@@ -87,7 +87,7 @@
 ;; (kh/get-bb-url "1.3.186")
 (defun kh/get-bb-url (vers)
   (concat "https://github.com/babashka/babashka/releases/download/v"
-          vers "/babashka-" vers "-linux-amd64.tar.gz"))
+          vers "/babashka-" vers "-linux-amd64-static.tar.gz"))
 
 (message " ")
 (message "Updating babashka...")
@@ -119,6 +119,7 @@
     (throw 'done t))
   (message "Babashka Done!"))
 
+(message " ")
 (message "Pushing to git..")
 (shell-command (concat "git commit -am \"Updated emacs: "
                        emacs-latest-commit "\" && git push"))
