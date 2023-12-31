@@ -2,7 +2,7 @@
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix packages)
   #:use-module (guix download)
-  #:use-module (guix build-systems copy))
+  #:use-module (guix build-system copy))
 
 (define babashka-git-version "1.3.186")
 (define babashka-git-hash "17qvbx4c7b6951qr7r26nrsyzw3zlc0xlnwhcdl1lw9rbanxd4ps")
