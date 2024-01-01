@@ -44,6 +44,7 @@
     (delete-file file)
     hash))
 
+(message " ")
 (message "Updating Emacs to latest git commit..")
 (message "Obtaining current time...")
 (setq emacs-time (format-time-string "%s"))
