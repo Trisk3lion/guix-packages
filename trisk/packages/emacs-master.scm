@@ -12,9 +12,9 @@
   #:use-module (rnrs lists)
   #:use-module (trisk packages))
 
-(define emacs-git-commit "91f316d293150c6d025c61949c24fc07136fb1fd")
-(define emacs-git-hash "0gfp1689vqnp72mssk671fsp6rarwig3y5z25nwnaihz4s9jnh4g")
-(define emacs-git-time "1704022641")
+(define emacs-git-commit "740953d1a2f4ea4a200637872b9ecb7dfddfdbe4")
+(define emacs-git-hash "06gjygbqx6klwrjbi06a1bac8mny0p2fx420hi61ks66g3z2cq9d")
+(define emacs-git-time "1705141535")
 
 (define-public trisk-emacs-master
   (package
@@ -29,11 +29,11 @@
              "https://git.savannah.gnu.org/cgit/emacs.git/snapshot/emacs-" emacs-git-commit ".tar.gz"))
        (patches
         (append (search-patches  "emacs-native-comp-driver-v2.patch")
-        (filter
-         (lambda (f)
-           (or (not (string-match "emacs-native-comp-driver-options\\.patch" f)
-                    (string-match "emacs-exec-path\\.patch" f))))
-         (origin-patches (package-source emacs-next)))))
+                (filter
+                 (lambda (f)
+                   (not (or (string-match "emacs-next-native-comp-driver-options\\.patch" f)
+                            (string-match "emacs-exec-path\\.patch" f))))
+                 (origin-patches (package-source emacs-next)))))
          (sha256 (base32 emacs-git-hash))))
     (arguments
      (substitute-keyword-arguments (package-arguments emacs-next)
@@ -41,7 +41,7 @@
         #~(cons* "--with-xwidgets" #$flags))))
     (inputs
      (modify-inputs (package-inputs emacs-next)
-       (prepend webkitgtk-with-libsoup2 libxcomposite)))
+       (prepend webkitgtk-with-libsoup2)))
     (synopsis "Emacs text editor, built from latest Git with X.")
     (description "The one and true editor!")))
 

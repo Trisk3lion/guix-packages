@@ -13,5 +13,11 @@ build-clj-kondo:
 build-tailscale:
 	guix build --load-path=. tailscale
 
+build-datalevin:
+	guix build --load-path=. datalevin
+
+build-protojure:
+	guix build --load-path=. protoc-gen-clojure
+
 update:
 	emacs --script update-packages.el

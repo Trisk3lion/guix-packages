@@ -1,17 +1,15 @@
-(define-module (bin-guix packages datalevin)
+(define-module (trisk packages datalevin)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix build-system copy)
   #:use-module ((guix licenses) #:prefix licenses:)
   #:use-module (gnu packages compression))
 
-
 (define datalevin-git-version "0.8.20")
 (define datalevin-git-hash "1pxalakz7bp5r9yfpa450hzj3mxr2vgda2m2sbxd0xdb7zrncphv")
 
-
 ;; Tagit från: https://github.com/ieugen/bin-guix
-(define-public datalevin
+(define-public datalevin-clojure
   (package
    (name "datalevin")
    (version datalevin-git-version)

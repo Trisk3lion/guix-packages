@@ -125,4 +125,5 @@
 (shell-command (concat "git commit -am \"Updated emacs: "
                        emacs-latest-commit "\" && git push"))
 
+
 (message "Done!")

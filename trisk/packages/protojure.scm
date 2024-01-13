@@ -1,4 +1,4 @@
-(define-module (bin-guix packages protojure)
+(define-module (trisk packages protojure)
    #:use-module (guix packages)
    #:use-module (guix download)
    #:use-module (guix build-system copy)

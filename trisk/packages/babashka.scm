@@ -4,8 +4,8 @@
   #:use-module (guix download)
   #:use-module (guix build-system copy))
 
-(define babashka-git-version "1.3.186")
-(define babashka-git-hash "17qvbx4c7b6951qr7r26nrsyzw3zlc0xlnwhcdl1lw9rbanxd4ps")
+(define babashka-git-version "1.3.188")
+(define babashka-git-hash "1h3wmxwcrzji5vx1bwqpkvmcijw256pqvmssl26lcjp8b431nhw9")
 
 (define-public babashka
   (package
