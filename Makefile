@@ -22,5 +22,8 @@ build-protojure:
 build-hunspell-sv:
 	guix build --load-path=. hunspell-dict-sv
 
+build-gitstatus:
+	guix build --load-path=. gitstatus
+
 update:
 	emacs --script update-packages.el
