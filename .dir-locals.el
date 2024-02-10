@@ -2,7 +2,8 @@
   (fill-column . 78)
   (tab-width   .  8)
   (sentence-end-double-space . t)
-  (compile-command . "guix build -L"))
+  (compile-command . "guix build -L . ")
+  (geiser-guile-binary  . ("guix" "repl")))
 
  (scheme-mode
   (indent-tabs-mode . nil)

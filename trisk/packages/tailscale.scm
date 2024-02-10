@@ -9,14 +9,14 @@
 (define-public tailscale
   (package
     (name "tailscale")
-    (version "1.38.4")
+    (version "1.58.2")
     (source (origin
               (method url-fetch/tarbomb)
               (uri (string-append "https://pkgs.tailscale.com/stable/tailscale_" version
                                   "_amd64.tgz"))
               (sha256
                (base32
-                "1wjiq7hzylv3dfkf835dwvq92ynm0afxcypiqb8n0ccbyr0wipli"))))
+                "0xxxsri9namn58bs1carxb2maqsmqrkazmjviy9c94f28ycsr055"))))
     (build-system copy-build-system)
     (arguments
      (list
