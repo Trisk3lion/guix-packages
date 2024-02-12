@@ -7,7 +7,7 @@
 (define clojure-lsp-git-version "2023.12.29-12.09.27")
 (define clojure-lsp-git-hash "0qwxjzyisdxc61a43df1rmk1pqifankg0g51sw6hlrjyw8sk06q5")
 
-(define clojure-lsp
+(define-public clojure-lsp
   (package
     (name "clojure-lsp")
     (version clojure-lsp-git-version)
