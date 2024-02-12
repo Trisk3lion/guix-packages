@@ -2,7 +2,8 @@
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix packages)
   #:use-module (guix download)
-  #:use-module (guix build-system copy))
+  #:use-module (guix build-system copy)
+  #:use-module (gnu packages compression))
 
 (define clojure-lsp-git-version "2023.12.29-12.09.27")
 (define clojure-lsp-git-hash "0qwxjzyisdxc61a43df1rmk1pqifankg0g51sw6hlrjyw8sk06q5")

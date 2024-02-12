@@ -19,6 +19,9 @@ build-datalevin:
 build-protojure:
 	guix build --load-path=. protoc-gen-clojure
 
+build-clojure-lsp:
+	guix build --load-path=. clojure-lsp
+
 build-hunspell-sv:
 	guix build --load-path=. hunspell-dict-sv
 
