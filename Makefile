@@ -28,5 +28,8 @@ build-hunspell-sv:
 build-gitstatus:
 	guix build --load-path=. gitstatus
 
+build-lsp-booster:
+	guix build --load-path=. emacs-lsp-booster
+
 update:
 	emacs --script update-packages.el
