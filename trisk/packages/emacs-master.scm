@@ -14,7 +14,7 @@
 
 (define emacs-git-commit "31a4bec609578afd453caf232f78e275c3a075bc")
 (define emacs-git-hash "099qf595l9lp82lxhcfc3179illc8dhawdj7hrr5l2qsq7g0bnli")
-(define emacs-git-time "1709294070")
+(define emacs-git-time "1709294856")
 
 (define-public trisk-emacs-master
   (package
