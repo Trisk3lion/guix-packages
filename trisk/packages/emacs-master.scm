@@ -12,9 +12,9 @@
   #:use-module (rnrs lists)
   #:use-module (trisk packages))
 
-(define emacs-git-commit "914b00f2079431bd0d44618f1d3558986ac5c282")
-(define emacs-git-hash "1pr6ahrsjgswz01cl6x1ql1qpk24j6s5vyh8zw18d4qq6bjphrnz")
-(define emacs-git-time "1711868500")
+(define emacs-git-commit "5e5e74b17ac77e93bce7f2158c9d2af5ca2a2ff7")
+(define emacs-git-hash "0fghk5nf20b6bclizsd31wal1fjkjrvd29zgxlj9cjijy86mfgqq")
+(define emacs-git-time "1712128253")
 
 (define-public trisk-emacs-master
   (package
@@ -27,13 +27,13 @@
        (method url-fetch)
        (uri (string-append
              "https://git.savannah.gnu.org/cgit/emacs.git/snapshot/emacs-" emacs-git-commit ".tar.gz"))
-       (patches
-        (append (search-patches  "emacs-native-comp-driver-v2.patch")
-                (filter
-                 (lambda (f)
-                   (not (or (string-match "emacs-next-native-comp-driver-options\\.patch" f)
-                            (string-match "emacs-exec-path\\.patch" f))))
-                 (origin-patches (package-source emacs-next)))))
+       ;; (patches
+       ;;  (append (search-patches  "emacs-native-comp-driver-v2.patch")
+       ;;          (filter
+       ;;           (lambda (f)
+       ;;             (not (or (string-match "emacs-next-native-comp-driver-options\\.patch" f)
+       ;;                      (string-match "emacs-exec-path\\.patch" f))))
+       ;;           (origin-patches (package-source emacs-next)))))
          (sha256 (base32 emacs-git-hash))))
     (arguments
      (substitute-keyword-arguments (package-arguments emacs-next)
@@ -56,13 +56,13 @@
        (method url-fetch)
        (uri (string-append
              "https://git.savannah.gnu.org/cgit/emacs.git/snapshot/emacs-" emacs-git-commit ".tar.gz"))
-       (patches
-        (append (search-patches "emacs-native-comp-driver-v2.patch")
-                (filter
-                 (lambda (f)
-                   (not (or (string-match "emacs-next-native-comp-driver-options\\.patch" f)
-                            (string-match "emacs-exec-path\\.patch" f))))
-                 (origin-patches (package-source emacs-next-pgtk-xwidgets)))))
+       ;; (patches
+       ;;  (append (search-patches "emacs-native-comp-driver-v2.patch")
+       ;;          (filter
+       ;;           (lambda (f)
+       ;;             (not (or (string-match "emacs-next-native-comp-driver-options\\.patch" f)
+       ;;                      (string-match "emacs-exec-path\\.patch" f))))
+       ;;           (origin-patches (package-source emacs-next-pgtk-xwidgets)))))
        (sha256 (base32 emacs-git-hash))))
     (arguments (package-arguments emacs-next-pgtk-xwidgets))
     (inputs (package-inputs emacs-next-pgtk-xwidgets))
