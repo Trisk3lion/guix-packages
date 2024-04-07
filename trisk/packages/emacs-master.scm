@@ -12,9 +12,9 @@
   #:use-module (rnrs lists)
   #:use-module (trisk packages))
 
-(define emacs-git-commit "63588775fcb64e4fd88a97e0882aae38c9f5fb1c")
-(define emacs-git-hash "1xahm2b1x65ac19shnczj1bxyj71jvk4b50zc48cpx5bgdxhkhgp")
-(define emacs-git-time "1712518345")
+(define emacs-git-commit "ee377aaddf9d73116b93c3d54b1ffef9a3a8b925")
+(define emacs-git-hash "1kxr9dw0ncri2q3p8fgqs9q3sc17zjsqa3lizwabypz8a079dssj")
+(define emacs-git-time "1712520698")
 
 (define-public trisk-emacs-master
   (package
@@ -27,13 +27,13 @@
        (method url-fetch)
        (uri (string-append
              "https://git.savannah.gnu.org/cgit/emacs.git/snapshot/emacs-" emacs-git-commit ".tar.gz"))
-       ;; (patches
-       ;;  (append (search-patches  "emacs-native-comp-driver-v2.patch")
-       ;;          (filter
-       ;;           (lambda (f)
-       ;;             (not (or (string-match "emacs-next-native-comp-driver-options\\.patch" f)
-       ;;                      (string-match "emacs-exec-path\\.patch" f))))
-       ;;           (origin-patches (package-source emacs-next)))))
+       (patches
+        (append (search-patches  "emacs-native-comp-driver-v2.patch")
+                (filter
+                 (lambda (f)
+                   (not (or (string-match "emacs-next-native-comp-driver-options\\.patch" f)
+                            (string-match "emacs-exec-path\\.patch" f))))
+                 (origin-patches (package-source emacs-next)))))
          (sha256 (base32 emacs-git-hash))))
     (arguments
      (substitute-keyword-arguments (package-arguments emacs-next)
