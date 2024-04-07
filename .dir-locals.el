@@ -3,7 +3,11 @@
   (tab-width   .  8)
   (sentence-end-double-space . t)
   (compile-command . "guix build -L . ")
-  (geiser-guile-binary  . ("guix" "repl")))
+  ;; (geiser-guile-binary  . ("guix" "repl"))
+  )
+
+ ;; Emacs-Guix
+ (eval . (setq-local guix-directory (expand-file-name "~/src/guix/")))
 
  (scheme-mode
   (indent-tabs-mode . nil)

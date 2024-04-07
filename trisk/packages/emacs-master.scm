@@ -12,9 +12,9 @@
   #:use-module (rnrs lists)
   #:use-module (trisk packages))
 
-(define emacs-git-commit "5e5e74b17ac77e93bce7f2158c9d2af5ca2a2ff7")
-(define emacs-git-hash "0fghk5nf20b6bclizsd31wal1fjkjrvd29zgxlj9cjijy86mfgqq")
-(define emacs-git-time "1712128253")
+(define emacs-git-commit "63588775fcb64e4fd88a97e0882aae38c9f5fb1c")
+(define emacs-git-hash "1xahm2b1x65ac19shnczj1bxyj71jvk4b50zc48cpx5bgdxhkhgp")
+(define emacs-git-time "1712518345")
 
 (define-public trisk-emacs-master
   (package

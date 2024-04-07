@@ -30,3 +30,30 @@
 Its main goal is to leverage Clojure in places where you would be using bash otherwise.")
    (home-page "https://babashka.org/")
    (license license:epl1.0)))
+
+(define neil-git-version "0.3.65")
+(define neil-git-hash "0qwxjzyisdxc61a43df1rmk1pqifankg0g51sw6hlrjyw8sk06q5")
+
+(define-public neil
+  (package
+    (name "neil")
+    (version neil-git-version)
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/neil/neil/releases/download/"
+             version
+             "/neil-native-static-linux-amd64.zip"))
+       (sha256
+        (base32 neil-git-hash))))
+    (build-system copy-build-system)
+    (native-inputs (list babashka java))
+    (arguments
+     `(#:install-plan
+       '(("neil" "bin/"))))
+    (home-page "https://clojure.org/releases/tools")
+    (synopsis "CLI tools for the Clojure programming language")
+    (description "The Clojure command line tools can be used to start a
+Clojure repl, use Clojure and Java libraries, and start Clojure programs.")
+    (license license:epl1.0)))
