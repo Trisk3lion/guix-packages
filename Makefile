@@ -31,5 +31,8 @@ build-gitstatus:
 build-lsp-booster:
 	guix build --load-path=. emacs-lsp-booster
 
+build-mu:
+	guix build --load-path=. mu
+
 update:
 	emacs --script update-packages.el
