@@ -34,5 +34,14 @@ build-lsp-booster:
 build-mu:
 	guix build --load-path=. mu
 
+build-rdrview:
+	guix build --load-path=. rdrview
+
+build-syncthing-goamd64v3:
+	guix build --load-path=. syncthing-amd64v3
+
+build-syncthing-armhf:
+	guix build --load-path=. syncthing-armhf
+
 update:
 	emacs --script update-packages.el
