@@ -10,8 +10,14 @@ build-babashka:
 build-clj-kondo:
 	guix build --load-path=. clj-kondo
 
-build-tailscale:
-	guix build --load-path=. tailscale
+build-tailscale-amd64:
+	guix build --load-path=. tailscale-amd64-bin
+
+build-tailscale-arm:
+	guix build --load-path=. tailscale-arm-bin
+
+build-tailscale-arm64:
+	guix build --load-path=. tailscale-arm64-bin
 
 build-datalevin:
 	guix build --load-path=. datalevin
