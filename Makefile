@@ -4,6 +4,9 @@ build-emacs-pgtk:
 build-emacs-master:
 	guix build --load-path=. trisk-emacs-master
 
+build-emacs-master-minimal:
+	guix build --load-path=. emacs-master-minimal
+
 build-babashka:
 	guix build --load-path=. babashka
 
