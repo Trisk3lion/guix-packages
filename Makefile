@@ -52,5 +52,8 @@ build-syncthing-goamd64v3:
 build-syncthing-armhf:
 	guix build --load-path=. syncthing-armhf
 
+build-calibre:
+	guix build --load-path=. calibre-latest
+
 update:
 	emacs --script update-packages.el
