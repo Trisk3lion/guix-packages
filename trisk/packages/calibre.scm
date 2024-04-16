@@ -58,6 +58,9 @@
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages wxwidgets))
 
+
+;; We create a alternative python-3.10 version with sqlite-extensions enables
+;; in order to pass calibre's db tests
 (define python-3.10-sqlite-ext
    (package/inherit python-3.10
      (arguments
