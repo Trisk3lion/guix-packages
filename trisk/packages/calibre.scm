@@ -7,6 +7,7 @@
   #:use-module (guix git-download)
   #:use-module (guix build-system python)
   #:use-module (guix build-system cmake)
+  #:use-module (guix build-system trivial)
   #:use-module (gnu packages)
   #:use-module (gnu packages autotools)
   #:use-module (gnu packages bash)
@@ -59,14 +60,68 @@
   #:use-module (gnu packages wxwidgets))
 
 
+
+(define* (wrap-python3 python
+                       #:optional
+                       (name (string-append (package-name python) "-wrapper")))
+  (package/inherit python
+    (name name)
+    (source #f)
+    (build-system trivial-build-system)
+    (outputs '("out"))
+    (inputs `(("bash" ,bash)))
+    (propagated-inputs `(("python" ,python)))
+    (arguments
+     (list #:modules '((guix build utils))
+           #:builder
+           #~(begin
+               (use-modules (guix build utils))
+               (let ((bin (string-append #$output "/bin"))
+                     (python (string-append
+                              ;; XXX: '%build-inputs' contains the native
+                              ;; Python when cross-compiling.
+                              #$(if (%current-target-system)
+                                    (this-package-input "python")
+                                    #~(assoc-ref %build-inputs "python"))
+                              "/bin/")))
+                 (mkdir-p bin)
+                 (for-each
+                  (lambda (old new)
+                    (symlink (string-append python old)
+                             (string-append bin "/" new)))
+                  `("python3" ,"pydoc3" ,"pip3")
+                  `("python"  ,"pydoc"  ,"pip"))
+                 ;; python-config outputs search paths based upon its location,
+                 ;; use a bash wrapper to avoid changing its outputs.
+                 (let ((bash (string-append (assoc-ref %build-inputs "bash")
+                                            "/bin/bash"))
+                       (old  (string-append python "python3-config"))
+                       (new  (string-append bin "/python-config")))
+                   (with-output-to-file new
+                     (lambda ()
+                       (format #t "#!~a~%" bash)
+                       (format #t "exec \"~a\" \"$@\"~%" old)
+                       (chmod new #o755))))))))
+    (synopsis "Wrapper for the Python 3 commands")
+    (description
+     "This package provides wrappers for the commands of Python@tie{}3.x such
+that they can also be invoked under their usual names---e.g., @command{python}
+instead of @command{python3} or @command{pip} instead of @command{pip3}.
+
+To function properly, this package should not be installed together with the
+@code{python} package: this package uses the @code{python} package as a
+propagated input, so installing this package already makes both the versioned
+and the unversioned commands available.")))
+
 ;; We create a alternative python-3.10 version with sqlite-extensions enables
 ;; in order to pass calibre's db tests
 (define python-3.10-sqlite-ext
+  (wrap-python3
    (package/inherit python-3.10
      (arguments
       (substitute-keyword-arguments (package-arguments python-3.10)
         ((#:configure-flags flags #~())
-         #~(append '("--enable-loadable-sqlite-extensions") #$flags))))))
+         #~(append '("--enable-loadable-sqlite-extensions") #$flags)))))))
 
 (define-public podofo-10
   (package
@@ -118,7 +173,7 @@ extracting content or merging files.")
        (snippet
         '(begin
            ;; Unbundle python2-odfpy.
-           (delete-file-recursively "src/odf")
+           ;; (delete-file-recursively "src/odf")
            ;; Disable test that attempts to load it.
            ;; (substitute* "setup/test.py"
            ;;   ((".*SRC, 'odf'.*") ""))
@@ -135,11 +190,14 @@ extracting content or merging files.")
     (native-inputs
      (list bash-minimal
            pkg-config
+           python-3.10-sqlite-ext
            python-flake8
            python-pyqt-builder
            qtbase                     ; for qmake
            xdg-utils
-           cmake))
+           cmake
+           ;;python-wrapper
+           ))
     (inputs
      (list fontconfig
            font-liberation
