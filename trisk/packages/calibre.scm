@@ -115,13 +115,27 @@ and the unversioned commands available.")))
 
 ;; We create a alternative python-3.10 version with sqlite-extensions enables
 ;; in order to pass calibre's db tests
+
+;; (define python-with-loadable-sqlite-modules
+;;   (package (inherit python)
+;;     (arguments
+;;      (substitute-keyword-arguments (package-arguments python)
+;;        ((#:configure-flags cf)
+;;         `(cons* "--enable-loadable-sqlite-extensions" ,cf))
+;;        ((#:phases phases)
+;;         `(modify-phases ,phases
+;;            (delete 'do-not-record-configure-flags)))))))
+
 (define python-3.10-sqlite-ext
   (wrap-python3
    (package/inherit python-3.10
      (arguments
       (substitute-keyword-arguments (package-arguments python-3.10)
         ((#:configure-flags flags #~())
-         #~(append '("--enable-loadable-sqlite-extensions") #$flags)))))))
+         #~(append '("--enable-loadable-sqlite-extensions") #$flags))
+        ((#:phases phases)
+         #~(modify-phases #$phases
+             (delete 'do-not-record-configure-flags))))))))
 
 (define-public podofo-10
   (package
