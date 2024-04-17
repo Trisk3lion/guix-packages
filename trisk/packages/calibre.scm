@@ -239,6 +239,7 @@ extracting content or merging files.")
            python-dateutil
            python-dnspython-1.16
            python-feedparser
+           python-fonttools
            python-html2text
            python-html5-parser
            python-html5lib
