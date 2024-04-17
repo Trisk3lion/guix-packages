@@ -55,5 +55,8 @@ build-syncthing-armhf:
 build-calibre:
 	guix build --load-path=. calibre-latest
 
+build-fastfetch:
+	guix build --load-path=. fastfetch
+
 update:
 	emacs --script update-packages.el
