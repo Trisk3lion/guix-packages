@@ -187,12 +187,12 @@ extracting content or merging files.")
        (snippet
         '(begin
            ;; Unbundle python2-odfpy.
-           ;; (delete-file-recursively "src/odf")
+           (delete-file-recursively "src/odf")
            ;; Disable test that attempts to load it.
-           ;; (substitute* "setup/test.py"
-           ;;   ((".*SRC, 'odf'.*") ""))
            (substitute* "src/calibre/utils/run_tests.py"
-             (("self.assertGreater(self.base_check(os.path.join(SRC, 'odf'), exclude_packages, exclude_modules), 10)") ""))
+             ((".*SRC, 'odf'.*") ""))
+           ;; (substitute* "src/calibre/utils/run_tests.py"
+           ;;   (("self\.assertGreater\(self\.base_check\(os\.path\.join\(SRC, 'odf'\), exclude_packages, exclude_modules\), 10\)") ""))
            ;; Remove unneeded resources.
            (delete-file "resources/mozilla-ca-certs.pem")
            (delete-file "resources/calibre-portable.bat")
