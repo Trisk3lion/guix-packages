@@ -173,7 +173,7 @@ extracting content or merging files.")
 (define-public calibre-latest
   (package
     (name "calibre-latest")
-    (version "7.8.0")
+    (version "7.9.0")
     (source
      (origin
        (method url-fetch)
@@ -182,7 +182,7 @@ extracting content or merging files.")
                            version ".tar.xz"))
        (sha256
         (base32
-         "0i1dlqncn5rrvlid2q7n39abghdj7abph9ibhmi6csgf7i1jw5hp"))
+         "128w0bvasbyjbyazb390a7a7nxkh71nl45nmaj29ksfnfphfyp12"))
        (modules '((guix build utils)))
        (snippet
         '(begin
