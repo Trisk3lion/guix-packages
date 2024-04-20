@@ -58,5 +58,8 @@ build-calibre:
 build-fastfetch:
 	guix build --load-path=. fastfetch
 
+build-cobol-lsp:
+	guix build --load-path=. che-lsp-for-cobol
+
 update:
 	emacs --script update-packages.el
