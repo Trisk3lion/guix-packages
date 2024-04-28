@@ -6,11 +6,13 @@
 (define-public syncthing-goamd64v3
   (package
     (inherit syncthing)
-    (name "syncthing-goamd64v3")  ; To make it easy to search for.
+    (name "syncthing-goamd64v3") ;To make it easy to search for.
     (arguments
      (substitute-keyword-arguments (package-arguments syncthing)
-       ((#:tests? _ #t) #f)
-       ((#:phases phases '%standard-phases)
+       ((#:tests? _ #t)
+        #f)
+       ((#:phases phases
+         '%standard-phases)
         `(modify-phases ,phases
            (add-after 'setup-go-environment 'set-microarchitecture
              (lambda _
@@ -22,10 +24,11 @@
 (define-public syncthing-goarm5
   (package
     (inherit syncthing)
-    (name "syncthing-armhf")   ; To make it easy to search for.
+    (name "syncthing-armhf") ;To make it easy to search for.
     (arguments
      (substitute-keyword-arguments (package-arguments syncthing)
-       ((#:phases phases '%standard-phases)
+       ((#:phases phases
+         '%standard-phases)
         `(modify-phases ,phases
            (add-after 'setup-go-environment 'set-microarchitecture
              (lambda _

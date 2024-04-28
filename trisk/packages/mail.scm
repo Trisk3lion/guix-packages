@@ -1,7 +1,8 @@
 (define-module (trisk packages mail)
-  #:use-module ((guix licenses) #:prefix license:)
+  #:use-module ((guix licenses)
+                #:prefix license:)
   #:use-module (gnu packages search)
- #:use-module (gnu packages emacs)
+  #:use-module (gnu packages emacs)
   #:use-module (gnu packages texinfo)
   #:use-module (gnu packages gawk)
   #:use-module (gnu packages gdb)
@@ -44,47 +45,51 @@
        (sha256
         (base32 "1q5pwzk69h47dn3yv0jwx3akqfr3mz6wi9hpkr6dxqzzc5bdsvnf"))))
     (build-system meson-build-system)
-    (native-inputs
-     (list pkg-config
-           emacs-minimal
-           gnupg                        ; for tests
-           texinfo))
-    (inputs
-     (list glib gmime guile-3.0 xapian readline python))
+    (native-inputs (list pkg-config emacs-minimal gnupg ;for tests
+                         texinfo))
+    (inputs (list glib
+                  gmime
+                  guile-3.0
+                  xapian
+                  readline
+                  python))
     (arguments
      (list
       #:modules '((guix build meson-build-system)
                   (guix build emacs-utils)
                   (guix build utils))
-      #:imported-modules `(,@%meson-build-system-modules
-                           (guix build emacs-utils))
-      #:configure-flags
-      #~(list (format #f "-Dguile-extension-dir=~a/lib" #$output))
-      #:phases
-      #~(modify-phases %standard-phases
-          (add-after 'unpack 'patch-bin-references
-            (lambda _
-              (substitute* '("guile/tests/test-mu-guile.cc"
-                             ;; "mu/tests/test-mu-cmd.cc"
-                             ;; "mu/tests/test-mu-cmd-cfind.cc"
-                             "mu/tests/test-mu-query.cc")
-                (("/bin/sh") (which "sh")))
-              (substitute* '("lib/tests/bench-indexer.cc"
-                             "lib/utils/mu-test-utils.cc")
-                (("/bin/rm") (which "rm")))
-              (substitute* '("lib/mu-maildir.cc")
-                (("/bin/mv") (which "mv")))))
-          (add-after 'install 'fix-ffi
-            (lambda _
-              (substitute* (find-files #$output "mu.scm")
-                (("\"libguile-mu\"")
-                 (format #f "\"~a/lib/libguile-mu\"" #$output)))))
-          (add-after 'install 'install-emacs-autoloads
-            (lambda* (#:key outputs #:allow-other-keys)
-              (emacs-generate-autoloads
-               "mu4e"
-               (string-append (assoc-ref outputs "out")
-                              "/share/emacs/site-lisp/mu4e")))))))
+      #:imported-modules `(,@%meson-build-system-modules (guix build
+                                                               emacs-utils))
+      #:configure-flags #~(list (format #f "-Dguile-extension-dir=~a/lib"
+                                        #$output))
+      #:phases #~(modify-phases %standard-phases
+                   (add-after 'unpack 'patch-bin-references
+                     (lambda _
+                       (substitute* '("guile/tests/test-mu-guile.cc"
+                                      ;; "mu/tests/test-mu-cmd.cc"
+                                      ;; "mu/tests/test-mu-cmd-cfind.cc"
+                                      "mu/tests/test-mu-query.cc")
+                         (("/bin/sh")
+                          (which "sh")))
+                       (substitute* '("lib/tests/bench-indexer.cc"
+                                      "lib/utils/mu-test-utils.cc")
+                         (("/bin/rm")
+                          (which "rm")))
+                       (substitute* '("lib/mu-maildir.cc")
+                         (("/bin/mv")
+                          (which "mv")))))
+                   (add-after 'install 'fix-ffi
+                     (lambda _
+                       (substitute* (find-files #$output "mu.scm")
+                         (("\"libguile-mu\"")
+                          (format #f "\"~a/lib/libguile-mu\""
+                                  #$output)))))
+                   (add-after 'install 'install-emacs-autoloads
+                     (lambda* (#:key outputs #:allow-other-keys)
+                       (emacs-generate-autoloads "mu4e"
+                                                 (string-append (assoc-ref
+                                                                 outputs "out")
+                                                  "/share/emacs/site-lisp/mu4e")))))))
     (home-page "https://www.djcbsoftware.nl/code/mu/")
     (synopsis "Quickly find emails")
     (description

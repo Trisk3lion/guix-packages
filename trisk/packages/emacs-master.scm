@@ -10,9 +10,12 @@
   #:use-module (rnrs lists)
   #:use-module (trisk packages))
 
-(define emacs-git-commit "103a2fdf18d99c872e4adb01a15a8300164acd66")
-(define emacs-git-hash "19w5nrnhj5b26l2pjkq9adsp1kpixq8d334mvsnr1j5by8229i0c")
-(define emacs-git-time "1712773724")
+(define emacs-git-commit
+  "103a2fdf18d99c872e4adb01a15a8300164acd66")
+(define emacs-git-hash
+  "19w5nrnhj5b26l2pjkq9adsp1kpixq8d334mvsnr1j5by8229i0c")
+(define emacs-git-time
+  "1712773724")
 
 (define-public emacs-master-minimal
   (package
@@ -26,51 +29,63 @@
        (uri (string-append
              "https://git.savannah.gnu.org/cgit/emacs.git/snapshot/emacs-"
              emacs-git-commit ".tar.gz"))
-       (sha256 (base32 emacs-git-hash))
-       (patches
-        (append
-         ;; HACK: There isn't any easy way to search patches in a third-party
-         ;; channel.
-         ;; (parameterize
-         ;;     ((%patch-path
-         ;;       (filter! identity
-         ;;                (map
-         ;;                 (lambda (directory)
-         ;;                   (if (file-exists?
-         ;;                        (string-append directory "/emacs-master.scm"))
-         ;;                       (string-append directory "/patches")
-         ;;                       #f))
-         ;;                 %load-path))))
-           ;; (search-patches "emacs-master-fix-scheme-indent-function.patch")
-         (delete
-          (car (search-patches "emacs-fix-scheme-indent-function.patch"))
-          ;; HACK: I don't know why this patch doesn't work.  :/
-          (delete (car (search-patches "emacs-next-exec-path.patch"))
-                  (origin-patches (package-source emacs-next-minimal))))))))))
+       (sha256
+        (base32 emacs-git-hash))
+       (patches (append
+                 ;; HACK: There isn't any easy way to search patches in a third-party
+                 ;; channel.
+                 ;; (parameterize
+                 ;; ((%patch-path
+                 ;; (filter! identity
+                 ;; (map
+                 ;; (lambda (directory)
+                 ;; (if (file-exists?
+                 ;; (string-append directory "/emacs-master.scm"))
+                 ;; (string-append directory "/patches")
+                 ;; #f))
+                 ;; %load-path))))
+                 ;; (search-patches "emacs-master-fix-scheme-indent-function.patch")
+                 (delete (car (search-patches
+                               "emacs-fix-scheme-indent-function.patch"))
+                         ;; HACK: I don't know why this patch doesn't work.  :/
+                         (delete (car (search-patches
+                                       "emacs-next-exec-path.patch"))
+                                 (origin-patches (package-source
+                                                  emacs-next-minimal))))))))))
 
-(define* (emacs->emacs-master emacs #:optional name #:key
-                              (version (package-version emacs-master-minimal))
+(define* (emacs->emacs-master emacs
+                              #:optional name
+                              #:key (version (package-version
+                                              emacs-master-minimal))
                               (source (package-source emacs-master-minimal)))
   (package
     (inherit emacs)
     (name (or name
-              (and (string-prefix? "emacs" (package-name emacs))
+              (and (string-prefix? "emacs"
+                                   (package-name emacs))
                    (string-append "trisk-emacs-master"
                                   (string-drop (package-name emacs)
                                                (string-length "emacs"))))))
     (version version)
-    (source source)))
+    (source
+     source)))
 
-(define-public trisk-emacs-master-no-x (emacs->emacs-master emacs-no-x))
-(define-public trisk-emacs-master (emacs->emacs-master emacs))
-(define-public trisk-emacs-master-xwidgets (emacs->emacs-master emacs-xwidgets))
-(define-public trisk-emacs-master-pgtk (emacs->emacs-master emacs-pgtk))
+(define-public trisk-emacs-master-no-x
+  (emacs->emacs-master emacs-no-x))
+(define-public trisk-emacs-master
+  (emacs->emacs-master emacs))
+(define-public trisk-emacs-master-xwidgets
+  (emacs->emacs-master emacs-xwidgets))
+(define-public trisk-emacs-master-pgtk
+  (emacs->emacs-master emacs-pgtk))
 (define-public trisk-emacs-master-pgtk-xwidgets
   (emacs->emacs-master emacs-pgtk-xwidgets))
-(define-public trisk-emacs-master-motif (emacs->emacs-master emacs-motif))
+(define-public trisk-emacs-master-motif
+  (emacs->emacs-master emacs-motif))
 (define-public trisk-emacs-master-no-x-toolkit
   (emacs->emacs-master emacs-no-x-toolkit))
-(define-public trisk-emacs-master-wide-int (emacs->emacs-master emacs-wide-int))
+(define-public trisk-emacs-master-wide-int
+  (emacs->emacs-master emacs-wide-int))
 
 ;; (define-public trisk-emacs-master
 ;;   (package

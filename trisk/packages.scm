@@ -17,19 +17,17 @@
 ;;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 (define-module (trisk packages)
-  #:use-module ((gnu packages) #:prefix gnu:)
+  #:use-module ((gnu packages)
+                #:prefix gnu:)
   #:use-module (guix diagnostics)
   #:use-module (guix i18n)
   #:use-module (srfi srfi-1)
-  #:export (search-patch
-            search-patches
-            %patch-path))
+  #:export (search-patch search-patches %patch-path))
 
 (define (search-patch file-name)
   "Search the patch FILE-NAME.  Raise an error if not found."
   (or (search-path (%patch-path) file-name)
-      (raise (formatted-message (G_ "the ~a: patch not found")
-                                file-name))))
+      (raise (formatted-message (G_ "the ~a: patch not found") file-name))))
 
 (define-syntax-rule (search-patches file-name ...)
   "Return the list of absolute file names corresponding to each
@@ -42,7 +40,5 @@ FILE-NAME found in %PATCH-PATH."
         %load-path))
 
 (define %patch-path
-  (make-parameter
-   (cons
-    (string-append %channel-root "/trisk/packages/patches")
-    (gnu:%patch-path))))
+  (make-parameter (cons (string-append %channel-root "/trisk/packages/patches")
+                        (gnu:%patch-path))))

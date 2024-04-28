@@ -1,5 +1,6 @@
 (define-module (trisk packages mainframe)
-  #:use-module ((guix licenses) #:prefix license:)
+  #:use-module ((guix licenses)
+                #:prefix license:)
   #:use-module (guix download)
   #:use-module (guix packages)
   #:use-module (guix build-system gnu)
@@ -10,20 +11,18 @@
     (name "hercules")
     (version "3.13")
     (source
-      (origin
-        (method url-fetch)
-        (uri (string-append "http://downloads.hercules-390.eu/hercules-"
-                            version ".tar.gz"))
-        (sha256
-         (base32 "0zg6rwz8ib4alibf8lygi8qn69xx8n92kbi8b3jhi1ymb32mf349"))))
+     (origin
+       (method url-fetch)
+       (uri (string-append "http://downloads.hercules-390.eu/hercules-"
+                           version ".tar.gz"))
+       (sha256
+        (base32 "0zg6rwz8ib4alibf8lygi8qn69xx8n92kbi8b3jhi1ymb32mf349"))))
     (build-system gnu-build-system)
     (arguments
-     `(#:configure-flags (list "--enable-cckd-bzip2"
-                               "--enable-het-bzip2"
+     `(#:configure-flags (list "--enable-cckd-bzip2" "--enable-het-bzip2"
                                "--enable-multi-cpu=128")))
-    (inputs
-     `(("bzip2" ,bzip2)
-       ("zlib" ,zlib)))
+    (inputs `(("bzip2" ,bzip2)
+              ("zlib" ,zlib)))
     (home-page "http://www.hercules-390.eu/")
     (synopsis "System/370, ESA/390 and z/Architecture Emulator")
     (description
@@ -48,7 +47,6 @@ public domain.
 Virtual networking can be accomplished using the TUN/TAP driver in host Linux
 kernel.")
     (license license:qpl)))
-
 
 ;; TODO sdl-hercules
 ;; TODO athena-hercules

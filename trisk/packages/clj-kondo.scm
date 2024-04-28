@@ -1,5 +1,6 @@
 (define-module (trisk packages clj-kondo)
-  #:use-module ((guix licenses) #:prefix license:)
+  #:use-module ((guix licenses)
+                #:prefix license:)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix utils)
@@ -7,9 +8,10 @@
   #:use-module (gnu packages compression)
   #:use-module (guix build-system copy))
 
-
-(define clj-kondo-git-version "2024.03.13")
-(define clj-kondo-git-hash "1c78i4wx4w1r6d5mwgnvcnnq3pqnm13d77y3ann0n8dw30n1akz1")
+(define clj-kondo-git-version
+  "2024.03.13")
+(define clj-kondo-git-hash
+  "1c78i4wx4w1r6d5mwgnvcnnq3pqnm13d77y3ann0n8dw30n1akz1")
 
 ;; Has been upstreamed to nongnu guix
 ;; (define-public clj-kondo
