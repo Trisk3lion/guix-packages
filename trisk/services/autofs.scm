@@ -80,7 +80,7 @@
           (default '())))
 
 (define (autofs-configuration-file config)
-  (let ((config (plain-file "autofs-mounts.conf"
+  (let ((mounts-config (plain-file "autofs-mounts.conf"
                             (call-with-output-string
                               (lambda (port)
                                 (match-record config <autofs-configuration>
@@ -93,7 +93,7 @@
                                                 (newline port)))
                                             mounts)))))))
     (mixed-text-file "autofs.conf"
-                     (string-join (list "/-" config (autofs-configuration-options config))))))
+                     (string-join (list "/-" mounts-config (autofs-configuration-options config))))))
 
 (define (autofs-activation config)
   "Return the activation gexp for CONFIG."
