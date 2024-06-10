@@ -3,6 +3,7 @@
   #:use-module (gnu services configuration)
   #:use-module (gnu services shepherd)
   #:use-module (gnu services web)
+  #:use-module (gnu services admin)
   #:use-module (gnu services)
   #:use-module (gnu system shadow)
   #:use-module (guix gexp)
