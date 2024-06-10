@@ -61,5 +61,11 @@ build-fastfetch:
 build-cobol-lsp:
 	guix build --load-path=. che-lsp-for-cobol
 
+build-rmapi: trisk/packages/remarkable.scm
+	guix build --load-path=. go-github-com-juruen-rmapi
+
+build-mermaid: trisk/packages/mermaid.scm
+	guix build --load-path=. node-mermaid-js-mermaid-cli
+
 update:
 	emacs --script update-packages.el
