@@ -80,22 +80,23 @@
           (default '())))
 
 (define (autofs-configuration-file config)
-  (let ((mounts-config (plain-file "autofs-mounts.conf"
-                            (call-with-output-string
-                              (lambda (port)
-                                (match-record config <autofs-configuration>
-                                              (autofs pid-file config-file mounts)
-                                  (for-each (lambda (mount)
-                                              (match-record mount <autofs-mount-configuration>
-                                                            (target source options)
-                                                (display (string-join (list target (string-join options ",") source))
-                                                         port)
-                                                (newline port)))
-                                            mounts)))))))
+  (define autofs-mounts-configuration-file
+    (plain-file "autofs-mounts.conf"
+                (call-with-output-string
+                  (lambda (port)
+                    (match-record config <autofs-configuration>
+                                  (autofs pid-file config-file mounts)
+                      (for-each (lambda (mount)
+                                  (match-record mount <autofs-mount-configuration>
+                                                (target source options)
+                                    (display (string-join (list target (string-join options ",") source))
+                                             port)
+                                    (newline port)))
+                                mounts))))))
     (mixed-text-file "autofs.conf"
-                     (string-join (list "/-" mounts-config "--timout=10"
+                     "/- " autofs-mounts-configuration-file " --timout=10"
                                         ;; (autofs-configuration-options config)
-                                        )))))
+                                        ))
 
 (define (autofs-activation config)
   "Return the activation gexp for CONFIG."
