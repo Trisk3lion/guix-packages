@@ -94,7 +94,7 @@
                                     (newline port)))
                                 mounts))))))
     (mixed-text-file "autofs.conf"
-                     "/- " autofs-mounts-configuration-file " --timout=10"
+                     "/- " autofs-mounts-configuration-file " --timeout=10"
                                         ;; (autofs-configuration-options config)
                                         ))
 
