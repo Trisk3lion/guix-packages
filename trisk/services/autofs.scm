@@ -67,7 +67,7 @@
   (mounts autofs-configuration-mounts ;list of <autofs-mount-configuration>
           (default '()))
   (options autofs-configuration-options
-           (default "--timout=5")))
+           (default "--timeout=5")))
 
 (define-record-type* <autofs-mount-configuration>
   autofs-mount-configuration make-autofs-mount-configuration
