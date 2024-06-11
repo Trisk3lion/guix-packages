@@ -93,7 +93,9 @@
                                                 (newline port)))
                                             mounts)))))))
     (mixed-text-file "autofs.conf"
-                     (string-join (list "/-" mounts-config (autofs-configuration-options config))))))
+                     (string-join (list "/-" mounts-config "--timout=10"
+                                        ;; (autofs-configuration-options config)
+                                        )))))
 
 (define (autofs-activation config)
   "Return the activation gexp for CONFIG."
