@@ -61,6 +61,9 @@ build-fastfetch:
 build-cobol-lsp:
 	guix build --load-path=. che-lsp-for-cobol
 
+build-kohighlights: trisk/packages/ebook.scm
+	guix build --load-path=. kohighlights
+
 build-rmapi: trisk/packages/remarkable.scm
 	guix build --load-path=. go-github-com-juruen-rmapi
 
