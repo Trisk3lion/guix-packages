@@ -64,6 +64,9 @@ build-cobol-lsp:
 build-kohighlights: trisk/packages/ebook.scm
 	guix build --load-path=. kohighlights
 
+build-rcu: trisk/packages/ebook.scm
+	guix build --load-path=. rcu
+
 build-rmapi: trisk/packages/remarkable.scm
 	guix build --load-path=. go-github-com-juruen-rmapi
 

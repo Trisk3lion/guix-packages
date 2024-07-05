@@ -10,6 +10,8 @@
   #:use-module (gnu packages python)
   #:use-module (gnu packages python-xyz)
   #:use-module (gnu packages python-web)
+  #:use-module (gnu packages python-crypto)
+  #:use-module (gnu packages protobuf)
   #:use-module (gnu packages qt)
   #:use-module (guix build-system copy))
 
@@ -53,3 +55,54 @@
    (synopsis "KOHighlights is a utility for viewing and exporting the Koreader's highlights to simple text, html, csv or markdown files.")
    (description "KOHighlights is a utility for viewing and exporting the Koreader's highlights to simple text, html, csv or markdown files.")
    (license license:expat)))
+
+(define-public rcu
+  (package
+    (name "rcu")
+    (version "d2024.001")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://files.davisr.me/projects/rcu/download-59ck3sdT/rcu.git")
+                    (commit "09c05b2e27d9cbe4586ac66f0bc1c8398cec2660")))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32 "0ikkr2sk7j9h3j62k288wsz0ldkxnr0x8gjb7lacawlwkmfwsq2m"))
+              (modules '((guix build utils)))
+              (snippet '(begin
+                          (delete-file-recursively "package_support")
+                          (delete-file-recursively "recover_os")
+                          (delete-file-recursively "recover_os_build")))))
+    (build-system copy-build-system)
+    (arguments
+    `(#:phases (modify-phases %standard-phases
+                 (add-after 'install 'make-wrapper
+                   (lambda* (#:key inputs outputs #:allow-other-keys)
+                     (let* ((out (assoc-ref outputs "out"))
+                            (_ (mkdir-p (string-append out "/bin")))
+                            (wrapper (string-append out "/bin/rcu")))
+                       (with-output-to-file wrapper
+                         (lambda _
+                           (display (string-append "#!/bin/sh\n\n"
+                                                   "(cd " out "/resources/rcu/ "
+                                                   "&& "
+                                                   (assoc-ref inputs "python")
+                                                   "/bin/python3 "
+                                                   "-B "
+                                                   "main.py)\n"))))
+                       (chmod wrapper #o555)) #t)))
+      #:install-plan '(("src/" "resources/rcu/"))))
+    (propagated-inputs
+     (list python
+           python-paramiko
+           python-pillow
+           python-certifi
+           python-pdfminer-six
+           python-protobuf
+           python-six
+           python-pyside-2
+           python-pikepdf))
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license license:expat)))
