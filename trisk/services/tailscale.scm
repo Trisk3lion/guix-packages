@@ -17,7 +17,7 @@
   tailscaled-configuration make-tailscaled-configuration
   tailscaled-configuration?
   (package      tailscaled-configuration-package
-                (default tailscale))   ; package
+                (default tailscale-amd64-bin))   ; package
   (listen-port  tailscaled-configuration-listen-port
                 (default 41641))     ; number
   (state-file   tailscaled-configuration-state-file
