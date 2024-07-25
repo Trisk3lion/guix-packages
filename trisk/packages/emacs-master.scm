@@ -31,7 +31,7 @@
              emacs-git-commit ".tar.gz"))
        (sha256
         (base32 emacs-git-hash))
-       (patches (append
+       (patches ;; (append
                  ;; HACK: There isn't any easy way to search patches in a third-party
                  ;; channel.
                  ;; (parameterize
@@ -45,13 +45,13 @@
                  ;; #f))
                  ;; %load-path))))
                  ;; (search-patches "emacs-master-fix-scheme-indent-function.patch")
-                 (delete (car (search-patches
-                               "emacs-fix-scheme-indent-function.patch"))
-                         ;; HACK: I don't know why this patch doesn't work.  :/
-                         (delete (car (search-patches
-                                       "emacs-next-exec-path.patch"))
-                                 (origin-patches (package-source
-                                                  emacs-next-minimal))))))))))
+                 ;; (delete (car (search-patches
+                 ;;               "emacs-fix-scheme-indent-function.patch"))
+                 ;;         ;; HACK: I don't know why this patch doesn't work.  :/
+                 ;;         (delete (car (search-patches
+                 ;;                       "emacs-next-exec-path.patch"))
+        (origin-patches (package-source
+                         emacs-next-minimal)))))))
 
 (define* (emacs->emacs-master emacs
                               #:optional name
