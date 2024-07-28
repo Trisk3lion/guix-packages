@@ -1,5 +1,5 @@
 build-emacs-pgtk:
-	guix build --load-path=. trisk-emacs-pgtk
+	guix build --load-path=. trisk-emacs-master-pgtk
 
 build-emacs-master:
 	guix build --load-path=. trisk-emacs-master
