@@ -73,5 +73,8 @@ build-rmapi: trisk/packages/remarkable.scm
 build-mermaid: trisk/packages/mermaid.scm
 	guix build --load-path=. node-mermaid-js-mermaid-cli
 
+build-guile-lsp: trisk/packages/mermaid.scm
+	guix build --load-path=. guile-lsp-server
+
 update:
 	emacs --script update-packages.el

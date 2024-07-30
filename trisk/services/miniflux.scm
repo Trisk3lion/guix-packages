@@ -107,7 +107,7 @@
    (extensions
     (list (service-extension account-service-type
 			     miniflux-account)
-	  ;; (service-extension postgresql-service-type (const #t))
+	  (service-extension postgresql-service-type (const #t))
 	  (service-extension postgresql-role-service-type
 			     miniflux-postgresql-role)
 	  (service-extension shepherd-root-service-type
