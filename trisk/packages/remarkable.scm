@@ -374,7 +374,17 @@ as defined by the Adobe XMP Specification
       #:phases
       #~(modify-phases %standard-phases
           ;; Source-only package.
-          (delete 'build))))
+          (delete 'build)
+          (add-after 'unpack 'fix-strange-import
+            (lambda* (#:key import-path #:allow-other-keys)
+              (substitute* (string-append "src/" import-path
+                                          "/raster/raster.go")
+                (("// import \"github.com/golang/freetype/raster\"")
+                 ""))
+              (substitute* (string-append "src/" import-path
+                                          "/truetype/truetype.go")
+                (("// import \"github.com/golang/freetype/truetype\"")
+                 "")))))))
     (propagated-inputs `(("go-golang-org-x-image" ,go-golang-org-x-image)))
     (home-page "https://github.com/unidoc/freetype")
     (synopsis #f)
