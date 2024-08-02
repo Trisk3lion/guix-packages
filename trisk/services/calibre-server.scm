@@ -38,7 +38,8 @@
    "Allow un-authenticated connections from specific IP addresses to make changes.
 Should be a comma separated list of address or network specifications.")
   (pid-file
-   (string "/var/log/calibre-server.pid"))
+   (string "/var/log/calibre-server.pid")
+   "Path to PID-file.")
   (log-file
    (string "/var/log/calibre-server.log")
    "Path to the log file"))
