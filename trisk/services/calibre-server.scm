@@ -19,7 +19,7 @@
    (file-like calibre)
    "Calibre package to use for the Calibre Content Server")
   (library-path
-   string
+   (string)
    "Path to the calibre library which includes the calibre db.")
   (url-prefix
    (maybe-string)
