@@ -46,14 +46,14 @@ Should be a comma separated list of address or network specifications.")
 
 (define (calibre-shepherd-service config)
   (match-record config <calibre-server-configuration>
-                (calibre database-path url-prefix enable-auth user group trusted-ips pid-file log-file)
+                (calibre library-path url-prefix enable-auth user group trusted-ips pid-file log-file)
     (list (shepherd-service
 	   (documentation "Run Calibre Content Server")
 	   (provision '(calibre-server))
 	   (requirement '(networking))
 	   (start #~(make-forkexec-constructor
 		     (list (string-append #$calibre "/bin/calibre-server")
-                           #$database-path
+                           #$library-path
                            #$@(if url-prefix
                                   '("--url-prefix" url-prefix)
                                   '())
