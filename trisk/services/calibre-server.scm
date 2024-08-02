@@ -22,7 +22,7 @@
    (string "/mnt/storage/books")
    "Path to the calibre library which includes the calibre db.")
   (url-prefix
-   (maybe-string #f)
+   maybe-string
    "Serve all URL's prefixed by url-prefix.")
   (user
    (string "calibre")
@@ -34,7 +34,7 @@
    (boolean #f)
    "Enable password basedauthentication to the server.")
   (trusted-ips
-   (maybe-string #f)
+   maybe-string
    "Allow un-authenticated connections from specific IP addresses to make changes.
 Should be a comma separated list of address or network specifications.")
   (pid-file
