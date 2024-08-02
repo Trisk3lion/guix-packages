@@ -44,7 +44,7 @@ Should be a comma separated list of address or network specifications.")
    (string "/var/log/calibre-server.log")
    "Path to the log file"))
 
-(define (calibre-shepherd-service config)
+(define (calibre-server-shepherd-service config)
   (match-record config <calibre-server-configuration>
                 (calibre library-path url-prefix enable-auth user group trusted-ips pid-file log-file)
     (list (shepherd-service
