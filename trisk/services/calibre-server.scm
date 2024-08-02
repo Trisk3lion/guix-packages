@@ -18,9 +18,9 @@
   (calibre
    (file-like calibre)
    "Calibre package to use for the Calibre Content Server")
-  (database-path
+  (library-path
    string
-   "Path to the calibre database.")
+   "Path to the calibre library which includes the calibre db.")
   (url-prefix
    maybe-string
    "Serve all URL's prefixed by url-prefix.")
@@ -32,7 +32,7 @@
    "Group name for the group that should run the server. Should be the same group that owns the files in calibre library folder."
    empty-serializer)
   (enable-auth
-   (bolean #f)
+   (boolean #f)
    "Enable password basedauthentication to the server.")
   (trusted-ips
    maybe-string

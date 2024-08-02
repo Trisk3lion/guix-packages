@@ -52,32 +52,6 @@ reMarkable tablet over ssh, without needing the cloud service, nor the USB Web
 UI.")
     (license license:gpl3+))))
 
-;; (define-public go-github-com-abiosoft-ishell-v2
-;;   (package
-;;     (name "go-github-com-abiosoft-ishell-v2")
-;;     (version "2.0.2")
-;;     (source
-;;      (origin
-;;        (method git-fetch)
-;;        (uri (git-reference
-;;              (url "https://github.com/abiosoft/ishell")
-;;              (commit (string-append "v" version))))
-;;        (file-name (git-file-name name version))
-;;        (sha256
-;;         (base32 "1p5bpshzyrg2lb6r88jg3xxhqqprw6z0yjaws410pdvq1c5davnw"))))
-;;     (build-system go-build-system)
-;;     (arguments
-;;      (list
-;;       #:import-path "github.com/abiosoft/ishell/v2"))
-;;     (propagated-inputs `(("go-github-com-stretchr-testify" ,go-github-com-stretchr-testify)
-;;                          ("go-github-com-flynn-archive-go-shlex" ,go-github-com-flynn-archive-go-shlex)
-;;                          ("go-github-com-fatih-color" ,go-github-com-fatih-color)
-;;                          ("go-github-com-abiosoft-readline" ,go-github-com-abiosoft-readline)))
-;;     (home-page "https://github.com/abiosoft/ishell")
-;;     (synopsis "ishell")
-;;     (description "Package ishell implements an interactive shell.")
-;;     (license license:expat)))
-
 (define-public go-github-com-abiosoft-readline
   (package
     (name "go-github-com-abiosoft-readline")
@@ -95,8 +69,8 @@ UI.")
     (arguments
      (list
       #:import-path "github.com/abiosoft/readline"))
-    (propagated-inputs `(("go-github-com-chzyer-test" ,go-github-com-chzyer-test)
-                         ("go-github-com-chzyer-logex" ,go-github-com-chzyer-logex)))
+    (propagated-inputs (list go-github-com-chzyer-test
+                             go-github-com-chzyer-logex))
     (home-page "https://github.com/abiosoft/readline")
     (synopsis "Guide")
     (description
@@ -120,10 +94,10 @@ UI.")
     (arguments
      (list
       #:import-path "github.com/abiosoft/ishell"))
-    (propagated-inputs `(("go-github-com-stretchr-testify" ,go-github-com-stretchr-testify)
-                         ("go-github-com-flynn-archive-go-shlex" ,go-github-com-flynn-archive-go-shlex)
-                         ("go-github-com-fatih-color" ,go-github-com-fatih-color)
-                         ("go-github-com-abiosoft-readline" ,go-github-com-abiosoft-readline)))
+    (propagated-inputs (list go-github-com-stretchr-testify
+                         go-github-com-flynn-archive-go-shlex
+                         go-github-com-fatih-color
+                         go-github-com-abiosoft-readline))
     (home-page "https://github.com/abiosoft/ishell")
     (synopsis "ishell")
     (description "Package ishell implements an interactive shell.")
@@ -169,7 +143,7 @@ UI.")
     (arguments
      (list
       #:import-path "github.com/adrg/strutil"))
-    (propagated-inputs `(("go-github-com-stretchr-testify" ,go-github-com-stretchr-testify)))
+    (propagated-inputs (list go-github-com-stretchr-testify))
     (home-page "https://github.com/adrg/strutil")
     (synopsis "Installation")
     (description
@@ -198,8 +172,8 @@ be found at
       #:import-path "github.com/adrg/xdg"
       ;; Include test that tries to create directories
       #:tests? #f))
-    (propagated-inputs `(("go-golang-org-x-sys" ,go-golang-org-x-sys)
-                         ("go-github-com-stretchr-testify" ,go-github-com-stretchr-testify)))
+    (propagated-inputs (list go-golang-org-x-sys
+                             go-github-com-stretchr-testify))
     (home-page "https://github.com/adrg/xdg")
     (synopsis "Installation")
     (description
@@ -227,8 +201,8 @@ paths.  The package also includes the locations of well known user directories."
     (arguments
      (list
       #:import-path "github.com/adrg/sysfont"))
-    (propagated-inputs `(("go-github-com-adrg-xdg" ,go-github-com-adrg-xdg)
-                         ("go-github-com-adrg-strutil" ,go-github-com-adrg-strutil)))
+    (propagated-inputs (list go-github-com-adrg-xdg
+                             go-github-com-adrg-strutil))
     (home-page "https://github.com/adrg/sysfont")
     (synopsis "sysfont")
     (description
@@ -337,8 +311,8 @@ no dependencies.")
       #~(modify-phases %standard-phases
           ;; Source-only package.
           (delete 'build))))
-    (propagated-inputs `(("go-github-com-montanaflynn-stats" ,go-github-com-montanaflynn-stats)
-                         ("go-github-com-golang-snappy" ,go-github-com-golang-snappy)))
+    (propagated-inputs (list go-github-com-montanaflynn-stats
+                             go-github-com-golang-snappy))
     (home-page "https://github.com/trimmer-io/go-xmp")
     (synopsis "go-xmp")
     (description
@@ -385,7 +359,7 @@ as defined by the Adobe XMP Specification
                                           "/truetype/truetype.go")
                 (("// import \"github.com/golang/freetype/truetype\"")
                  "")))))))
-    (propagated-inputs `(("go-golang-org-x-image" ,go-golang-org-x-image)))
+    (propagated-inputs (list go-golang-org-x-image))
     (home-page "https://github.com/unidoc/freetype")
     (synopsis #f)
     (description
@@ -411,7 +385,7 @@ rasterization and @code{TrueType} parsing.")
     (arguments
      (list
       #:import-path "github.com/unidoc/garabic"))
-    (propagated-inputs `(("go-golang-org-x-text" ,go-golang-org-x-text)))
+    (propagated-inputs (list go-golang-org-x-text))
     (home-page "https://github.com/unidoc/garabic")
     (synopsis "GArabic")
     (description
@@ -463,7 +437,7 @@ golang.")
       #:import-path "github.com/unidoc/timestamp"
       #:tests? #f ;; Test are failing for unknown reason
       ))
-    (propagated-inputs `(("go-github-com-unidoc-pkcs7" ,go-github-com-unidoc-pkcs7)))
+    (propagated-inputs (list go-github-com-unidoc-pkcs7))
     (home-page "https://github.com/unidoc/timestamp")
     (synopsis "RFC3161 Time-Stamp Protocol (TSP) package for Go")
     (description
@@ -488,7 +462,7 @@ RFC3161 (Internet X.509 Public Key Infrastructure Time-Stamp Protocol (TSP)).")
     (arguments
      (list
       #:import-path "github.com/unidoc/unichart"))
-    (propagated-inputs `(("go-github-com-stretchr-testify" ,go-github-com-stretchr-testify)))
+    (propagated-inputs (list go-github-com-stretchr-testify))
     (home-page "https://github.com/unidoc/unichart")
     (synopsis "unichart")
     (description
@@ -515,9 +489,9 @@ provide charting capabilities.")
     (arguments
      (list
       #:import-path "github.com/unidoc/unitype"))
-    (propagated-inputs `(("go-golang-org-x-text" ,go-golang-org-x-text)
-                         ("go-github-com-stretchr-testify" ,go-github-com-stretchr-testify)
-                         ("go-github-com-sirupsen-logrus" ,go-github-com-sirupsen-logrus)))
+    (propagated-inputs (list go-golang-org-x-text
+                             go-github-com-stretchr-testify
+                             go-github-com-sirupsen-logrus))
     (home-page "https://github.com/unidoc/unitype")
     (synopsis #f)
     (description #f)
@@ -539,7 +513,6 @@ provide charting capabilities.")
     (build-system go-build-system)
     (arguments
      (list
-      ;; #:go go-1.18
       #:import-path "github.com/unidoc/unipdf/v3"
       #:tests? #f
       #:phases
@@ -547,23 +520,23 @@ provide charting capabilities.")
           ;; Source-only package.
           (delete 'build))
       ))
-    (propagated-inputs `(("go-golang-org-x-xerrors" ,go-golang-org-x-xerrors)
-                         ("go-golang-org-x-text" ,go-golang-org-x-text)
-                         ("go-golang-org-x-net" ,go-golang-org-x-net)
-                         ("go-golang-org-x-image" ,go-golang-org-x-image)
-                         ("go-golang-org-x-crypto" ,go-golang-org-x-crypto)
-                         ("go-github-com-unidoc-unitype" ,go-github-com-unidoc-unitype)
-                         ("go-github-com-unidoc-unichart" ,go-github-com-unidoc-unichart)
-                         ("go-github-com-unidoc-timestamp" ,go-github-com-unidoc-timestamp)
-                         ("go-github-com-unidoc-pkcs7" ,go-github-com-unidoc-pkcs7)
-                         ("go-github-com-unidoc-garabic" ,go-github-com-unidoc-garabic)
-                         ("go-github-com-unidoc-freetype" ,go-github-com-unidoc-freetype)
-                         ("go-github-com-trimmer-io-go-xmp" ,go-github-com-trimmer-io-go-xmp)
-                         ("go-github-com-stretchr-testify" ,go-github-com-stretchr-testify)
-                         ("go-github-com-gorilla-i18n" ,go-github-com-gorilla-i18n)
-                         ("go-github-com-gabriel-vasile-mimetype" ,go-github-com-gabriel-vasile-mimetype)
-                         ("go-github-com-boombuler-barcode" ,go-github-com-boombuler-barcode)
-                         ("go-github-com-adrg-sysfont" ,go-github-com-adrg-sysfont)))
+    (propagated-inputs (list go-golang-org-x-xerrors
+                             go-golang-org-x-text
+                             go-golang-org-x-net
+                             go-golang-org-x-image
+                             go-golang-org-x-crypto
+                             go-github-com-unidoc-unitype
+                             go-github-com-unidoc-unichart
+                             go-github-com-unidoc-timestamp
+                             go-github-com-unidoc-pkcs7
+                             go-github-com-unidoc-garabic
+                             go-github-com-unidoc-freetype
+                             go-github-com-trimmer-io-go-xmp
+                             go-github-com-stretchr-testify
+                             go-github-com-gorilla-i18n
+                             go-github-com-gabriel-vasile-mimetype
+                             go-github-com-boombuler-barcode
+                             go-github-com-adrg-sysfont))
     (home-page "https://github.com/unidoc/unipdf")
     (synopsis #f)
     (description #f)
@@ -588,16 +561,16 @@ provide charting capabilities.")
       #:go go-1.19
       ;; #:install-source? #f
       #:import-path "github.com/juruen/rmapi"))
-    (propagated-inputs `(("go-github-com-google-shlex" ,go-github-com-google-shlex)
-                         ("go-gopkg-in-yaml-v2" ,go-gopkg-in-yaml-v2)
-                         ("go-golang-org-x-sync" ,go-golang-org-x-sync)
-                         ("go-github-com-unidoc-unipdf-v3" ,go-github-com-unidoc-unipdf-v3)
-                         ("go-github-com-stretchr-testify" ,go-github-com-stretchr-testify)
-                         ("go-github-com-pkg-errors" ,go-github-com-pkg-errors)
-                         ("go-github-com-nfnt-resize" ,go-github-com-nfnt-resize)
-                         ("go-github-com-google-uuid" ,go-github-com-google-uuid)
-                         ("go-github-com-golang-jwt-jwt" ,go-github-com-golang-jwt-jwt)
-                         ("go-github-com-abiosoft-ishell" ,go-github-com-abiosoft-ishell)))
+    (propagated-inputs (list go-github-com-google-shlex
+                         go-gopkg-in-yaml-v2
+                         go-golang-org-x-sync
+                         go-github-com-unidoc-unipdf-v3
+                         go-github-com-stretchr-testify
+                         go-github-com-pkg-errors
+                         go-github-com-nfnt-resize
+                         go-github-com-google-uuid
+                         go-github-com-golang-jwt-jwt
+                         go-github-com-abiosoft-ishell))
     (home-page "https://github.com/juruen/rmapi")
     (synopsis "rMAPI")
     (description
