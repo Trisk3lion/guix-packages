@@ -22,20 +22,19 @@
    string
    "Path to the calibre library which includes the calibre db.")
   (url-prefix
-   maybe-string
+   (maybe-string)
    "Serve all URL's prefixed by url-prefix.")
   (user
-   string
+   (string)
    "User name for the user that should run the server. Should be the same user that owns the files in calibre library folder.")
   (group
-   string
-   "Group name for the group that should run the server. Should be the same group that owns the files in calibre library folder."
-   empty-serializer)
+   (string)
+   "Group name for the group that should run the server. Should be the same group that owns the files in calibre library folder.")
   (enable-auth
    (boolean #f)
    "Enable password basedauthentication to the server.")
   (trusted-ips
-   maybe-string
+   (maybe-string)
    "Allow un-authenticated connections from specific IP addresses to make changes.
 Should be a comma separated list of address or network specifications.")
   (pid-file
