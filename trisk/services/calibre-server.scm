@@ -19,22 +19,22 @@
    (file-like calibre)
    "Calibre package to use for the Calibre Content Server")
   (library-path
-   (string)
+   (string "/mnt/storage/books")
    "Path to the calibre library which includes the calibre db.")
   (url-prefix
-   (maybe-string)
+   (maybe-string #f)
    "Serve all URL's prefixed by url-prefix.")
   (user
-   (string)
+   (string "calibre")
    "User name for the user that should run the server. Should be the same user that owns the files in calibre library folder.")
   (group
-   (string)
+   (string "calibre")
    "Group name for the group that should run the server. Should be the same group that owns the files in calibre library folder.")
   (enable-auth
    (boolean #f)
    "Enable password basedauthentication to the server.")
   (trusted-ips
-   (maybe-string)
+   (maybe-string #f)
    "Allow un-authenticated connections from specific IP addresses to make changes.
 Should be a comma separated list of address or network specifications.")
   (pid-file
