@@ -71,7 +71,7 @@ when needed.")
              (commit commit)))
        (sha256
         (base32
-         "0z5azrxm4qd8dccz7hx2gnnw4wgig1n8x1jqv3bi9zack8q1wyfk"))))
+         "0p79ahqw78gbkirhci9jlgxwpm07sh3h5fl1llyxq96wyix3f9pb"))))
      (build-system gnu-build-system)
      (arguments
       (list
