@@ -13,7 +13,7 @@
 
 (define-public go-github-com-google-go-cmp-cmp-0-6
   (package
-    (name "go-github-com-google-go-cmp-cmp")
+    (name "go-github-com-google-go-cmp-cmp-0-6")
     (version "0.6.0")
     (source
      (origin
