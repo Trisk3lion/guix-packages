@@ -76,5 +76,8 @@ build-mermaid: trisk/packages/mermaid.scm
 build-guile-lsp: trisk/packages/mermaid.scm
 	guix build --load-path=. guile-lsp-server
 
+build-ciopfs: trisk/packages/ciopfs.scm
+	guix build --load-path=. ciopfs
+
 update:
 	emacs --script update-packages.el
