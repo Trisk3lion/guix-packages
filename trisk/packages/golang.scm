@@ -11,39 +11,6 @@
   #:use-module (gnu packages golang-build)
   #:use-module (gnu packages golang-check))
 
-(define-public go-github-com-google-go-cmp-cmp-0-6
-  (package
-    (name "go-github-com-google-go-cmp-cmp-0-6")
-    (version "0.6.0")
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url "https://github.com/google/go-cmp")
-             (commit (string-append "v" version))))
-       (file-name (git-file-name name version))
-       (sha256
-        (base32 "1n1j4hi50bl05pyys4i7y417k9g6k1blslj27z327qny7kkdl2ma"))))
-    (build-system go-build-system)
-    (arguments
-     '(#:import-path "github.com/google/go-cmp/cmp"
-       #:unpack-path "github.com/google/go-cmp"
-       #:phases
-       (modify-phases %standard-phases
-         (replace 'check
-           (lambda* (#:key inputs #:allow-other-keys #:rest args)
-             (unless
-                 ;; The tests fail when run with gccgo.
-                 (false-if-exception (search-input-file inputs "/bin/gccgo"))
-               (apply (assoc-ref %standard-phases 'check) args)))))))
-    (home-page "https://github.com/google/go-cmp")
-    (synopsis "Package for equality of Go values")
-    (description
-     "This package is intended to be a more powerful and safer alternative to
-@@code{reflect.@code{DeepEqual}} for comparing whether two values are
-semantically equal.")
-    (license license:bsd-3)))
-
 (define-public go-golang-org-x-telemetry
   (package
     (name "go-golang-org-x-telemetry")
@@ -139,7 +106,7 @@ toolchain programs with opt-in telemetry.")
            go-golang-org-x-mod
            go-github-com-jba-templatecheck
            go-github-com-sergi-go-diff
-           go-github-com-google-go-cmp-cmp-0-6))
+           go-github-com-google-go-cmp))
     (home-page "https://golang.org/x/tools/gopls")
     (synopsis ", the Go language server")
     (description

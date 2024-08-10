@@ -348,7 +348,7 @@ free to implement mocks and testing over filesystem operations.")
            go-github-com-kevinburke-ssh-config
            go-github-com-jessevdk-go-flags
            go-github-com-jbenet-go-context
-           go-github-com-google-go-cmp-cmp
+           go-github-com-google-go-cmp
            go-github-com-gliderlabs-ssh
            go-github-com-emirpasic-gods
            go-github-com-armon-go-socks5))
@@ -378,7 +378,7 @@ free to implement mocks and testing over filesystem operations.")
       #:unpack-path "gotest.tools/v3"))
     (propagated-inputs
      (list go-golang-org-x-tools
-           go-github-com-google-go-cmp-cmp))
+           go-github-com-google-go-cmp))
     (home-page "https://gotest.tools/v3")
     (synopsis "gotest.tools")
     (description
