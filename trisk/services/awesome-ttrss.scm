@@ -64,7 +64,8 @@
    (string "3000")
    "The port where awesome-ttrss will be exposed.")
   (postgres-datadir
-   (string "/var/lib/postgresql/data"))
+   (string "/var/lib/postgresql/data")
+  "Data directory for postgres")
   (db-name
    (string "ttrss")
    "Postgres database name.")
