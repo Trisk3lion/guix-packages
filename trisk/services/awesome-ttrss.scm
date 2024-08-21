@@ -144,7 +144,7 @@
            (volumes
             '(("/etc/timezone" . "/etc/timezone:ro")
               ("/etc/localtime" . "/etc/localtime:ro")))
-           (networks "ttrss"))
+           (network "ttrss"))
           (oci-container-configuration
            (image postgres-image)
            (provision "database.postgres")
@@ -154,11 +154,11 @@
             `((,datadir . "/var/lib/postgresql/data")
               ("/etc/timezone" . "/etc/timezone:ro")
               ("/etc/localtime" . "/etc/localtime:ro")))
-           (networks "ttrss"))
+           (network "ttrss"))
           (oci-container-configuration
            (image %mercury-image)
            (provision "service.mercury")
-           (networks "ttrss")))))
+           (network "ttrss")))))
 
 (define oci-awesome-ttrss-service-type
   (service-type
