@@ -56,5 +56,3 @@
                                      (symlink (string-append lib "/docker-compose")
                                               (string-append bin "/docker-compose"))))))))
    (supported-systems '("armhf-linux" "aarch64-linux" "x86_64-linux"))))
-
-docker-compose-plugin
