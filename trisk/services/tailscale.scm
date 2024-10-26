@@ -233,7 +233,7 @@ to #f.")
 
 
 (define tailscale-up-shepherd-service
-  (match-record-lambda <tailscale--upconfiguration>
+  (match-record-lambda <tailscale-up-configuration>
       (tailscale ssh? subroutes? exit-node? auth-key?
                  socket login-server extra-options log-file)
     (list (shepherd-service
