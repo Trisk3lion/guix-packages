@@ -266,7 +266,7 @@ to #f.")
 (define tailescale-up-service-type
   (service-type
    (name 'tailscale-up)
-   (extension
+   (extensions
     (list (service-extension shepherd-root-service-type
                              tailscale-up-shepherd-service)))
    (default-value (tailscale-up-configuration))
