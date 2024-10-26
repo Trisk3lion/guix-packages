@@ -2,16 +2,19 @@
   #:use-module (guix packages)
   #:use-module (gnu packages linux)
   #:use-module (guix gexp)
+  #:use-module (guix utils)
   #:use-module (guix build-system copy)
+  #:use-module (guix build-system go)
   #:use-module (guix download)
+  #:use-module (guix git-download)
+  #:use-module (gnu packages golang)
   #:use-module (trisk utils go-fetch-vendored)
-  #:use-module (guix licenses))
-
+  #:use-module ((guix licenses) #:prefix license:))
 
 (define-public tailscale-vendored
   (let ((version "1.74.1"))
     (package
-      (name "tailscale")
+      (name "tailscale-vendored")
       (version version)
       (source (origin
                 (method go-fetch-vendored)
@@ -40,9 +43,9 @@
   (let ((import-path "tailscale.com/cmd/tailscaled"))
     (package
       (inherit tailscale-vendored)
-      (name "tailscaled")
+      (name "tailscaled-vendored")
       (arguments
-       (substitute-keyword-arguments (package-arguments tailscale)
+       (substitute-keyword-arguments (package-arguments tailscale-vendored)
          ((#:import-path _ #f)
           import-path)
          ((#:phases phases #~%standard-phases)
@@ -62,58 +65,92 @@
       (synopsis "Tailscale daemon")
       (description "Tailscale daemon"))))
 
-(define* (tailscale-base #:key arch hash)
+
+(define-public tailscale-amd64-bin
   (package
-    (name (string-append "tailscale-" arch "-bin"))
-    (version "1.64.0")
-    (source
-     (origin
-       (method url-fetch/tarbomb)
-       (uri (string-append "https://pkgs.tailscale.com/stable/tailscale_"
-                           version "_" arch ".tgz"))
-       (sha256
-        (base32 hash))))
+    (name "tailscale-amd64-bin")
+    (version "1.76.1")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://pkgs.tailscale.com/stable/tailscale_"
+                                  version "_amd64.tgz"))
+              (sha256
+               (base32 "0dk0p4jc91p6c1jg944ljvanj85r3szjs6zl4xh71anq20vlj4bb"))))
     (build-system copy-build-system)
     (arguments
      (list
-      #:install-plan #~`((,(string-append "tailscale_"
-                                          #$version "_"
-                                          #$arch "/tailscaled") "sbin/")
-                         (,(string-append "tailscale_"
-                                          #$version "_"
-                                          #$arch "/tailscale") "bin/"))
-      ;; #:phases #~(modify-phases %standard-phases
-      ;;              (add-after 'install 'wrap-binary
-      ;;                (lambda* (#:key inputs outputs #:allow-other-keys)
-      ;;                  (wrap-program (string-append (assoc-ref outputs "out")
-      ;;                                               "/sbin/tailscaled")
-      ;;                    `("PATH" ":" prefix
-      ;;                      (,(dirname (search-input-file inputs
-      ;;                                                    "/sbin/iptables")) ,(dirname
-      ;;                                                                         (search-input-file
-      ;;                                                                          inputs
-      ;;                                                                          "/sbin/ip"))))))))
-      ))
-    ;; (inputs (list iproute iptables))
-    (synopsis
-     "Tailscale connects your team's devices and development environments for easy access to remote resources.")
-    (description
-     "Tailscale is a zero config VPN for building secure networks. Install on any device in minutes. Remote access from any network or physical location.")
-    (home-page "https://tailscale.com/")
-    ;; (supported-systems '("x86_64-linux"))
-    (license #f)))
+       #:install-plan
+       #~'(("tailscaled" "sbin/")
+           ("tailscale" "bin/"))
+       #:phases
+       #~(modify-phases %standard-phases
+           (add-after 'install 'wrap-binary
+             (lambda* (#:key inputs outputs #:allow-other-keys)
+               (wrap-program
+                 (string-append (assoc-ref outputs "out") "/sbin/tailscaled")
+                 `("PATH" ":" prefix (,(dirname (search-input-file
+                                                  inputs "/sbin/iptables"))
+                                      ,(dirname (search-input-file
+                                                  inputs "/sbin/ip")))))))
+           (add-after 'install 'install-shell-completions
+             (lambda* (#:key outputs #:allow-other-keys)
+               (let* ((out #$output)
+                      (tailscale (string-append out "/bin/tailscale"))
+                      (share (string-append out "/share"))
+                      (bash (string-append out "/etc/bash_completion.d/tailscale"))
+                      )
+                 (mkdir-p (dirname bash))
+                 (with-output-to-file bash
+                   (lambda ()
+                     (invoke tailscale "completion" "bash")))))))))
+    (inputs (list iproute iptables))
+    (home-page "https://github.com/tailscale/tailscale")
+    (synopsis "Tailscale VPN client")
+    (description "Tailscale lets you easily manage access to private resources,
+quickly SSH into devices on your network, and work securely from anywhere in
+the world.")
+    ;(properties
+    ; `(;(hidden? . #t)
+    ;   (release-monitoring-url . "https://github.com/tailscale/tailscale/releases")
+    ;   (upstream-name . "tailscale")))
+    (supported-systems '("x86_64-linux"))
+    (license license:bsd-3)))
 
-(define-public tailscale-amd64-bin
-  (tailscale-base #:arch "amd64"
-                  #:hash
-                  "1kvdzgyjgp6sd2wxhq99xfsp66pb4gj7m672d477w9x2a77ds7m8"))
+(define-public tailscale-386-bin
+  (package
+    (inherit tailscale-amd64-bin)
+    (name "tailscale-bin-386")
+    (version "1.76.1")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://pkgs.tailscale.com/stable/tailscale_"
+                                  version "_386.tgz"))
+              (sha256
+               (base32 "0ihnmha6vg8a2bss7dxyp78c1wrcpdz2hv87hsph2spk7fvn8167"))))
+    (supported-systems '("i686-linux"))))
 
 (define-public tailscale-arm-bin
-  (tailscale-base #:arch "arm"
-                  #:hash
-                  "15ahjl45091mwjf3465lyx556wmdiws76dk3dz54a684f132a3zl"))
+  (package
+    (inherit tailscale-amd64-bin)
+    (name "tailscale-bin-arm")
+    (version "1.76.1")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://pkgs.tailscale.com/stable/tailscale_"
+                                  version "_arm.tgz"))
+              (sha256
+               (base32 "10asp7r1h6ipsb7gn4570v2ydal137hdachpygvha5jqkzhxj40m"))))
+    (supported-systems '("armhf-linux"))))
 
 (define-public tailscale-arm64-bin
-  (tailscale-base #:arch "arm64"
-                  #:hash
-                  "06qml88zw4m7v9aqm0pz46y6aqibhxfl4k5g2ljwsyr9s8z6h0xl"))
+  (package
+    (inherit tailscale-amd64-bin)
+    (name "tailscale-bin-arm64")
+    (version "1.76.1")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://pkgs.tailscale.com/stable/tailscale_"
+                                  version "_arm64.tgz"))
+              (sha256
+               (base32 "06036495pymqyv0ppsnw512c5f2k21s9n7fvjqfm2mcswkrn0drz"))))
+    (supported-systems '("aarch64-linux"))))

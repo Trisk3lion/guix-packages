@@ -6,10 +6,13 @@
   #:use-module (gnu packages linux)
   #:use-module (guix records)
   #:use-module (guix gexp)
+  #:use-module (guix store)
   #:use-module (ice-9 match)
   #:use-module (trisk packages tailscale)
   #:export (tailscaled-service-type
-            tailscaled-configuration)
+            tailscaled-configuration
+            tailescale-up-service-type
+            tailescale-up-configuration)
   )
 
 ;; Taken from https://git.sr.ht/~efraim/my-guix/tree/master/item/dfsg/contrib/services/tailscale.scm
@@ -190,36 +193,77 @@ to #f.")
    (description "Run tailscaled.")))
 
 
-(define tailscale-shepherd-service
-  ;; (match-record-lambda <tailscale-configuration>
-  ;;     (tailscale iptables log-file socket state-directory
-  ;;                upload-log? verbosity extra-options)
-  (list (shepherd-service
-         (documentation "Run tailscale up")
-         (provision '(tailscale))
-         (requirement '(tailscaled))
-         (one-shot? #t)
-         (start #~(make-forkexec-constructor
-                   (list
-                    #$(file-append tailscale "/bin/tailscale")
-                    "up"
-                    #$@(if ssh?
-                           '()
-                           '("--ssh"))
-                    #$@(if subroutes?
-                           '()
-                           '("--accept-routes"))
-                    #$@(if exit-node?
-                           '()
-                           '("--advertise-exit-node"))
-                    #$@(if authkey?
-                           '()
-                           '("--authkey" #$authkey))
-                    #$@extra-options)
-                   #:log-file #$log-file))
-         (stop #~(const #f)))))
+(define-configuration tailscale-up-configuration
+  (tailscale
+   (file-like tailscale-amd64-bin)
+   "The tailscale package to use.")
 
-(define tailescal-up-service-type
+  (ssh?
+   (boolean #f)
+   "Accept ssh connnections over tailscale?")
+
+  (subroutes?
+   (boolean #f)
+   "Accept advertised subroutes?")
+
+  (exit-node?
+   (boolean #f)
+   "Advertise this node as an exit node?")
+
+  (auth-key?
+   maybe-string
+   "Authkey used for connection to your tailscale account")
+
+  (login-server
+   (string "https://controlplane.tailscale.com")
+   "Base URL of control server")
+
+  (socket
+   (string "/run/tailscale/tailscaled.sock")
+   "Path of the service UNIX socket.")
+
+  (log-file
+   (string "/var/log/tailscaled.log")
+   "Path to log file.")
+
+  (extra-options
+   (list-of-strings '())
+   "List of extra options.")
+  (no-serialization))
+
+
+(define tailscale-up-shepherd-service
+  (match-record-lambda <tailscale--upconfiguration>
+      (tailscale ssh? subroutes? exit-node? auth-key?
+                 socket login-server extra-options log-file)
+    (list (shepherd-service
+           (documentation "Run tailscale up")
+           (provision '(tailscale))
+           (requirement '(tailscaled))
+           (one-shot? #t)
+           (start #~(make-forkexec-constructor
+                     (list
+                      #$(file-append tailscale "/bin/tailscale")
+                      "up"
+                      #$@(if ssh?
+                             '()
+                             '("--ssh"))
+                      #$@(if subroutes?
+                             '()
+                             '("--accept-routes"))
+                      #$@(if exit-node?
+                             '()
+                             '("--advertise-exit-node"))
+                      #$@(if authkey?
+                             '()
+                             '("--authkey" #$authkey))
+                      "--login-server" #$login-server
+                      "--socket" #$socket
+                      #$@extra-options)
+                     #:log-file #$log-file))
+           (stop #~(const #f))))))
+
+(define tailescale-up-service-type
   (service-type
    (name 'tailscale-up)
    (extension

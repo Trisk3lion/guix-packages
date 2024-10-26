@@ -1,5 +1,6 @@
 (define-module (trisk utils go-fetch-vendored)
   #:use-module ((guix licenses) #:prefix license:)
+  #:use-module (gnu)
   #:use-module (guix utils)
   #:use-module (guix gexp)
   #:use-module (guix download)
@@ -12,11 +13,10 @@
   #:use-module (gnu packages certs)
   #:use-module (gnu packages compression)
   #:use-module (gnu packages base)
-  #:use-module (gnu)
   #:use-module (gnu services shepherd)
   #:export (go-git-reference
             go-url-reference
-            go fetch-vendored))
+            go-fetch-vendored))
 
 (define-record-type* <go-git-reference>
   go-git-reference make-go-git-reference
