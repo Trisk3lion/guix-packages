@@ -11,22 +11,7 @@
   #:use-module (ice-9 match)
   #:use-module (ice-9 string-fun)
   #:export (awesome-ttrss-configuration
-            awesome-ttrss-configuration?
-            awesome-ttrss-configuration-fields
-            awesome-ttrss-configuration-uid
-            awesome-ttrss-configuration-gid
-            awesome-ttrss-configuration-ttrss-image
-            awesome-ttrss-configuration-postgres-image
-            awesome-ttrss-configuration-db-name
-            awesome-ttrss-configuration-db-user
-            awesome-ttrss-configuration-db-pass
-            awesome-ttrss-configuration-port
-            awesome-ttrss-configuration-postgres-datadir
-            awesome-ttrss-configuration-ttrss-plugins
-            %awesome-ttrss-accounts
-            %awesome-ttrss-activation
-            awesome-ttrss-configuration->oci-container-configuration
-            oci-awesome-ttrss-service-type))
+            awesome-ttrss-service-type))
 
 ;; Some of this code comes from the Guix manual.
 ;; Check it out! It's pretty cool.
@@ -110,9 +95,10 @@
               (gid #$gid)
               (uid #$uid))
           ;; Setup datadir
-          (mkdir-p datadir)
-          (chown datadir uid gid)
-          (chmod datadir #o770)
+          (unless (file-exists? datadir)
+            (mkdir-p datadir)
+            (chown datadir uid gid)
+            (chmod datadir #o770))
           ;; Create docker network
           (invoke #$docker "network" "create" "ttrss")))))
 
@@ -160,7 +146,7 @@
            (provision "service.mercury")
            (network "ttrss")))))
 
-(define oci-awesome-ttrss-service-type
+(define awesome-ttrss-service-type
   (service-type
    (name 'awesome-ttrss)
    (extensions (list (service-extension oci-container-service-type
@@ -170,4 +156,4 @@
                      (service-extension activation-service-type
                                         %awesome-ttrss-activation)))
    (default-value (awesome-ttrss-configuration))
-   (description "This service install a OCI backed Forgejo Shepherd Service.")))
+   (description "This service install a OCI backed Awesome-TTRSS Shepard Service.")))
