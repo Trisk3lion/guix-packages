@@ -79,5 +79,8 @@ build-guile-lsp: trisk/packages/mermaid.scm
 build-ciopfs: trisk/packages/ciopfs.scm
 	guix build --load-path=. ciopfs
 
+build-tailscale-vendored: trisk/packages/tailscale.scm
+	guix build --load-path=. tailscale-vendored
+
 update:
 	emacs --script update-packages.el

@@ -33,7 +33,7 @@
    "Group name for the group that should run the server. Should be the same group that owns the files in calibre library folder.")
   (enable-auth
    (boolean #f)
-   "Enable password basedauthentication to the server.")
+   "Enable password based authentication to the server.")
   (trusted-ips
    maybe-string
    "Allow un-authenticated connections from specific IP addresses to make changes.
@@ -44,6 +44,34 @@ Should be a comma separated list of address or network specifications.")
   (log-file
    (string "/var/log/calibre-server.log")
    "Path to the log file"))
+
+(define (calibre-server-accounts config)
+  (list (user-group
+         (system? #t)
+         (name "calibre"))
+        (user-account
+         (name "calibre")
+         (comment "Calibre Server Service Account")
+         (group "calibre")
+         (supplementary-groups '("tty"))
+         (system? #t)
+         (home-directory "/var/empty")
+         (shell (file-append shadow "/sbin/nologin")))))
+
+(define (calibre-server-activation config)
+  (match-record config <calibre-server-configuration>
+      (user group library-path)
+  #~(begin
+        (use-modules (guix build utils)
+        (let ((user (getpwnam "calibre"))
+              (uid (passwd:uid user))
+              (gid (passwd:gid user))
+              (dir #$library-path))
+          ;; Setup datadir
+          (unless (file-exists? dir)
+            (mkdir-p dir)
+            (chown datadir uid gid)
+            (chmod datadir #o770)))))))
 
 (define (calibre-server-shepherd-service config)
   (match-record config <calibre-server-configuration>
@@ -61,7 +89,7 @@ Should be a comma separated list of address or network specifications.")
                            #$@(if enable-auth
                                   '("--enable-auth")
                                   '())
-                           #$@(if trusted-ips
+                           #$@(if (maybe-value-set? trusted-ips)
                                   '("--trusted-ips" trusted-ips)
                                   '())
 			   "--daemonize"
@@ -80,10 +108,14 @@ Should be a comma separated list of address or network specifications.")
 (define calibre-server-service-type
   (service-type
    (name 'calibre-server)
-   (description "Calire Content Server")
-   (default-value (calibre-server-configuration))
+   (description "Calibre Content Server")
    (extensions
     (list (service-extension shepherd-root-service-type
 			     calibre-server-shepherd-service)
+          (service-extension account-service-type
+                             calibre-server-accounts)
+          (service-extension activation-service-type
+                             calibre-server-activation)
           (service-extension rottlog-service-type
-                             calibre-server-log-rotations)))))
+                             calibre-server-log-rotations)))
+   (default-value (calibre-server-configuration))))
