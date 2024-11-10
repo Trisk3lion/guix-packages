@@ -38,8 +38,8 @@
               (list
                #$(file-append
                   (home-goimapnotify-configuration-goimapnotify config)
-                  "/bin/goimapnotify"
-                  "-conf" "~/.config/goimapnotify/goimapnotify.conf"))
+                  "/bin/goimapnotify")
+               "-conf" "~/.config/goimapnotify/goimapnotify.conf")
               #:log-file (string-append
                           (getenv "XDG_STATE_HOME") "/log"
                           "/goimapnotify.log")))
