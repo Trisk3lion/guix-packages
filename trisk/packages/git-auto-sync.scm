@@ -335,7 +335,7 @@ free to implement mocks and testing over filesystem operations.")
       #:import-path "gopkg.in/src-d/go-git.v4"
       #:unpack-path "gopkg.in/src-d/go-git.v4"))
     (propagated-inputs
-     (list go-github-com-go-git-go-git-fixtures
+     (list go-github-com-go-git-go-git-fixtures-v4
            go-gopkg-in-src-d-go-billy-v4
            go-gopkg-in-check-v1
            go-golang-org-x-text
