@@ -94,7 +94,7 @@
 
 (define-maybe/no-serialization string)
 
-(define-configuration tailscale-configuration
+(define-configuration tailscaled-configuration
   (tailscale
    (file-like tailscale-amd64-bin)
    "The tailscale package to use.")
