@@ -137,17 +137,17 @@ to #f.")
   (with-imported-modules '((guix build utils))
     #~(begin
         (use-modules (guix build utils))
-        (mkdir-p (dirname #$(tailscale-configuration-state-directory config)))
-        (mkdir-p (dirname #$(tailscale-configuration-socket config)))
-        (system* #$(file-append (tailscale-configuration-tailscale config)
+        (mkdir-p (dirname #$(tailscaled-configuration-state-directory config)))
+        (mkdir-p (dirname #$(tailscaled-configuration-socket config)))
+        (system* #$(file-append (tailscaled-configuration-tailscale config)
                                 "/sbin/tailscaled") "--cleanup"))))
 
 (define (tailscale-log-rotations config)
   (list (log-rotation
-         (files (list (tailscale-configuration-log-file config))))))
+         (files (list (tailscaled-configuration-log-file config))))))
 
 (define tailscaled-shepherd-service
-  (match-record-lambda <tailscale-configuration>
+  (match-record-lambda <tailscaled-configuration>
       (tailscale iptables log-file socket state-directory
                  upload-log? verbosity extra-options)
     (let ((environment
@@ -186,10 +186,10 @@ to #f.")
           (service-extension activation-service-type
                              tailscaled-activation)
           (service-extension profile-service-type
-                             (compose list tailscale-configuration-tailscale))
+                             (compose list tailscaled-configuration-tailscale))
           (service-extension rottlog-service-type
                              tailscale-log-rotations)))
-   (default-value (tailscale-configuration))
+   (default-value (tailscaled-configuration))
    (description "Run tailscaled.")))
 
 
