@@ -166,9 +166,6 @@ to #f.")
                         #$@(if upload-log?
                                '()
                                '("-no-logs-no-support"))
-                        #$@(if authkey
-                               '()
-                               '("--authkey" #$authkey))
                         "-socket" #$socket
                         "-statedir" #$state-directory
                         "-verbose" #$(number->string verbosity)
