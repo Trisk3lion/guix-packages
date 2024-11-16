@@ -96,7 +96,7 @@
 
 (define (miniflux-postgresql-role config)
   (list (postgresql-role
-	 (name (miniflux-configuration-user config))
+	 (name "miniflux")
          (create-database? #t))))
 
 (define miniflux-service-type

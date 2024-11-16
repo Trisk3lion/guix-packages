@@ -146,7 +146,7 @@ to #f.")
   (list (log-rotation
          (files (list (tailscale-configuration-log-file config))))))
 
-(define tailscale-shepherd-service
+(define tailscaled-shepherd-service
   (match-record-lambda <tailscale-configuration>
       (tailscale iptables log-file socket state-directory
                  upload-log? verbosity extra-options)
@@ -177,12 +177,12 @@ to #f.")
                        #:log-file #$log-file))
              (stop #~(make-kill-destructor)))))))
 
-(define tailscale-service-type
+(define tailscaled-service-type
   (service-type
    (name 'tailscaled)
    (extensions
     (list (service-extension shepherd-root-service-type
-                             tailscale-shepherd-service)
+                             tailscaled-shepherd-service)
           (service-extension activation-service-type
                              tailscaled-activation)
           (service-extension profile-service-type
