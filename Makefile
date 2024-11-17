@@ -82,5 +82,11 @@ build-ciopfs: trisk/packages/ciopfs.scm
 build-tailscale-vendored: trisk/packages/tailscale.scm
 	guix build --load-path=. tailscale-vendored
 
+build-squeezelite: trisk/packages/audio.scm
+	guix build --load-path=. squeezelite
+
+build-squeezelite-pulse: trisk/packages/audio.scm
+	guix build --load-path=. squeezelite-pulse
+
 update:
 	emacs --script update-packages.el
