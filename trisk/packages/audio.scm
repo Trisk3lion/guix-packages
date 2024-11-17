@@ -36,15 +36,18 @@
       #~(list (string-append "PREFIX=" #$output)
               (string-append "CC=" #$(cc-for-target)))
       #:configure-flags #~(list "-DLINKALL" "-DGPIO" "-DFFMPEG" "-DUSE_SSL" "-DDSD" "-DRESAMPLE"
-                                ;; "-DOPUS"
+                                "-DOPUS"
                                 )
       #:phases
-      ;; install -Dm444 -t $out/share/doc/squeezelite *.txt *.md
       #~(modify-phases %standard-phases
           (replace 'configure
             (lambda* (#:key inputs parallel-build? configure-flags
                       #:allow-other-keys)
               (setenv "OPTS" (string-join configure-flags))))
+          (add-before 'build 'adjust-opus
+            (lambda _
+              (substitute* "opus.c"
+                (("<opusfile.h>") "<opus/opusfile.h>"))))
           (replace 'install
             (lambda* (#:key outputs #:allow-other-keys)
               (let* ((out (assoc-ref outputs "out")))
@@ -64,12 +67,12 @@
     (name "squeezelite-pulse")
     (arguments
      (substitute-keyword-arguments (package-arguments squeezelite)
-       ((#:configure-flags flags) #~(cons* "-DPULSEAUDIO" #$flags))
-       ;; ((#:phases phases #~(modify-phases #$phases
+       ((#:configure-flags flags) #~(cons* "-DPULSEAUDIO" #$flags)))
+       ;; ((#:phases phases) #~(modify-phases #$phases
        ;;                       (replace 'install
        ;;                         (lambda* (#:key outputs #:allow-other-keys)
-       ;;                           (let* ((out (assoc-ref outputs "out")))
-       ;;                             (install-file #$name (string-append out "/bin")))
-       ;;                           #t)))))
-       ))
+       ;;                           (let ((out (assoc-ref outputs "out")))
+       ;;                             (install-file "squeezelite" (string-append out "/bin/" #$name)))
+       ;;                           #t))))
+       )
     (native-inputs (list flac libmad libvorbis mpg123 alsa-lib faad2 ffmpeg opusfile openssl soxr pulseaudio))))
