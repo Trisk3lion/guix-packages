@@ -51,9 +51,7 @@
           (replace 'install
             (lambda* (#:key outputs #:allow-other-keys)
               (let* ((out (assoc-ref outputs "out")))
-                (install-file #$name (string-append out "/bin"))
-                ;; (copy-recursively "*.[txt|md]" (string-append out "/share/doc/squeezelite"))
-                )
+                (install-file #$name (string-append out "/bin")))
               #t)))))
     (native-inputs (list flac libmad libvorbis mpg123 alsa-lib faad2 ffmpeg opusfile openssl soxr))
     (home-page "https://github.com/ralph-irving/squeezelite")
@@ -67,12 +65,6 @@
     (name "squeezelite-pulse")
     (arguments
      (substitute-keyword-arguments (package-arguments squeezelite)
-       ((#:configure-flags flags) #~(cons* "-DPULSEAUDIO" #$flags)))
-       ;; ((#:phases phases) #~(modify-phases #$phases
-       ;;                       (replace 'install
-       ;;                         (lambda* (#:key outputs #:allow-other-keys)
-       ;;                           (let ((out (assoc-ref outputs "out")))
-       ;;                             (install-file "squeezelite" (string-append out "/bin/" #$name)))
-       ;;                           #t))))
-       )
-    (native-inputs (list flac libmad libvorbis mpg123 alsa-lib faad2 ffmpeg opusfile openssl soxr pulseaudio))))
+       ((#:configure-flags flags) #~(cons* "-DPULSEAUDIO" #$flags))))
+    (native-inputs (list flac libmad libvorbis mpg123 alsa-lib faad2 ffmpeg opusfile openssl soxr pulseaudio))
+    (synopsis "Lightweight headless squeezebox client emulator with pulseaudio support.")))

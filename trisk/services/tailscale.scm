@@ -162,7 +162,7 @@ to #f.")
              (requirement '(user-processes))
              (start #~(make-forkexec-constructor
                        (list
-                        #$(file-append tailscale "/bin/tailscaled")
+                        #$(file-append tailscale "/sbin/tailscaled")
                         #$@(if upload-log?
                                '()
                                '("-no-logs-no-support"))
