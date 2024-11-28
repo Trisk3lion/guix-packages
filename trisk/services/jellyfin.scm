@@ -26,6 +26,8 @@
   (log-file
    (string "/var/log/jellyfin.log")
    "Path to log file.")
+  (requirement
+   (list-of-symbols '()))
   (extra-options
    (list-of-strings '())
    "List of extra options.")
@@ -58,7 +60,7 @@
 
 (define jellyfin-oci-containers
   (match-record-lambda <jellyfin-configuration>
-      (cache-directory config-directory proxy-url log-file extra-options)
+      (cache-directory config-directory proxy-url log-file requirement extra-options)
     (list (oci-container-configuration
            (user "jellyfin")
            (group "docker")
@@ -71,6 +73,7 @@
            (provision "jellyfin")
            (log-file log-file)
            (respawn? #t)
+           (requirement requirement)
            (network "host")
            (volumes
             `((,cache-directory . "/cache")
