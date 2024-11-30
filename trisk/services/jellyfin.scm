@@ -27,7 +27,8 @@
    (string "/var/log/jellyfin.log")
    "Path to log file.")
   (requirement
-   (list-of-symbols '()))
+   (list-of-symbols '())
+   "List of symbols for other shepherd services which we require.")
   (extra-options
    (list-of-strings '())
    "List of extra options.")
