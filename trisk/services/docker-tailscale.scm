@@ -56,6 +56,7 @@
     (list (log-rotation
            (files (list log-file))))))
 
+;; Check out `transmission-daemon-computed-settings-file' for example of transforming config file to json.
 (define docker-tailscale-activation
   (match-record-lambda <docker-tailscale-configuration>
       (data-directory config-directory)

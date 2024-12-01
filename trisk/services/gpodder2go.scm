@@ -10,7 +10,7 @@
   #:use-module (gnu services databases)
   #:use-module (gnu packages web)
   #:use-module (ice-9 string-fun)
-  #:use-module (trisk packages golang)
+  #:use-module (trisk packages gpodder)
   #:export (gpodder2go-service-type
 	    gpodder2go-configuration
 	    gpodder2go-configuration?))
