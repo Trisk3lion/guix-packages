@@ -49,7 +49,6 @@
     (list (shepherd-service
            (documentation "Run squeezelite")
            (provision '(squeezelite))
-           (requirement '(alsa))
            (start #~(make-forkexec-constructor
                      (list #$(file-append squeezelite "/bin/squeezelite")
                            "-o" #$output-device
