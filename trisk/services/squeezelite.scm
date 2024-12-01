@@ -37,10 +37,10 @@
 
 (define squeezelite-shepherd-service config
   (match-record-lambda <squeezelite-configuration>
-      (squeezelite output-device pid-file extra-options)
+      (squeezelite output-device pid-file name extra-options)
     (list (shepherd-service
            (documentation "Run squeezelite")
-           (provision '(sqeezelite))
+           (provision '(squeezelite))
            (requirement '(alsa))
            (start #~(make-forkexec-constructor
                      (list #$(file-append squeezelite "/bin/squeezelite")
@@ -51,8 +51,8 @@
                                   '("-n" #$name))
                            #$@extra-options)
                      #:pid-file #$pid-file
-                     #:log-file "/var/log/squeezelite.log")
-                  (stop #~(make-kill-destructor)))))))
+                     #:log-file "/var/log/squeezelite.log"))
+           (stop #~(make-kill-destructor))))))
 
 (define squeezelite-service-type
   (service-type
