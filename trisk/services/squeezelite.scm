@@ -42,7 +42,7 @@
     (list (log-rotation
            (files (list log-file))))))
 
-(define squeezelite-shepherd-service config
+(define squeezelite-shepherd-service
   (match-record-lambda <squeezelite-configuration>
       (squeezelite output-device pid-file name? log-file extra-options)
     (list (shepherd-service
