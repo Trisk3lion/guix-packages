@@ -7,8 +7,6 @@
   #:use-module (guix records)
   #:use-module (gnu packages admin)
   #:use-module (gnu packages web)
-  #:use-module (gnu services databases)
-  #:use-module (gnu packages web)
   #:use-module (trisk packages audio)
   #:use-module (ice-9 string-fun)
   #:export (squeezelite-service-type
@@ -46,7 +44,7 @@
 
 (define squeezelite-shepherd-service config
   (match-record-lambda <squeezelite-configuration>
-      (squeezelite output-device pid-file name log-file extra-options)
+      (squeezelite output-device pid-file name? log-file extra-options)
     (list (shepherd-service
            (documentation "Run squeezelite")
            (provision '(squeezelite))
@@ -55,9 +53,9 @@
                      (list #$(file-append squeezelite "/bin/squeezelite")
                            "-o" #$output-device
                            "-P" #$pid-file
-                           #$@(if (maybe-value-set? name)
-                                  '()
-                                  '("-n" #$name))
+                           #$@(if (maybe-value-set? name?)
+                                  '("-n" #$name?)
+                                  '())
                            #$@extra-options)
                      #:pid-file #$pid-file
                      #:log-file #$log-file))
