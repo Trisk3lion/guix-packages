@@ -64,6 +64,8 @@
 (define squeezelite-service-type
   (service-type
    (name 'squeezelite)
+   (description "Squeezelite service")
+   (default-value (squeezelite-configuration))
    (extensions
     (list (service-extension shepherd-root-service-type
                              squeezelite-shepherd-service)
