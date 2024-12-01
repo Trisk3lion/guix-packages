@@ -85,7 +85,8 @@
            (respawn? #t)
            (requirement requirement)
            (volumes
-            `((,data-directory . "/data")
+            `(("/var/run/docker.sock" . "/var/run/docker.sock")
+              (,data-directory . "/data")
               (,config-directory . "/config")))
            (extra-arguments extra-options)))))
 
