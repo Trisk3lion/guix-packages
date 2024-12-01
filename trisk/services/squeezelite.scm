@@ -27,6 +27,9 @@
   (pid-file
    (string "/var/run/squeezelite.pid")
    "Pid-file")
+  (log-file
+   (string "/var/log/squeezelite.log")
+   "Log file path.")
   (name?
    maybe-string
    "Name of the squeezelite instance.")
@@ -35,9 +38,15 @@
    "List of extra options.")
   (no-serialization))
 
+(define squeezelite-log-rotations
+  (match-record-lambda <squeezelite-configuration>
+      (log-file)
+    (list (log-rotation
+           (files (list log-file))))))
+
 (define squeezelite-shepherd-service config
   (match-record-lambda <squeezelite-configuration>
-      (squeezelite output-device pid-file name extra-options)
+      (squeezelite output-device pid-file name log-file extra-options)
     (list (shepherd-service
            (documentation "Run squeezelite")
            (provision '(squeezelite))
@@ -46,12 +55,12 @@
                      (list #$(file-append squeezelite "/bin/squeezelite")
                            "-o" #$output-device
                            "-P" #$pid-file
-                           #$@(if (maybe-value-set? name?)
+                           #$@(if (maybe-value-set? name)
                                   '()
                                   '("-n" #$name))
                            #$@extra-options)
                      #:pid-file #$pid-file
-                     #:log-file "/var/log/squeezelite.log"))
+                     #:log-file #$log-file))
            (stop #~(make-kill-destructor))))))
 
 (define squeezelite-service-type
@@ -59,4 +68,6 @@
    (name 'squeezelite)
    (extensions
     (list (service-extension shepherd-root-service-type
-                             squeezelite-shepherd-service)))))
+                             squeezelite-shepherd-service)
+          (service-extension rottlog-service-type
+                             squeezelite-log-rotations)))))
