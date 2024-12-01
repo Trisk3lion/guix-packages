@@ -68,7 +68,7 @@ build-rcu: trisk/packages/ebook.scm
 	guix build --load-path=. rcu
 
 build-rmapi: trisk/packages/remarkable.scm
-	guix build --load-path=. go-github-com-juruen-rmapi
+	guix build --load-path=. rmapi
 
 build-mermaid: trisk/packages/mermaid.scm
 	guix build --load-path=. node-mermaid-js-mermaid-cli
