@@ -70,12 +70,12 @@
 
 (define docker-tailscale-oci-containers
   (match-record-lambda <docker-tailscale-configuration>
-      (docker-image data-directory config-directory server-hostname control-url log-file requirement extra-options)
+      (docker-image data-directory auth-key config-directory server-hostname control-url log-file requirement extra-options)
     (list (oci-container-configuration
            (user "docker-tailscale")
            (group "docker")
            (environment
-            `(("TSDPROXY_AUTHKEY" . ,authkey)
+            `(("TSDPROXY_AUTHKEY" . ,auth-key)
               ("TSDPROXY_HOSTNAME" . ,server-hostname)
               ("TSDPROXY_CONTROLURL" . ,control-url)
               ("TSDPROXY_DATADIR" . "/data/")
