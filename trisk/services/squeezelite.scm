@@ -29,7 +29,7 @@
   (log-file
    (string "/var/log/squeezelite.log")
    "Log file path.")
-  (name?
+  (name
    maybe-string
    "Name of the squeezelite instance.")
   (extra-options
@@ -43,23 +43,23 @@
     (list (log-rotation
            (files (list log-file))))))
 
-(define squeezelite-shepherd-service
+(define squeezelite-shepherd-service 
   (match-record-lambda <squeezelite-configuration>
-      (squeezelite output-device pid-file name? log-file extra-options)
-    (list (shepherd-service
-           (documentation "Run squeezelite")
-           (provision '(squeezelite))
-           (start #~(make-forkexec-constructor
-                     (list #$(file-append squeezelite "/bin/squeezelite")
-                           "-o" #$output-device
-                           "-P" #$pid-file
-                           #$@(if (maybe-value-set? name?)
-                                  '("-n" #$name?)
-                                  '())
-                           #$@extra-options)
-                     #:pid-file #$pid-file
-                     #:log-file #$log-file))
-           (stop #~(make-kill-destructor))))))
+      (squeezelite output-device pid-file name log-file extra-options)
+      (list (shepherd-service
+             (documentation "Run squeezelite")
+             (provision '(squeezelite))
+             (start #~(make-forkexec-constructor
+                       (list #$(file-append squeezelite "/bin/squeezelite")
+                             "-o" #$output-device
+                             "-P" #$pid-file
+                             #$@(if (maybe-value-set? name)
+                                    '("-n" #$name)
+                                    '())
+                             #$@extra-options)
+                       #:pid-file #$pid-file
+                       #:log-file #$log-file))
+             (stop #~(make-kill-destructor))))))
 
 (define squeezelite-service-type
   (service-type
