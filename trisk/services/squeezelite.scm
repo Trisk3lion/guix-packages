@@ -65,6 +65,7 @@
   (service-type
    (name 'squeezelite)
    (description "Squeezelite service")
+   (requirement '(user-processes networking))
    (default-value (squeezelite-configuration))
    (extensions
     (list (service-extension shepherd-root-service-type
