@@ -29,6 +29,10 @@
   (group
    (string "squeezelite")
    "Group to run the squeezelite service.")
+  (environment-variables
+   (list-of-strings '("PULSE_CLIENTCONFIG=/etc/pulse/client.conf"
+                      "PULSE_CONFIG=/etc/pulse/daemon.conf"))
+   "A list of strings specifying environment variables.")
   (pid-file
    (string "/var/run/squeezelite.pid")
    "Pid-file")
@@ -56,13 +60,25 @@
 	(user-account
 	 (name (squeezelite-configuration-user config))
 	 (group (squeezelite-configuration-group config))
-	 (home-directory "/var/empty")
+	 (home-directory "/var/lib/squeezelite")
 	 (shell (file-append shadow "/sbin/nologin"))
 	 (system? #t))))
 
+;; (define (squeezelite-activation config)
+;;   "Create the necessary directories for tailscale and run 'squeezelite
+;; --cleanup' at startup, as recommended."
+;;   (with-imported-modules '((guix build utils))
+;;     #~(begin
+;;         (use-modules (guix build utils))
+;;         (mkdir-p (dirname #$(squeezelite-configuration-state-directory config)))
+;;         (mkdir-p (dirname #$(squeezelite-configuration-socket config)))
+;;         (system* #$(file-append (squeezelite-configuration-tailscale config)
+;;                                 "/sbin/squeezelite") "--cleanup"))))
+
 (define squeezelite-shepherd-service 
   (match-record-lambda <squeezelite-configuration>
-      (squeezelite output-device pid-file name log-file extra-options)
+      (squeezelite output-device user environment-variables pid-file name log-file extra-options)
+    (let ((home #$(user-account-home-directory user)))
       (list (shepherd-service
              (documentation "Run squeezelite")
              (provision '(squeezelite))
@@ -75,9 +91,14 @@
                                     '("-n" #$name)
                                     '())
                              #$@extra-options)
+                       #:environment-variables
+                 ;; Set HOME so MPD can infer default paths, such as
+                 ;; for the database file.
+                 (cons (string-append "HOME=" home)
+                       '#$environment-variables)
                        #:pid-file #$pid-file
                        #:log-file #$log-file))
-             (stop #~(make-kill-destructor))))))
+             (stop #~(make-kill-destructor)))))))
 
 (define squeezelite-service-type
   (service-type
