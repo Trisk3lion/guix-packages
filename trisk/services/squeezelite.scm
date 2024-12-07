@@ -23,6 +23,12 @@
   (output-device
    (string "default")
    "The output device to use.")
+  (user
+   (string "squeezelite")
+   "User to run the squeezelite service.")
+  (group
+   (string "squeezelite")
+   "Group to run the squeezelite service.")
   (pid-file
    (string "/var/run/squeezelite.pid")
    "Pid-file")
@@ -42,6 +48,17 @@
       (log-file)
     (list (log-rotation
            (files (list log-file))))))
+
+(define (squeezlite-account config)
+  (list (user-group
+	 (name (squeezlite-configuration-group config))
+	 (system? #t))
+	(user-account
+	 (name (squeezlite-configuration-user config))
+	 (group (squeezlite-configuration-group config))
+	 (home-directory "/var/empty")
+	 (shell (file-append shadow "/sbin/nologin"))
+	 (system? #t))))
 
 (define squeezelite-shepherd-service 
   (match-record-lambda <squeezelite-configuration>
@@ -68,7 +85,9 @@
    (description "Squeezelite service")
    (default-value (squeezelite-configuration))
    (extensions
-    (list (service-extension shepherd-root-service-type
+    (list (service-extension account-service-type
+			     squeezelite-account)
+          (service-extension shepherd-root-service-type
                              squeezelite-shepherd-service)
           (service-extension rottlog-service-type
                              squeezelite-log-rotations)))))
