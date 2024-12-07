@@ -49,13 +49,13 @@
     (list (log-rotation
            (files (list log-file))))))
 
-(define (squeezlite-account config)
+(define (squeezelite-account config)
   (list (user-group
-	 (name (squeezlite-configuration-group config))
+	 (name (squeezelite-configuration-group config))
 	 (system? #t))
 	(user-account
-	 (name (squeezlite-configuration-user config))
-	 (group (squeezlite-configuration-group config))
+	 (name (squeezelite-configuration-user config))
+	 (group (squeezelite-configuration-group config))
 	 (home-directory "/var/empty")
 	 (shell (file-append shadow "/sbin/nologin"))
 	 (system? #t))))
