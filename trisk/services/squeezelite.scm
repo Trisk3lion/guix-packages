@@ -49,6 +49,7 @@
       (list (shepherd-service
              (documentation "Run squeezelite")
              (provision '(squeezelite))
+             (requirement '(user-processes networking))
              (start #~(make-forkexec-constructor
                        (list #$(file-append squeezelite "/bin/squeezelite")
                              "-o" #$output-device
@@ -65,7 +66,6 @@
   (service-type
    (name 'squeezelite)
    (description "Squeezelite service")
-   (requirement '(user-processes networking))
    (default-value (squeezelite-configuration))
    (extensions
     (list (service-extension shepherd-root-service-type
