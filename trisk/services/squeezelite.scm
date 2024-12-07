@@ -88,7 +88,7 @@
                              "-o" #$output-device
                              "-P" #$pid-file
                              #$@(if (maybe-value-set? name)
-                                    '("-n" #$name)
+                                    (list "-n" name)
                                     '())
                              #$@extra-options)
                        #:environment-variables
