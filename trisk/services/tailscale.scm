@@ -159,7 +159,7 @@ to #f.")
       (list (shepherd-service
              (documentation "Run tailscaled")
              (provision '(tailscaled))
-             (requirement '(user-processes))
+             (requirement '(user-processes networking))
              (start #~(make-forkexec-constructor
                        (list
                         #$(file-append tailscale "/sbin/tailscaled")
