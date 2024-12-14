@@ -88,5 +88,8 @@ build-squeezelite: trisk/packages/audio.scm
 build-squeezelite-pulse: trisk/packages/audio.scm
 	guix build --load-path=. squeezelite-pulse
 
+build-docker-compose: trisk/packages/docker.scm
+	guix build --load-path=. docker-compose-plugin
+
 update:
 	emacs --script update-packages.el
