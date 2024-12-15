@@ -95,7 +95,7 @@
                      #:environment-variables
                      ;; Set HOME so MPD can infer default paths, such as
                      ;; for the database file.
-                     (cons (string-append "HOME=" "/var/lib/squeezelite"))
+                     (cons (string-append "HOME=" "/var/lib/squeezelite")
                            '#$environment-variables)
                      #:pid-file #$pid-file
                      #:log-file #$log-file))
