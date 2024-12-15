@@ -78,29 +78,28 @@
 (define squeezelite-shepherd-service 
   (match-record-lambda <squeezelite-configuration>
       (squeezelite output-device user group environment-variables pid-file name log-file extra-options)
-    (let ((home #~(user-account-home-directory user)))
-      (list (shepherd-service
-             (documentation "Run squeezelite")
-             (provision '(squeezelite))
-             (requirement '(user-processes networking))
-             (start #~(make-forkexec-constructor
-                       (list #$(file-append squeezelite "/bin/squeezelite")
-                             "-o" #$output-device
-                             "-P" #$pid-file
-                             #$@(if (maybe-value-set? name)
-                                    (list "-n" name)
-                                    '())
-                             #$@extra-options)
-                       #:user #$user
-                       #:group #$group
-                       #:environment-variables
-                       ;; Set HOME so MPD can infer default paths, such as
-                       ;; for the database file.
-                       (cons (string-append "HOME=" home)
-                             '#$environment-variables)
-                       #:pid-file #$pid-file
-                       #:log-file #$log-file))
-             (stop #~(make-kill-destructor)))))))
+    (list (shepherd-service
+           (documentation "Run squeezelite")
+           (provision '(squeezelite))
+           (requirement '(user-processes networking))
+           (start #~(make-forkexec-constructor
+                     (list #$(file-append squeezelite "/bin/squeezelite")
+                           "-o" #$output-device
+                           "-P" #$pid-file
+                           #$@(if (maybe-value-set? name)
+                                  (list "-n" name)
+                                  '())
+                           #$@extra-options)
+                     #:user #$user
+                     #:group #$group
+                     #:environment-variables
+                     ;; Set HOME so MPD can infer default paths, such as
+                     ;; for the database file.
+                     (cons (string-append "HOME=" #$(user-account-home-directory user))
+                           '#$environment-variables)
+                     #:pid-file #$pid-file
+                     #:log-file #$log-file))
+           (stop #~(make-kill-destructor))))))
 
 (define squeezelite-service-type
   (service-type
