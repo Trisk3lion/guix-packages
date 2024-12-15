@@ -24,10 +24,10 @@
    (string "default")
    "The output device to use.")
   (user
-   (string "squeezelite")
+   (user-account %squeezelite-user)
    "User to run the squeezelite service.")
   (group
-   (string "squeezelite")
+   (user-group %squeezelite-group)
    "Group to run the squeezelite service.")
   (environment-variables
    (list-of-strings '("PULSE_CLIENTCONFIG=/etc/pulse/client.conf"
@@ -53,16 +53,24 @@
     (list (log-rotation
            (files (list log-file))))))
 
+(define %squeezelite-user
+  (user-account
+   (name "squeezelite")
+   (group %squeezelite-group)
+   (comment "Squeezelite user")
+   (home-directory "/var/lib/squeezelite")
+   (shell (file-append shadow "/sbin/nologin"))
+   (supplementary-groups '("audio"))
+   (system? #t)))
+
+(define %squeezelite-group
+  (user-group
+   (name "squeezelite")
+   (system? #t)))
+
 (define (squeezelite-account config)
-  (list (user-group
-	 (name (squeezelite-configuration-group config))
-	 (system? #t))
-	(user-account
-	 (name (squeezelite-configuration-user config))
-	 (group (squeezelite-configuration-group config))
-	 (home-directory "/var/lib/squeezelite")
-	 (shell (file-append shadow "/sbin/nologin"))
-	 (system? #t))))
+  (match-record config <squeezelite-configuration>
+                (list user group)))
 
 ;; (define (squeezelite-activation config)
 ;;   "Create the necessary directories for tailscale and run 'squeezelite
@@ -79,28 +87,36 @@
   (match-record-lambda <squeezelite-configuration>
       (squeezelite output-device user group environment-variables ;; pid-file
                    name log-file extra-options)
-    (list (shepherd-service
-           (documentation "Run squeezelite")
-           (provision '(squeezelite))
-           (requirement '(user-processes networking))
-           (start #~(make-forkexec-constructor
+    (let ((username (user-account-name user))
+          (groupname (user-group-name group)))
+      (list (shepherd-service
+             (documentation "Run squeezelite")
+             (provision '(squeezelite))
+             (requirement '(user-processes networking))
+             (start
+              #~(begin
+                  (let ((home #$(user-account-home-directory user)))
+                    (let ((user (getpw #$username))
+                          (group (getgr #$groupname))))
+                    (make-forkexec-constructor
                      (list #$(file-append squeezelite "/bin/squeezelite")
                            "-o" #$output-device
+                           "-d" "all=info"
                            ;; "-P" #$pid-file
                            #$@(if (maybe-value-set? name)
                                   (list "-n" name)
                                   '())
                            #$@extra-options)
-                     ;; #:user #$user
-                     ;; #:group #$group
+                     #:user user
+                     #:group group
                      #:environment-variables
                      ;; Set HOME so MPD can infer default paths, such as
                      ;; for the database file.
-                     (cons (string-append "HOME=" "/var/lib/squeezelite")
+                     (cons (string-append "HOME=" home)
                            '#$environment-variables)
                      ;; #:pid-file #$pid-file
-                     #:log-file #$log-file))
-           (stop #~(make-kill-destructor))))))
+                     #:log-file #$log-file))))
+                    (stop #~(make-kill-destructor)))))))
 
 (define squeezelite-service-type
   (service-type
