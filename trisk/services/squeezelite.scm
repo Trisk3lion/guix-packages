@@ -71,10 +71,10 @@
    (system? #t)))
 
 (define (squeezelite-account config)
-  (match-record config <squeezelite-configuration>
-                (let ((user (if (eq? (user-account-group user) %lazy-group)
-                                (set-user-group user group)
-                                user))))
+  (match-record config <squeezelite-configuration> (user group)
+    (let ((user (if (eq? (user-account-group user) %lazy-group)
+                    (set-user-group user group)
+                    user))))
     (list user group)))
 
 ;; (define (squeezelite-activation config)
