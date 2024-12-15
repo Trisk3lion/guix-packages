@@ -53,10 +53,12 @@
     (list (log-rotation
            (files (list log-file))))))
 
+(define %lazy-group (make-symbol "%lazy-group"))
+
 (define %squeezelite-user
   (user-account
    (name "squeezelite")
-   (group %squeezelite-group)
+   (group %lazy-group)
    (comment "Squeezelite user")
    (home-directory "/var/lib/squeezelite")
    (shell (file-append shadow "/sbin/nologin"))
@@ -70,7 +72,10 @@
 
 (define (squeezelite-account config)
   (match-record config <squeezelite-configuration>
-                (list user group)))
+                (let ((user (if (eq? (user-account-group user) %lazy-group)
+                                (set-user-group user group)
+                                user))))
+    (list user group)))
 
 ;; (define (squeezelite-activation config)
 ;;   "Create the necessary directories for tailscale and run 'squeezelite
