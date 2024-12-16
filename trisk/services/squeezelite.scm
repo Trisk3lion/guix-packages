@@ -70,6 +70,11 @@
    (name "squeezelite")
    (system? #t)))
 
+(define (set-user-group user group)
+  (user-account
+   (inherit user)
+   (group (user-group-name group))))
+
 (define (squeezelite-account config)
   (match-record config <squeezelite-configuration> (user group)
                 (let ((user (if (eq? (user-account-group user) %lazy-group)
