@@ -107,7 +107,7 @@
               #~(begin
                   (let ((home #$(user-account-home-directory user)))
                     (let ((user (getpw #$username))
-                          (group (getgr #$groupname))))
+                          (group (getgr #$groupname)))
                     (make-forkexec-constructor
                      (list #$(file-append squeezelite "/bin/squeezelite")
                            "-o" #$output-device
@@ -125,7 +125,7 @@
                      (cons (string-append "HOME=" home)
                            '#$environment-variables)
                      ;; #:pid-file #$pid-file
-                     #:log-file #$log-file))))
+                     #:log-file #$log-file)))))
                     (stop #~(make-kill-destructor)))))))
 
 (define squeezelite-service-type
