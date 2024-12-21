@@ -117,8 +117,8 @@
                                   (list "-n" name)
                                   '())
                            #$@extra-options)
-                     #:user user
-                     #:group group
+                     ;; #:user user
+                     ;; #:group group
                      #:environment-variables
                      ;; Set HOME so MPD can infer default paths, such as
                      ;; for the database file.
