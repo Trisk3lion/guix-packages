@@ -91,5 +91,8 @@ build-squeezelite-pulse: trisk/packages/audio.scm
 build-docker-compose: trisk/packages/docker.scm
 	guix build --load-path=. docker-compose-plugin
 
+build-atuin: trisk/packages/atuin.scm
+	guix build --load-path=. atuin
+
 update:
 	emacs --script update-packages.el
