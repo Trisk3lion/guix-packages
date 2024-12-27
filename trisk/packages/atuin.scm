@@ -38,17 +38,17 @@
         (base32 "1v1a3vb9gs5zkwp4jzkcfnpg0gvyp4ifydzx37f4qy14kzcibnbw"))))
     (build-system cargo-build-system)
     (arguments
-     `(#:cargo-inputs (("rust-indenter" ,rust-indenter-0.3)
-                       ("rust-once-cell" ,rust-once-cell-1)
-                       ("rust-pyo3" ,rust-pyo3-0.20))
-       #:cargo-development-inputs (("rust-anyhow" ,rust-anyhow-1)
-                                   ("rust-backtrace" ,rust-backtrace-0.3)
-                                   ("rust-futures" ,rust-futures-0.3)
-                                   ("rust-pyo3" ,rust-pyo3-0.20)
-                                   ("rust-rustversion" ,rust-rustversion-1)
-                                   ("rust-syn" ,rust-syn-2)
-                                   ("rust-thiserror" ,rust-thiserror-1)
-                                   ("rust-trybuild" ,rust-trybuild-1))))
+     `(#:cargo-inputs (rust-indenter-0.3
+                       rust-once-cell-1
+                       rust-pyo3-0.20)
+       #:cargo-development-inputs (rust-anyhow-1
+                                   rust-backtrace-0.3
+                                   rust-futures-0.3
+                                   rust-pyo3-0.20
+                                   rust-rustversion-1
+                                   rust-syn-2
+                                   rust-thiserror-1
+                                   rust-trybuild-1)))
     (home-page "https://github.com/eyre-rs/eyre")
     (synopsis
      "Flexible concrete Error Reporting type built on std::error::Error with customizable Reports")
@@ -73,11 +73,11 @@ customizable Reports.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-nu-ansi-term" ,rust-nu-ansi-term-0.50)
-                       ("rust-time" ,rust-time-0.3)
-                       ("rust-tracing-core" ,rust-tracing-core-0.1)
-                       ("rust-tracing-log" ,rust-tracing-log-0.2)
-                       ("rust-tracing-subscriber" ,rust-tracing-subscriber-0.3))))
+       #:cargo-inputs (rust-nu-ansi-term-0.50
+                       rust-time-0.3
+                       rust-tracing-core-0.1
+                       rust-tracing-log-0.2
+                       rust-tracing-subscriber-0.3)))
     (home-page "https://github.com/davidbarsky/tracing-tree")
     (synopsis "Tracing Layer which prints a tree of spans and events.")
     (description
@@ -98,16 +98,16 @@ customizable Reports.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-bitflags" ,rust-bitflags-2)
-                       ("rust-compiler-builtins" ,rust-compiler-builtins-0.1)
-                       ("rust-errno" ,rust-errno-0.3)
-                       ("rust-itoa" ,rust-itoa-1)
-                       ("rust-libc" ,rust-libc-0.2)
-                       ("rust-linux-raw-sys" ,rust-linux-raw-sys-0.4)
-                       ("rust-once-cell" ,rust-once-cell-1)
-                       ("rust-rustc-std-workspace-alloc" ,rust-rustc-std-workspace-alloc-1)
-                       ("rust-rustc-std-workspace-core" ,rust-rustc-std-workspace-core-1)
-                       ("rust-windows-sys" ,rust-windows-sys-0.52))))
+       #:cargo-inputs (rust-bitflags-2
+                       rust-compiler-builtins-0.1
+                       rust-errno-0.3
+                       rust-itoa-1
+                       rust-libc-0.2
+                       rust-linux-raw-sys-0.4
+                       rust-once-cell-1
+                       rust-rustc-std-workspace-alloc-1
+                       rust-rustc-std-workspace-core-1
+                       rust-windows-sys-0.52)))
     (home-page "https://github.com/bytecodealliance/rustix")
     (synopsis "Safe Rust bindings to POSIX/Unix/Linux/Winsock-like syscalls")
     (description
@@ -129,7 +129,7 @@ customizable Reports.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-tinyvec" ,rust-tinyvec-1))))
+       #:cargo-inputs (rust-tinyvec-1)))
     (home-page "https://github.com/conradludgate/strfmt")
     (synopsis "rust library for formatting dynamic strings")
     (description
@@ -150,8 +150,8 @@ customizable Reports.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-clap" ,rust-clap-4)
-                       ("rust-clap-complete" ,rust-clap-complete-4))))
+       #:cargo-inputs (rust-clap-4
+                       rust-clap-complete-4)))
     (home-page "https://github.com/clap-rs/clap")
     (synopsis
      "generator library used with clap for Nushell completion scripts")
@@ -174,10 +174,10 @@ scripts.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-heck" ,rust-heck-0.5)
-                       ("rust-proc-macro2" ,rust-proc-macro2-1)
-                       ("rust-quote" ,rust-quote-1)
-                       ("rust-syn" ,rust-syn-2))))
+       #:cargo-inputs (rust-heck-0.5
+                       rust-proc-macro2-1
+                       rust-quote-1
+                       rust-syn-2)))
     (home-page "https://github.com/clap-rs/clap")
     (synopsis "Parse command line argument by defining a struct, derive crate")
     (description
@@ -198,8 +198,8 @@ scripts.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-compiler-builtins" ,rust-compiler-builtins-0.1)
-                       ("rust-rustc-std-workspace-core" ,rust-rustc-std-workspace-core-1))))
+       #:cargo-inputs (rust-compiler-builtins-0.1
+                       rust-rustc-std-workspace-core-1)))
     (home-page "https://github.com/rust-lang/rustc-demangle")
     (synopsis "Rust compiler symbol demangling.")
     (description "This package provides Rust compiler symbol demangling.")
@@ -219,14 +219,14 @@ scripts.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-atomic-polyfill" ,rust-atomic-polyfill-1)
-                       ("rust-cfg-if" ,rust-cfg-if-1)
-                       ("rust-const-random" ,rust-const-random-0.1)
-                       ("rust-getrandom" ,rust-getrandom-0.2)
-                       ("rust-once-cell" ,rust-once-cell-1)
-                       ("rust-serde" ,rust-serde-1)
-                       ("rust-version-check" ,rust-version-check-0.9)
-                       ("rust-zerocopy" ,rust-zerocopy-0.7))))
+       #:cargo-inputs (rust-atomic-polyfill-1
+                       rust-cfg-if-1
+                       rust-const-random-0.1
+                       rust-getrandom-0.2
+                       rust-once-cell-1
+                       rust-serde-1
+                       rust-version-check-0.9
+                       rust-zerocopy-0.7)))
     (home-page "https://github.com/tkaitchuck/ahash")
     (synopsis
      "non-cryptographic hash function using AES-NI for high performance")
@@ -249,12 +249,12 @@ performance.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-ahash" ,rust-ahash-0.8)
-                       ("rust-bitflags" ,rust-bitflags-2)
-                       ("rust-hashbrown" ,rust-hashbrown-0.14)
-                       ("rust-indexmap" ,rust-indexmap-2)
-                       ("rust-semver" ,rust-semver-1)
-                       ("rust-serde" ,rust-serde-1))))
+       #:cargo-inputs (rust-ahash-0.8
+                       rust-bitflags-2
+                       rust-hashbrown-0.14
+                       rust-indexmap-2
+                       rust-semver-1
+                       rust-serde-1)))
     (home-page
      "https://github.com/bytecodealliance/wasm-tools/tree/main/crates/wasmparser")
     (synopsis
@@ -279,8 +279,8 @@ performance.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-byteorder" ,rust-byteorder-1)
-                       ("rust-twox-hash" ,rust-twox-hash-1))))
+       #:cargo-inputs (rust-byteorder-1
+                       rust-twox-hash-1)))
     (home-page "https://github.com/KillingSpark/zstd-rs")
     (synopsis "decoder for the zstd compression format")
     (description
@@ -301,16 +301,16 @@ performance.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-compiler-builtins" ,rust-compiler-builtins-0.1)
-                       ("rust-crc32fast" ,rust-crc32fast-1)
-                       ("rust-flate2" ,rust-flate2-1)
-                       ("rust-hashbrown" ,rust-hashbrown-0.14)
-                       ("rust-indexmap" ,rust-indexmap-2)
-                       ("rust-memchr" ,rust-memchr-2)
-                       ("rust-rustc-std-workspace-alloc" ,rust-rustc-std-workspace-alloc-1)
-                       ("rust-rustc-std-workspace-core" ,rust-rustc-std-workspace-core-1)
-                       ("rust-ruzstd" ,rust-ruzstd-0.7)
-                       ("rust-wasmparser" ,rust-wasmparser-0.215))))
+       #:cargo-inputs (rust-compiler-builtins-0.1
+                       rust-crc32fast-1
+                       rust-flate2-1
+                       rust-hashbrown-0.14
+                       rust-indexmap-2
+                       rust-memchr-2
+                       rust-rustc-std-workspace-alloc-1
+                       rust-rustc-std-workspace-core-1
+                       rust-ruzstd-0.7
+                       rust-wasmparser-0.215)))
     (home-page "https://github.com/gimli-rs/object")
     (synopsis "unified interface for reading and writing object file formats.")
     (description
@@ -332,7 +332,7 @@ formats.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-libc" ,rust-libc-0.2))))
+       #:cargo-inputs (rust-libc-0.2)))
     (home-page "https://github.com/rust-lang/jobserver-rs")
     (synopsis "An implementation of the GNU Make jobserver for Rust.")
     (description
@@ -353,8 +353,8 @@ formats.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-jobserver" ,rust-jobserver-0.1)
-                       ("rust-libc" ,rust-libc-0.2))))
+       #:cargo-inputs (rust-jobserver-0.1
+                       rust-libc-0.2)))
     (home-page "https://github.com/rust-lang/cc-rs")
     (synopsis
      "build-time dependency for Cargo build scripts to assist in invoking the native
@@ -380,9 +380,9 @@ to be linked into Rust code.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-bitflags" ,rust-bitflags-2)
-                       ("rust-indexmap" ,rust-indexmap-2)
-                       ("rust-semver" ,rust-semver-1))))
+       #:cargo-inputs (rust-bitflags-2
+                       rust-indexmap-2
+                       rust-semver-1)))
     (home-page
      "https://github.com/bytecodealliance/wasm-tools/tree/main/crates/wasmparser")
     (synopsis
@@ -406,9 +406,9 @@ to be linked into Rust code.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-byteorder" ,rust-byteorder-1)
-                       ("rust-derive-more" ,rust-derive-more-0.99)
-                       ("rust-twox-hash" ,rust-twox-hash-1))))
+       #:cargo-inputs (rust-byteorder-1
+                       rust-derive-more-0.99
+                       rust-twox-hash-1)))
     (home-page "https://github.com/KillingSpark/zstd-rs")
     (synopsis "decoder for the zstd compression format")
     (description
@@ -429,16 +429,16 @@ to be linked into Rust code.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-compiler-builtins" ,rust-compiler-builtins-0.1)
-                       ("rust-crc32fast" ,rust-crc32fast-1)
-                       ("rust-flate2" ,rust-flate2-1)
-                       ("rust-hashbrown" ,rust-hashbrown-0.14)
-                       ("rust-indexmap" ,rust-indexmap-2)
-                       ("rust-memchr" ,rust-memchr-2)
-                       ("rust-rustc-std-workspace-alloc" ,rust-rustc-std-workspace-alloc-1)
-                       ("rust-rustc-std-workspace-core" ,rust-rustc-std-workspace-core-1)
-                       ("rust-ruzstd" ,rust-ruzstd-0.6)
-                       ("rust-wasmparser" ,rust-wasmparser-0.202))))
+       #:cargo-inputs (rust-compiler-builtins-0.1
+                       rust-crc32fast-1
+                       rust-flate2-1
+                       rust-hashbrown-0.14
+                       rust-indexmap-2
+                       rust-memchr-2
+                       rust-rustc-std-workspace-alloc-1
+                       rust-rustc-std-workspace-core-1
+                       rust-ruzstd-0.6
+                       rust-wasmparser-0.202)))
     (home-page "https://github.com/gimli-rs/object")
     (synopsis "unified interface for reading and writing object file formats.")
     (description
@@ -460,8 +460,8 @@ formats.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-libc" ,rust-libc-0.2)
-                       ("rust-stable-deref-trait" ,rust-stable-deref-trait-1))))
+       #:cargo-inputs (rust-libc-0.2
+                       rust-stable-deref-trait-1)))
     (home-page "https://github.com/RazrFalcon/memmap2-rs")
     (synopsis "Cross-platform Rust API for memory-mapped file IO")
     (description
@@ -482,12 +482,12 @@ formats.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-compiler-builtins" ,rust-compiler-builtins-0.1)
-                       ("rust-fallible-iterator" ,rust-fallible-iterator-0.3)
-                       ("rust-indexmap" ,rust-indexmap-2)
-                       ("rust-rustc-std-workspace-alloc" ,rust-rustc-std-workspace-alloc-1)
-                       ("rust-rustc-std-workspace-core" ,rust-rustc-std-workspace-core-1)
-                       ("rust-stable-deref-trait" ,rust-stable-deref-trait-1))))
+       #:cargo-inputs (rust-compiler-builtins-0.1
+                       rust-fallible-iterator-0.3
+                       rust-indexmap-2
+                       rust-rustc-std-workspace-alloc-1
+                       rust-rustc-std-workspace-core-1
+                       rust-stable-deref-trait-1)))
     (home-page "https://github.com/gimli-rs/gimli")
     (synopsis "library for reading and writing the DWARF debugging format.")
     (description
@@ -509,16 +509,16 @@ format.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-compiler-builtins" ,rust-compiler-builtins-0.1)
-                       ("rust-cpp-demangle" ,rust-cpp-demangle-0.4)
-                       ("rust-fallible-iterator" ,rust-fallible-iterator-0.3)
-                       ("rust-gimli" ,rust-gimli-0.29)
-                       ("rust-memmap2" ,rust-memmap2-0.9)
-                       ("rust-object" ,rust-object-0.35)
-                       ("rust-rustc-demangle" ,rust-rustc-demangle-0.1)
-                       ("rust-rustc-std-workspace-alloc" ,rust-rustc-std-workspace-alloc-1)
-                       ("rust-rustc-std-workspace-core" ,rust-rustc-std-workspace-core-1)
-                       ("rust-smallvec" ,rust-smallvec-1))))
+       #:cargo-inputs (rust-compiler-builtins-0.1
+                       rust-cpp-demangle-0.4
+                       rust-fallible-iterator-0.3
+                       rust-gimli-0.29
+                       rust-memmap2-0.9
+                       rust-object-0.35
+                       rust-rustc-demangle-0.1
+                       rust-rustc-std-workspace-alloc-1
+                       rust-rustc-std-workspace-core-1
+                       rust-smallvec-1)))
     (home-page "https://github.com/gimli-rs/addr2line")
     (synopsis
      "cross-platform symbolication library written in Rust, using `gimli`")
@@ -541,16 +541,16 @@ using `gimli`.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-addr2line" ,rust-addr2line-0.22)
-                       ("rust-cc" ,rust-cc-1)
-                       ("rust-cfg-if" ,rust-cfg-if-1)
-                       ("rust-cpp-demangle" ,rust-cpp-demangle-0.4)
-                       ("rust-libc" ,rust-libc-0.2)
-                       ("rust-miniz-oxide" ,rust-miniz-oxide-0.7)
-                       ("rust-object" ,rust-object-0.36)
-                       ("rust-rustc-demangle" ,rust-rustc-demangle-0.1)
-                       ("rust-serde" ,rust-serde-1)
-                       ("rust-winapi" ,rust-winapi-0.3))))
+       #:cargo-inputs (rust-addr2line-0.22
+                       rust-cc-1
+                       rust-cfg-if-1
+                       rust-cpp-demangle-0.4
+                       rust-libc-0.2
+                       rust-miniz-oxide-0.7
+                       rust-object-0.36
+                       rust-rustc-demangle-0.1
+                       rust-serde-1
+                       rust-winapi-0.3)))
     (home-page "https://github.com/rust-lang/backtrace-rs")
     (synopsis
      "library to acquire a stack trace (backtrace) at runtime in a Rust program.")
@@ -592,14 +592,14 @@ in a Rust program.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-anstream" ,rust-anstream-0.6)
-                       ("rust-anstyle" ,rust-anstyle-1)
-                       ("rust-backtrace" ,rust-backtrace-0.3)
-                       ("rust-clap-lex" ,rust-clap-lex-0.7)
-                       ("rust-strsim" ,rust-strsim-0.11)
-                       ("rust-terminal-size" ,rust-terminal-size-0.3)
-                       ("rust-unicase" ,rust-unicase-2)
-                       ("rust-unicode-width" ,rust-unicode-width-0.1))))
+       #:cargo-inputs (rust-anstream-0.6
+                       rust-anstyle-1
+                       rust-backtrace-0.3
+                       rust-clap-lex-0.7
+                       rust-strsim-0.11
+                       rust-terminal-size-0.3
+                       rust-unicase-2
+                       rust-unicode-width-0.1)))
     (home-page "https://github.com/clap-rs/clap")
     (synopsis
      "simple to use, efficient, and full-featured Command Line Argument Parser")
@@ -622,8 +622,8 @@ Argument Parser.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-clap-builder" ,rust-clap-builder-4)
-                       ("rust-clap-derive" ,rust-clap-derive-4))))
+       #:cargo-inputs (rust-clap-builder-4
+                       rust-clap-derive-4)))
     (home-page "https://github.com/clap-rs/clap")
     (synopsis
      "simple to use, efficient, and full-featured Command Line Argument Parser")
@@ -646,12 +646,12 @@ Argument Parser.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-clap" ,rust-clap-4)
-                       ("rust-clap-lex" ,rust-clap-lex-0.7)
-                       ("rust-is-executable" ,rust-is-executable-1)
-                       ("rust-pathdiff" ,rust-pathdiff-0.2)
-                       ("rust-shlex" ,rust-shlex-1)
-                       ("rust-unicode-xid" ,rust-unicode-xid-0.2))))
+       #:cargo-inputs (rust-clap-4
+                       rust-clap-lex-0.7
+                       rust-is-executable-1
+                       rust-pathdiff-0.2
+                       rust-shlex-1
+                       rust-unicode-xid-0.2)))
     (home-page "https://github.com/clap-rs/clap")
     (synopsis "Generate shell completion scripts for your clap::Command")
     (description
@@ -672,17 +672,17 @@ Argument Parser.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-async-trait" ,rust-async-trait-0.1)
-                       ("rust-atuin-common" ,rust-atuin-common-18)
-                       ("rust-atuin-server-database" ,rust-atuin-server-database-18)
-                       ("rust-eyre" ,rust-eyre-0.6)
-                       ("rust-futures-util" ,rust-futures-util-0.3)
-                       ("rust-serde" ,rust-serde-1)
-                       ("rust-sqlx" ,rust-sqlx-0.7)
-                       ("rust-time" ,rust-time-0.3)
-                       ("rust-tracing" ,rust-tracing-0.1)
-                       ("rust-url" ,rust-url-2)
-                       ("rust-uuid" ,rust-uuid-1))))
+       #:cargo-inputs (rust-async-trait-0.1
+                       rust-atuin-common-18
+                       rust-atuin-server-database-18
+                       rust-eyre-0.6
+                       rust-futures-util-0.3
+                       rust-serde-1
+                       rust-sqlx-0.7
+                       rust-time-0.3
+                       rust-tracing-0.1
+                       rust-url-2
+                       rust-uuid-1)))
     (home-page "https://atuin.sh")
     (synopsis "server postgres database library for atuin")
     (description
@@ -703,8 +703,8 @@ Argument Parser.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-base64" ,rust-base64-0.22)
-                       ("rust-rustls-pki-types" ,rust-rustls-pki-types-1))))
+       #:cargo-inputs (rust-base64-0.22
+                       rust-rustls-pki-types-1)))
     (home-page "https://github.com/rustls/pemfile")
     (synopsis "Basic .pem file parser for keys and certificates")
     (description
@@ -725,7 +725,7 @@ Argument Parser.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-serde" ,rust-serde-1))))
+       #:cargo-inputs (rust-serde-1)))
     (home-page "https://github.com/mheffner/rust-sketches-ddsketch")
     (synopsis "direct port of the Golang DDSketch implementation.")
     (description
@@ -746,7 +746,7 @@ Argument Parser.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-prost" ,rust-prost-0.11))))
+       #:cargo-inputs (rust-prost-0.11)))
     (home-page "https://github.com/tokio-rs/prost")
     (synopsis "Prost definitions of Protocol Buffers well known types")
     (description
@@ -767,15 +767,15 @@ Argument Parser.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-crossbeam-utils" ,rust-crossbeam-utils-0.8)
-                       ("rust-libc" ,rust-libc-0.2)
-                       ("rust-mach2" ,rust-mach2-0.4)
-                       ("rust-once-cell" ,rust-once-cell-1)
-                       ("rust-prost-types" ,rust-prost-types-0.11)
-                       ("rust-raw-cpuid" ,rust-raw-cpuid-10)
-                       ("rust-wasi" ,rust-wasi-0.11)
-                       ("rust-web-sys" ,rust-web-sys-0.3)
-                       ("rust-winapi" ,rust-winapi-0.3))))
+       #:cargo-inputs (rust-crossbeam-utils-0.8
+                       rust-libc-0.2
+                       rust-mach2-0.4
+                       rust-once-cell-1
+                       rust-prost-types-0.11
+                       rust-raw-cpuid-10
+                       rust-wasi-0.11
+                       rust-web-sys-0.3
+                       rust-winapi-0.3)))
     (home-page "https://github.com/metrics-rs/quanta")
     (synopsis "high-speed timing library")
     (description "This package provides high-speed timing library.")
@@ -795,13 +795,13 @@ Argument Parser.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-ahash" ,rust-ahash-0.8)
-                       ("rust-bumpalo" ,rust-bumpalo-3)
-                       ("rust-compiler-builtins" ,rust-compiler-builtins-0.1)
-                       ("rust-rayon" ,rust-rayon-1)
-                       ("rust-rustc-std-workspace-alloc" ,rust-rustc-std-workspace-alloc-1)
-                       ("rust-rustc-std-workspace-core" ,rust-rustc-std-workspace-core-1)
-                       ("rust-serde" ,rust-serde-1))))
+       #:cargo-inputs (rust-ahash-0.8
+                       rust-bumpalo-3
+                       rust-compiler-builtins-0.1
+                       rust-rayon-1
+                       rust-rustc-std-workspace-alloc-1
+                       rust-rustc-std-workspace-core-1
+                       rust-serde-1)))
     (home-page "https://github.com/rust-lang/hashbrown")
     (synopsis "Rust port of Google's SwissTable hash map")
     (description
@@ -822,18 +822,18 @@ Argument Parser.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-ahash" ,rust-ahash-0.8)
-                       ("rust-aho-corasick" ,rust-aho-corasick-1)
-                       ("rust-crossbeam-epoch" ,rust-crossbeam-epoch-0.9)
-                       ("rust-crossbeam-utils" ,rust-crossbeam-utils-0.8)
-                       ("rust-hashbrown" ,rust-hashbrown-0.13)
-                       ("rust-indexmap" ,rust-indexmap-1)
-                       ("rust-metrics" ,rust-metrics-0.21)
-                       ("rust-num-cpus" ,rust-num-cpus-1)
-                       ("rust-ordered-float" ,rust-ordered-float-3)
-                       ("rust-quanta" ,rust-quanta-0.11)
-                       ("rust-radix-trie" ,rust-radix-trie-0.2)
-                       ("rust-sketches-ddsketch" ,rust-sketches-ddsketch-0.2))))
+       #:cargo-inputs (rust-ahash-0.8
+                       rust-aho-corasick-1
+                       rust-crossbeam-epoch-0.9
+                       rust-crossbeam-utils-0.8
+                       rust-hashbrown-0.13
+                       rust-indexmap-1
+                       rust-metrics-0.21
+                       rust-num-cpus-1
+                       rust-ordered-float-3
+                       rust-quanta-0.11
+                       rust-radix-trie-0.2
+                       rust-sketches-ddsketch-0.2)))
     (home-page "https://github.com/metrics-rs/metrics")
     (synopsis "Helper types/functions used by the metrics ecosystem")
     (description
@@ -854,16 +854,16 @@ Argument Parser.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-base64" ,rust-base64-0.21)
-                       ("rust-hyper" ,rust-hyper-0.14)
-                       ("rust-indexmap" ,rust-indexmap-1)
-                       ("rust-ipnet" ,rust-ipnet-2)
-                       ("rust-metrics" ,rust-metrics-0.21)
-                       ("rust-metrics-util" ,rust-metrics-util-0.15)
-                       ("rust-quanta" ,rust-quanta-0.11)
-                       ("rust-thiserror" ,rust-thiserror-1)
-                       ("rust-tokio" ,rust-tokio-1)
-                       ("rust-tracing" ,rust-tracing-0.1))))
+       #:cargo-inputs (rust-base64-0.21
+                       rust-hyper-0.14
+                       rust-indexmap-1
+                       rust-ipnet-2
+                       rust-metrics-0.21
+                       rust-metrics-util-0.15
+                       rust-quanta-0.11
+                       rust-thiserror-1
+                       rust-tokio-1
+                       rust-tracing-0.1)))
     (home-page "https://github.com/metrics-rs/metrics")
     (synopsis "metrics-compatible exporter for sending metrics to Prometheus.")
     (description
@@ -885,9 +885,9 @@ Prometheus.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-proc-macro2" ,rust-proc-macro2-1)
-                       ("rust-quote" ,rust-quote-1)
-                       ("rust-syn" ,rust-syn-2))))
+       #:cargo-inputs (rust-proc-macro2-1
+                       rust-quote-1
+                       rust-syn-2)))
     (home-page "https://github.com/metrics-rs/metrics")
     (synopsis "Macros for the metrics crate")
     (description "This package provides Macros for the metrics crate.")
@@ -907,9 +907,9 @@ Prometheus.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-ahash" ,rust-ahash-0.8)
-                       ("rust-metrics-macros" ,rust-metrics-macros-0.7)
-                       ("rust-portable-atomic" ,rust-portable-atomic-1))))
+       #:cargo-inputs (rust-ahash-0.8
+                       rust-metrics-macros-0.7
+                       rust-portable-atomic-1)))
     (home-page "https://github.com/metrics-rs/metrics")
     (synopsis "lightweight metrics facade.")
     (description "This package provides a lightweight metrics facade.")
@@ -929,23 +929,23 @@ Prometheus.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-arc-swap" ,rust-arc-swap-1)
-                       ("rust-bytes" ,rust-bytes-1)
-                       ("rust-futures-util" ,rust-futures-util-0.3)
-                       ("rust-http" ,rust-http-1)
-                       ("rust-http-body" ,rust-http-body-1)
-                       ("rust-http-body-util" ,rust-http-body-util-0.1)
-                       ("rust-hyper" ,rust-hyper-1)
-                       ("rust-hyper-util" ,rust-hyper-util-0.1)
-                       ("rust-openssl" ,rust-openssl-0.10)
-                       ("rust-pin-project-lite" ,rust-pin-project-lite-0.2)
-                       ("rust-rustls" ,rust-rustls-0.21)
-                       ("rust-rustls-pemfile" ,rust-rustls-pemfile-2)
-                       ("rust-tokio" ,rust-tokio-1)
-                       ("rust-tokio-openssl" ,rust-tokio-openssl-0.6)
-                       ("rust-tokio-rustls" ,rust-tokio-rustls-0.24)
-                       ("rust-tower" ,rust-tower-0.4)
-                       ("rust-tower-service" ,rust-tower-service-0.3))))
+       #:cargo-inputs (rust-arc-swap-1
+                       rust-bytes-1
+                       rust-futures-util-0.3
+                       rust-http-1
+                       rust-http-body-1
+                       rust-http-body-util-0.1
+                       rust-hyper-1
+                       rust-hyper-util-0.1
+                       rust-openssl-0.10
+                       rust-pin-project-lite-0.2
+                       rust-rustls-0.21
+                       rust-rustls-pemfile-2
+                       rust-tokio-1
+                       rust-tokio-openssl-0.6
+                       rust-tokio-rustls-0.24
+                       rust-tower-0.4
+                       rust-tower-service-0.3)))
     (home-page "https://github.com/programatik29/axum-server")
     (synopsis "High level server designed to be used with axum framework")
     (description
@@ -966,13 +966,13 @@ Prometheus.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-async-trait" ,rust-async-trait-0.1)
-                       ("rust-atuin-common" ,rust-atuin-common-18)
-                       ("rust-eyre" ,rust-eyre-0.6)
-                       ("rust-serde" ,rust-serde-1)
-                       ("rust-time" ,rust-time-0.3)
-                       ("rust-tracing" ,rust-tracing-0.1)
-                       ("rust-uuid" ,rust-uuid-1))))
+       #:cargo-inputs (rust-async-trait-0.1
+                       rust-atuin-common-18
+                       rust-eyre-0.6
+                       rust-serde-1
+                       rust-time-0.3
+                       rust-tracing-0.1
+                       rust-uuid-1)))
     (home-page "https://atuin.sh")
     (synopsis "server database library for atuin")
     (description "This package provides server database library for atuin.")
@@ -992,31 +992,31 @@ Prometheus.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-argon2" ,rust-argon2-0.5)
-                       ("rust-async-trait" ,rust-async-trait-0.1)
-                       ("rust-atuin-common" ,rust-atuin-common-18)
-                       ("rust-atuin-server-database" ,rust-atuin-server-database-18)
-                       ("rust-axum" ,rust-axum-0.7)
-                       ("rust-axum-server" ,rust-axum-server-0.6)
-                       ("rust-base64" ,rust-base64-0.22)
-                       ("rust-config" ,rust-config-0.13)
-                       ("rust-eyre" ,rust-eyre-0.6)
-                       ("rust-fs-err" ,rust-fs-err-2)
-                       ("rust-metrics" ,rust-metrics-0.21)
-                       ("rust-metrics-exporter-prometheus" ,rust-metrics-exporter-prometheus-0.12)
-                       ("rust-rand" ,rust-rand-0.8)
-                       ("rust-reqwest" ,rust-reqwest-0.11)
-                       ("rust-rustls" ,rust-rustls-0.21)
-                       ("rust-rustls-pemfile" ,rust-rustls-pemfile-2)
-                       ("rust-semver" ,rust-semver-1)
-                       ("rust-serde" ,rust-serde-1)
-                       ("rust-serde-json" ,rust-serde-json-1)
-                       ("rust-time" ,rust-time-0.3)
-                       ("rust-tokio" ,rust-tokio-1)
-                       ("rust-tower" ,rust-tower-0.4)
-                       ("rust-tower-http" ,rust-tower-http-0.5)
-                       ("rust-tracing" ,rust-tracing-0.1)
-                       ("rust-uuid" ,rust-uuid-1))))
+       #:cargo-inputs (rust-argon2-0.5
+                       rust-async-trait-0.1
+                       rust-atuin-common-18
+                       rust-atuin-server-database-18
+                       rust-axum-0.7
+                       rust-axum-server-0.6
+                       rust-base64-0.22
+                       rust-config-0.13
+                       rust-eyre-0.6
+                       rust-fs-err-2
+                       rust-metrics-0.21
+                       rust-metrics-exporter-prometheus-0.12
+                       rust-rand-0.8
+                       rust-reqwest-0.11
+                       rust-rustls-0.21
+                       rust-rustls-pemfile-2
+                       rust-semver-1
+                       rust-serde-1
+                       rust-serde-json-1
+                       rust-time-0.3
+                       rust-tokio-1
+                       rust-tower-0.4
+                       rust-tower-http-0.5
+                       rust-tracing-0.1
+                       rust-uuid-1)))
     (home-page "https://atuin.sh")
     (synopsis "server library for atuin")
     (description "This package provides server library for atuin.")
@@ -1036,9 +1036,9 @@ Prometheus.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-prost" ,rust-prost-0.12)
-                       ("rust-prost-types" ,rust-prost-types-0.12)
-                       ("rust-tonic" ,rust-tonic-0.11))))
+       #:cargo-inputs (rust-prost-0.12
+                       rust-prost-types-0.12
+                       rust-tonic-0.11)))
     (home-page "https://github.com/hyperium/tonic")
     (synopsis
      "collection of useful protobuf types that can be used with `tonic`.")
@@ -1061,11 +1061,11 @@ with `tonic`.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-prettyplease" ,rust-prettyplease-0.2)
-                       ("rust-proc-macro2" ,rust-proc-macro2-1)
-                       ("rust-prost-build" ,rust-prost-build-0.12)
-                       ("rust-quote" ,rust-quote-1)
-                       ("rust-syn" ,rust-syn-2))))
+       #:cargo-inputs (rust-prettyplease-0.2
+                       rust-proc-macro2-1
+                       rust-prost-build-0.12
+                       rust-quote-1
+                       rust-syn-2)))
     (home-page "https://github.com/hyperium/tonic")
     (synopsis "Codegen module of `tonic` gRPC implementation.")
     (description
@@ -1086,32 +1086,32 @@ with `tonic`.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-async-stream" ,rust-async-stream-0.3)
-                       ("rust-async-trait" ,rust-async-trait-0.1)
-                       ("rust-axum" ,rust-axum-0.6)
-                       ("rust-base64" ,rust-base64-0.21)
-                       ("rust-bytes" ,rust-bytes-1)
-                       ("rust-flate2" ,rust-flate2-1)
-                       ("rust-h2" ,rust-h2-0.3)
-                       ("rust-http" ,rust-http-0.2)
-                       ("rust-http-body" ,rust-http-body-0.4)
-                       ("rust-hyper" ,rust-hyper-0.14)
-                       ("rust-hyper-timeout" ,rust-hyper-timeout-0.4)
-                       ("rust-percent-encoding" ,rust-percent-encoding-2)
-                       ("rust-pin-project" ,rust-pin-project-1)
-                       ("rust-prost" ,rust-prost-0.12)
-                       ("rust-rustls-native-certs" ,rust-rustls-native-certs-0.7)
-                       ("rust-rustls-pemfile" ,rust-rustls-pemfile-2)
-                       ("rust-rustls-pki-types" ,rust-rustls-pki-types-1)
-                       ("rust-tokio" ,rust-tokio-1)
-                       ("rust-tokio-rustls" ,rust-tokio-rustls-0.25)
-                       ("rust-tokio-stream" ,rust-tokio-stream-0.1)
-                       ("rust-tower" ,rust-tower-0.4)
-                       ("rust-tower-layer" ,rust-tower-layer-0.3)
-                       ("rust-tower-service" ,rust-tower-service-0.3)
-                       ("rust-tracing" ,rust-tracing-0.1)
-                       ("rust-webpki-roots" ,rust-webpki-roots-0.26)
-                       ("rust-zstd" ,rust-zstd-0.12))))
+       #:cargo-inputs (rust-async-stream-0.3
+                       rust-async-trait-0.1
+                       rust-axum-0.6
+                       rust-base64-0.21
+                       rust-bytes-1
+                       rust-flate2-1
+                       rust-h2-0.3
+                       rust-http-0.2
+                       rust-http-body-0.4
+                       rust-hyper-0.14
+                       rust-hyper-timeout-0.4
+                       rust-percent-encoding-2
+                       rust-pin-project-1
+                       rust-prost-0.12
+                       rust-rustls-native-certs-0.7
+                       rust-rustls-pemfile-2
+                       rust-rustls-pki-types-1
+                       rust-tokio-1
+                       rust-tokio-rustls-0.25
+                       rust-tokio-stream-0.1
+                       rust-tower-0.4
+                       rust-tower-layer-0.3
+                       rust-tower-service-0.3
+                       rust-tracing-0.1
+                       rust-webpki-roots-0.26
+                       rust-zstd-0.12)))
     (home-page "https://github.com/hyperium/tonic")
     (synopsis
      "gRPC over HTTP/2 implementation focused on high performance, interoperability, and flexibility.")
@@ -1134,30 +1134,30 @@ performance, interoperability, and flexibility.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-async-trait" ,rust-async-trait-0.1)
-                       ("rust-atuin-client" ,rust-atuin-client-18)
-                       ("rust-atuin-common" ,rust-atuin-common-18)
-                       ("rust-base64" ,rust-base64-0.22)
-                       ("rust-crossterm" ,rust-crossterm-0.27)
-                       ("rust-directories" ,rust-directories-5)
-                       ("rust-eyre" ,rust-eyre-0.6)
-                       ("rust-fs-err" ,rust-fs-err-2)
-                       ("rust-futures-util" ,rust-futures-util-0.3)
-                       ("rust-indicatif" ,rust-indicatif-0.17)
-                       ("rust-interim" ,rust-interim-0.1)
-                       ("rust-itertools" ,rust-itertools-0.12)
-                       ("rust-log" ,rust-log-0.4)
-                       ("rust-semver" ,rust-semver-1)
-                       ("rust-serde" ,rust-serde-1)
-                       ("rust-serde-json" ,rust-serde-json-1)
-                       ("rust-sysinfo" ,rust-sysinfo-0.30)
-                       ("rust-time" ,rust-time-0.3)
-                       ("rust-tokio" ,rust-tokio-1)
-                       ("rust-tracing" ,rust-tracing-0.1)
-                       ("rust-unicode-segmentation" ,rust-unicode-segmentation-1)
-                       ("rust-unicode-width" ,rust-unicode-width-0.1)
-                       ("rust-uuid" ,rust-uuid-1)
-                       ("rust-whoami" ,rust-whoami-1))))
+       #:cargo-inputs (rust-async-trait-0.1
+                       rust-atuin-client-18
+                       rust-atuin-common-18
+                       rust-base64-0.22
+                       rust-crossterm-0.27
+                       rust-directories-5
+                       rust-eyre-0.6
+                       rust-fs-err-2
+                       rust-futures-util-0.3
+                       rust-indicatif-0.17
+                       rust-interim-0.1
+                       rust-itertools-0.12
+                       rust-log-0.4
+                       rust-semver-1
+                       rust-serde-1
+                       rust-serde-json-1
+                       rust-sysinfo-0.30
+                       rust-time-0.3
+                       rust-tokio-1
+                       rust-tracing-0.1
+                       rust-unicode-segmentation-1
+                       rust-unicode-width-0.1
+                       rust-uuid-1
+                       rust-whoami-1)))
     (home-page "https://atuin.sh")
     (synopsis "The history crate for Atuin")
     (description "This package provides The history crate for Atuin.")
@@ -1177,14 +1177,14 @@ performance, interoperability, and flexibility.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-atuin-client" ,rust-atuin-client-18)
-                       ("rust-atuin-common" ,rust-atuin-common-18)
-                       ("rust-crypto-secretbox" ,rust-crypto-secretbox-0.1)
-                       ("rust-eyre" ,rust-eyre-0.6)
-                       ("rust-rand" ,rust-rand-0.8)
-                       ("rust-rmp" ,rust-rmp-0.8)
-                       ("rust-serde" ,rust-serde-1)
-                       ("rust-tokio" ,rust-tokio-1))))
+       #:cargo-inputs (rust-atuin-client-18
+                       rust-atuin-common-18
+                       rust-crypto-secretbox-0.1
+                       rust-eyre-0.6
+                       rust-rand-0.8
+                       rust-rmp-0.8
+                       rust-serde-1
+                       rust-tokio-1)))
     (home-page "https://atuin.sh")
     (synopsis "The dotfiles crate for Atuin")
     (description "This package provides The dotfiles crate for Atuin.")
@@ -1204,25 +1204,25 @@ performance, interoperability, and flexibility.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-atuin-client" ,rust-atuin-client-18)
-                       ("rust-atuin-dotfiles" ,rust-atuin-dotfiles-0.3)
-                       ("rust-atuin-history" ,rust-atuin-history-0.2)
-                       ("rust-dashmap" ,rust-dashmap-5)
-                       ("rust-eyre" ,rust-eyre-0.6)
-                       ("rust-listenfd" ,rust-listenfd-1)
-                       ("rust-prost" ,rust-prost-0.12)
-                       ("rust-prost-types" ,rust-prost-types-0.12)
-                       ("rust-rand" ,rust-rand-0.8)
-                       ("rust-time" ,rust-time-0.3)
-                       ("rust-tokio" ,rust-tokio-1)
-                       ("rust-tokio-stream" ,rust-tokio-stream-0.1)
-                       ("rust-tonic" ,rust-tonic-0.11)
-                       ("rust-tonic-build" ,rust-tonic-build-0.11)
-                       ("rust-tonic-types" ,rust-tonic-types-0.11)
-                       ("rust-tower" ,rust-tower-0.4)
-                       ("rust-tracing" ,rust-tracing-0.1)
-                       ("rust-tracing-subscriber" ,rust-tracing-subscriber-0.3)
-                       ("rust-uuid" ,rust-uuid-1))))
+       #:cargo-inputs (rust-atuin-client-18
+                       rust-atuin-dotfiles-0.3
+                       rust-atuin-history-0.2
+                       rust-dashmap-5
+                       rust-eyre-0.6
+                       rust-listenfd-1
+                       rust-prost-0.12
+                       rust-prost-types-0.12
+                       rust-rand-0.8
+                       rust-time-0.3
+                       rust-tokio-1
+                       rust-tokio-stream-0.1
+                       rust-tonic-0.11
+                       rust-tonic-build-0.11
+                       rust-tonic-types-0.11
+                       rust-tower-0.4
+                       rust-tracing-0.1
+                       rust-tracing-subscriber-0.3
+                       rust-uuid-1)))
     (home-page "https://atuin.sh")
     (synopsis "The daemon crate for Atuin")
     (description "This package provides The daemon crate for Atuin.")
@@ -1261,9 +1261,9 @@ performance, interoperability, and flexibility.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-redox-syscall" ,rust-redox-syscall-0.4)
-                       ("rust-wasite" ,rust-wasite-0.1)
-                       ("rust-web-sys" ,rust-web-sys-0.3))))
+       #:cargo-inputs (rust-redox-syscall-0.4
+                       rust-wasite-0.1
+                       rust-web-sys-0.3)))
     (home-page "https://github.com/ardaku/whoami/blob/v1/CHANGELOG.md")
     (synopsis "Retrieve the current user and environment")
     (description
@@ -1284,17 +1284,17 @@ performance, interoperability, and flexibility.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-anyhow" ,rust-anyhow-1)
-                       ("rust-hmac" ,rust-hmac-0.12)
-                       ("rust-once-cell" ,rust-once-cell-1)
-                       ("rust-pbkdf2" ,rust-pbkdf2-0.11)
-                       ("rust-rand" ,rust-rand-0.8)
-                       ("rust-rustc-hash" ,rust-rustc-hash-1)
-                       ("rust-sha2" ,rust-sha2-0.10)
-                       ("rust-thiserror" ,rust-thiserror-1)
-                       ("rust-unicode-normalization" ,rust-unicode-normalization-0.1)
-                       ("rust-wasm-bindgen" ,rust-wasm-bindgen-0.2)
-                       ("rust-zeroize" ,rust-zeroize-1))))
+       #:cargo-inputs (rust-anyhow-1
+                       rust-hmac-0.12
+                       rust-once-cell-1
+                       rust-pbkdf2-0.11
+                       rust-rand-0.8
+                       rust-rustc-hash-1
+                       rust-sha2-0.10
+                       rust-thiserror-1
+                       rust-unicode-normalization-0.1
+                       rust-wasm-bindgen-0.2
+                       rust-zeroize-1)))
     (home-page "https://github.com/maciejhirsz/tiny-bip39/")
     (synopsis
      "fork of the bip39 crate with fixes to v0.6. Rust implementation of BIP-0039")
@@ -1317,8 +1317,8 @@ implementation of BIP-0039.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-anyhow" ,rust-anyhow-1)
-                       ("rust-thiserror" ,rust-thiserror-1))))
+       #:cargo-inputs (rust-anyhow-1
+                       rust-thiserror-1)))
     (home-page "https://github.com/perdumonocle/sql-builder.git")
     (synopsis "Simple SQL code generator")
     (description "This package provides Simple SQL code generator.")
@@ -1338,11 +1338,11 @@ implementation of BIP-0039.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-indexmap" ,rust-indexmap-2)
-                       ("rust-itoa" ,rust-itoa-1)
-                       ("rust-memchr" ,rust-memchr-2)
-                       ("rust-ryu" ,rust-ryu-1)
-                       ("rust-serde" ,rust-serde-1))))
+       #:cargo-inputs (rust-indexmap-2
+                       rust-itoa-1
+                       rust-memchr-2
+                       rust-ryu-1
+                       rust-serde-1)))
     (home-page "https://github.com/serde-rs/json")
     (synopsis "JSON serialization file format")
     (description "This package provides a JSON serialization file format.")
@@ -1382,8 +1382,8 @@ implementation of BIP-0039.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-serde" ,rust-serde-1)
-                       ("rust-typeid" ,rust-typeid-1))))
+       #:cargo-inputs (rust-serde-1
+                       rust-typeid-1)))
     (home-page "https://github.com/dtolnay/erased-serde")
     (synopsis "Type-erased Serialize and Serializer traits")
     (description
@@ -1404,26 +1404,26 @@ implementation of BIP-0039.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-aes" ,rust-aes-0.7)
-                       ("rust-base64" ,rust-base64-0.22)
-                       ("rust-blake2" ,rust-blake2-0.10)
-                       ("rust-chacha20" ,rust-chacha20-0.9)
-                       ("rust-chacha20poly1305" ,rust-chacha20poly1305-0.10)
-                       ("rust-digest" ,rust-digest-0.10)
-                       ("rust-ed25519-dalek" ,rust-ed25519-dalek-2)
-                       ("rust-erased-serde" ,rust-erased-serde-0.4)
-                       ("rust-hex" ,rust-hex-0.4)
-                       ("rust-hmac" ,rust-hmac-0.12)
-                       ("rust-iso8601" ,rust-iso8601-0.6)
-                       ("rust-p384" ,rust-p384-0.13)
-                       ("rust-rand-core" ,rust-rand-core-0.6)
-                       ("rust-ring" ,rust-ring-0.17)
-                       ("rust-serde" ,rust-serde-1)
-                       ("rust-serde-json" ,rust-serde-json-1)
-                       ("rust-sha2" ,rust-sha2-0.10)
-                       ("rust-thiserror" ,rust-thiserror-1)
-                       ("rust-time" ,rust-time-0.3)
-                       ("rust-zeroize" ,rust-zeroize-1))))
+       #:cargo-inputs (rust-aes-0.7
+                       rust-base64-0.22
+                       rust-blake2-0.10
+                       rust-chacha20-0.9
+                       rust-chacha20poly1305-0.10
+                       rust-digest-0.10
+                       rust-ed25519-dalek-2
+                       rust-erased-serde-0.4
+                       rust-hex-0.4
+                       rust-hmac-0.12
+                       rust-iso8601-0.6
+                       rust-p384-0.13
+                       rust-rand-core-0.6
+                       rust-ring-0.17
+                       rust-serde-1
+                       rust-serde-json-1
+                       rust-sha2-0.10
+                       rust-thiserror-1
+                       rust-time-0.3
+                       rust-zeroize-1)))
     (home-page "https://github.com/rrrodzilla/rusty_paseto")
     (synopsis
      "type-driven, ergonomic alternative to JWT for secure stateless PASETO tokens.")
@@ -1446,27 +1446,27 @@ stateless PASETO tokens.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-aes" ,rust-aes-0.8)
-                       ("rust-arbitrary" ,rust-arbitrary-1)
-                       ("rust-argon2" ,rust-argon2-0.5)
-                       ("rust-base64" ,rust-base64-0.22)
-                       ("rust-base64ct" ,rust-base64ct-1)
-                       ("rust-blake2" ,rust-blake2-0.10)
-                       ("rust-chacha20" ,rust-chacha20-0.9)
-                       ("rust-cipher" ,rust-cipher-0.4)
-                       ("rust-ctr" ,rust-ctr-0.9)
-                       ("rust-curve25519-dalek" ,rust-curve25519-dalek-4)
-                       ("rust-digest" ,rust-digest-0.10)
-                       ("rust-ed25519-dalek" ,rust-ed25519-dalek-2)
-                       ("rust-generic-array" ,rust-generic-array-0.14)
-                       ("rust-hmac" ,rust-hmac-0.12)
-                       ("rust-p384" ,rust-p384-0.13)
-                       ("rust-pbkdf2" ,rust-pbkdf2-0.12)
-                       ("rust-rand" ,rust-rand-0.8)
-                       ("rust-rusty-paseto" ,rust-rusty-paseto-0.7)
-                       ("rust-serde" ,rust-serde-1)
-                       ("rust-sha2" ,rust-sha2-0.10)
-                       ("rust-subtle" ,rust-subtle-2))))
+       #:cargo-inputs (rust-aes-0.8
+                       rust-arbitrary-1
+                       rust-argon2-0.5
+                       rust-base64-0.22
+                       rust-base64ct-1
+                       rust-blake2-0.10
+                       rust-chacha20-0.9
+                       rust-cipher-0.4
+                       rust-ctr-0.9
+                       rust-curve25519-dalek-4
+                       rust-digest-0.10
+                       rust-ed25519-dalek-2
+                       rust-generic-array-0.14
+                       rust-hmac-0.12
+                       rust-p384-0.13
+                       rust-pbkdf2-0.12
+                       rust-rand-0.8
+                       rust-rusty-paseto-0.7
+                       rust-serde-1
+                       rust-sha2-0.10
+                       rust-subtle-2)))
     (home-page "https://github.com/conradludgate/rusty-paserk")
     (synopsis
      "Platform Agnostic Serializable Keys (PASERK) is an extension on PASETO for key management")
@@ -1489,9 +1489,9 @@ management.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-byteorder" ,rust-byteorder-1)
-                       ("rust-num-traits" ,rust-num-traits-0.2)
-                       ("rust-paste" ,rust-paste-1))))
+       #:cargo-inputs (rust-byteorder-1
+                       rust-num-traits-0.2
+                       rust-paste-1)))
     (home-page "https://github.com/3Hren/msgpack-rust")
     (synopsis "Pure Rust MessagePack serialization implementation")
     (description
@@ -1533,13 +1533,13 @@ management.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-beef" ,rust-beef-0.5)
-                       ("rust-fnv" ,rust-fnv-1)
-                       ("rust-lazy-static" ,rust-lazy-static-1)
-                       ("rust-proc-macro2" ,rust-proc-macro2-1)
-                       ("rust-quote" ,rust-quote-1)
-                       ("rust-regex-syntax" ,rust-regex-syntax-0.8)
-                       ("rust-syn" ,rust-syn-2))))
+       #:cargo-inputs (rust-beef-0.5
+                       rust-fnv-1
+                       rust-lazy-static-1
+                       rust-proc-macro2-1
+                       rust-quote-1
+                       rust-regex-syntax-0.8
+                       rust-syn-2)))
     (home-page "https://logos.maciej.codes/")
     (synopsis "Create ridiculously fast Lexers")
     (description "This package provides Create ridiculously fast Lexers.")
@@ -1559,7 +1559,7 @@ management.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-logos-codegen" ,rust-logos-codegen-0.14))))
+       #:cargo-inputs (rust-logos-codegen-0.14)))
     (home-page "https://logos.maciej.codes/")
     (synopsis "Create ridiculously fast Lexers")
     (description "This package provides Create ridiculously fast Lexers.")
@@ -1579,7 +1579,7 @@ management.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-logos-derive" ,rust-logos-derive-0.14))))
+       #:cargo-inputs (rust-logos-derive-0.14)))
     (home-page "https://logos.maciej.codes/")
     (synopsis "Create ridiculously fast Lexers")
     (description "This package provides Create ridiculously fast Lexers.")
@@ -1599,9 +1599,9 @@ management.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-chrono" ,rust-chrono-0.4)
-                       ("rust-logos" ,rust-logos-0.14)
-                       ("rust-time" ,rust-time-0.3))))
+       #:cargo-inputs (rust-chrono-0.4
+                       rust-logos-0.14
+                       rust-time-0.3)))
     (home-page "https://github.com/conradludgate/interim")
     (synopsis
      "parses simple English dates, inspired by Linux date command, and forked from chrono-english")
@@ -1624,9 +1624,9 @@ chrono-english.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-proc-macro2" ,rust-proc-macro2-1)
-                       ("rust-quote" ,rust-quote-1)
-                       ("rust-syn" ,rust-syn-2))))
+       #:cargo-inputs (rust-proc-macro2-1
+                       rust-quote-1
+                       rust-syn-2)))
     (home-page "https://github.com/uuid-rs/uuid")
     (synopsis "Private implementation details of the uuid! macro")
     (description
@@ -1647,20 +1647,20 @@ chrono-english.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-arbitrary" ,rust-arbitrary-1)
-                       ("rust-atomic" ,rust-atomic-0.6)
-                       ("rust-borsh" ,rust-borsh-1)
-                       ("rust-borsh-derive" ,rust-borsh-derive-1)
-                       ("rust-bytemuck" ,rust-bytemuck-1)
-                       ("rust-getrandom" ,rust-getrandom-0.2)
-                       ("rust-md-5" ,rust-md-5-0.10)
-                       ("rust-rand" ,rust-rand-0.8)
-                       ("rust-serde" ,rust-serde-1)
-                       ("rust-sha1-smol" ,rust-sha1-smol-1)
-                       ("rust-slog" ,rust-slog-2)
-                       ("rust-uuid-macro-internal" ,rust-uuid-macro-internal-1)
-                       ("rust-wasm-bindgen" ,rust-wasm-bindgen-0.2)
-                       ("rust-zerocopy" ,rust-zerocopy-0.7))))
+       #:cargo-inputs (rust-arbitrary-1
+                       rust-atomic-0.6
+                       rust-borsh-1
+                       rust-borsh-derive-1
+                       rust-bytemuck-1
+                       rust-getrandom-0.2
+                       rust-md-5-0.10
+                       rust-rand-0.8
+                       rust-serde-1
+                       rust-sha1-smol-1
+                       rust-slog-2
+                       rust-uuid-macro-internal-1
+                       rust-wasm-bindgen-0.2
+                       rust-zerocopy-0.7)))
     (home-page "https://github.com/uuid-rs/uuid")
     (synopsis "library to generate and parse UUIDs.")
     (description
@@ -1681,9 +1681,9 @@ chrono-english.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-proc-macro2" ,rust-proc-macro2-1)
-                       ("rust-quote" ,rust-quote-1)
-                       ("rust-syn" ,rust-syn-2))))
+       #:cargo-inputs (rust-proc-macro2-1
+                       rust-quote-1
+                       rust-syn-2)))
     (home-page "https://github.com/idanarye/rust-typed-builder")
     (synopsis "Compile-time type-checked builder derive")
     (description
@@ -1704,7 +1704,7 @@ chrono-english.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-typed-builder-macro" ,rust-typed-builder-macro-0.18))))
+       #:cargo-inputs (rust-typed-builder-macro-0.18)))
     (home-page "https://github.com/idanarye/rust-typed-builder")
     (synopsis "Compile-time type-checked builder derive")
     (description
@@ -1725,8 +1725,8 @@ chrono-english.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-num-conv" ,rust-num-conv-0.1)
-                       ("rust-time-core" ,rust-time-core-0.1))))
+       #:cargo-inputs (rust-num-conv-0.1
+                       rust-time-core-0.1)))
     (home-page "https://github.com/time-rs/time")
     (synopsis
      "Procedural macros for the time crate.
@@ -1750,18 +1750,18 @@ and should not be relied upon directly.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-deranged" ,rust-deranged-0.3)
-                       ("rust-itoa" ,rust-itoa-1)
-                       ("rust-js-sys" ,rust-js-sys-0.3)
-                       ("rust-libc" ,rust-libc-0.2)
-                       ("rust-num-conv" ,rust-num-conv-0.1)
-                       ("rust-num-threads" ,rust-num-threads-0.1)
-                       ("rust-powerfmt" ,rust-powerfmt-0.2)
-                       ("rust-quickcheck" ,rust-quickcheck-1)
-                       ("rust-rand" ,rust-rand-0.8)
-                       ("rust-serde" ,rust-serde-1)
-                       ("rust-time-core" ,rust-time-core-0.1)
-                       ("rust-time-macros" ,rust-time-macros-0.2))))
+       #:cargo-inputs (rust-deranged-0.3
+                       rust-itoa-1
+                       rust-js-sys-0.3
+                       rust-libc-0.2
+                       rust-num-conv-0.1
+                       rust-num-threads-0.1
+                       rust-powerfmt-0.2
+                       rust-quickcheck-1
+                       rust-rand-0.8
+                       rust-serde-1
+                       rust-time-core-0.1
+                       rust-time-macros-0.2)))
     (home-page "https://time-rs.github.io")
     (synopsis
      "Date and time library. Fully interoperable with the standard library. Mostly compatible with #![no_std]")
@@ -1784,10 +1784,10 @@ compatible with #![no_std].")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-futures-core" ,rust-futures-core-0.3)
-                       ("rust-futures-sink" ,rust-futures-sink-0.3)
-                       ("rust-nanorand" ,rust-nanorand-0.7)
-                       ("rust-spin" ,rust-spin-0.9))))
+       #:cargo-inputs (rust-futures-core-0.3
+                       rust-futures-sink-0.3
+                       rust-nanorand-0.7
+                       rust-spin-0.9)))
     (home-page "https://github.com/zesterer/flume")
     (synopsis "blazingly fast multi-producer channel")
     (description
@@ -1808,25 +1808,25 @@ compatible with #![no_std].")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-atoi" ,rust-atoi-2)
-                       ("rust-chrono" ,rust-chrono-0.4)
-                       ("rust-flume" ,rust-flume-0.11)
-                       ("rust-futures-channel" ,rust-futures-channel-0.3)
-                       ("rust-futures-core" ,rust-futures-core-0.3)
-                       ("rust-futures-executor" ,rust-futures-executor-0.3)
-                       ("rust-futures-intrusive" ,rust-futures-intrusive-0.5)
-                       ("rust-futures-util" ,rust-futures-util-0.3)
-                       ("rust-libsqlite3-sys" ,rust-libsqlite3-sys-0.27)
-                       ("rust-log" ,rust-log-0.4)
-                       ("rust-percent-encoding" ,rust-percent-encoding-2)
-                       ("rust-regex" ,rust-regex-1)
-                       ("rust-serde" ,rust-serde-1)
-                       ("rust-sqlx-core" ,rust-sqlx-core-0.7)
-                       ("rust-time" ,rust-time-0.3)
-                       ("rust-tracing" ,rust-tracing-0.1)
-                       ("rust-url" ,rust-url-2)
-                       ("rust-urlencoding" ,rust-urlencoding-2)
-                       ("rust-uuid" ,rust-uuid-1))))
+       #:cargo-inputs (rust-atoi-2
+                       rust-chrono-0.4
+                       rust-flume-0.11
+                       rust-futures-channel-0.3
+                       rust-futures-core-0.3
+                       rust-futures-executor-0.3
+                       rust-futures-intrusive-0.5
+                       rust-futures-util-0.3
+                       rust-libsqlite3-sys-0.27
+                       rust-log-0.4
+                       rust-percent-encoding-2
+                       rust-regex-1
+                       rust-serde-1
+                       rust-sqlx-core-0.7
+                       rust-time-0.3
+                       rust-tracing-0.1
+                       rust-url-2
+                       rust-urlencoding-2
+                       rust-uuid-1)))
     (home-page "https://github.com/launchbadge/sqlx")
     (synopsis
      "SQLite driver implementation for SQLx. Not for direct use; see the `sqlx` crate for details")
@@ -1849,45 +1849,45 @@ for details.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-atoi" ,rust-atoi-2)
-                       ("rust-base64" ,rust-base64-0.21)
-                       ("rust-bigdecimal" ,rust-bigdecimal-0.3)
-                       ("rust-bit-vec" ,rust-bit-vec-0.6)
-                       ("rust-bitflags" ,rust-bitflags-2)
-                       ("rust-byteorder" ,rust-byteorder-1)
-                       ("rust-chrono" ,rust-chrono-0.4)
-                       ("rust-crc" ,rust-crc-3)
-                       ("rust-dotenvy" ,rust-dotenvy-0.15)
-                       ("rust-etcetera" ,rust-etcetera-0.8)
-                       ("rust-futures-channel" ,rust-futures-channel-0.3)
-                       ("rust-futures-core" ,rust-futures-core-0.3)
-                       ("rust-futures-io" ,rust-futures-io-0.3)
-                       ("rust-futures-util" ,rust-futures-util-0.3)
-                       ("rust-hex" ,rust-hex-0.4)
-                       ("rust-hkdf" ,rust-hkdf-0.12)
-                       ("rust-hmac" ,rust-hmac-0.12)
-                       ("rust-home" ,rust-home-0.5)
-                       ("rust-ipnetwork" ,rust-ipnetwork-0.20)
-                       ("rust-itoa" ,rust-itoa-1)
-                       ("rust-log" ,rust-log-0.4)
-                       ("rust-mac-address" ,rust-mac-address-1)
-                       ("rust-md-5" ,rust-md-5-0.10)
-                       ("rust-memchr" ,rust-memchr-2)
-                       ("rust-num-bigint" ,rust-num-bigint-0.4)
-                       ("rust-once-cell" ,rust-once-cell-1)
-                       ("rust-rand" ,rust-rand-0.8)
-                       ("rust-rust-decimal" ,rust-rust-decimal-1)
-                       ("rust-serde" ,rust-serde-1)
-                       ("rust-serde-json" ,rust-serde-json-1)
-                       ("rust-sha2" ,rust-sha2-0.10)
-                       ("rust-smallvec" ,rust-smallvec-1)
-                       ("rust-sqlx-core" ,rust-sqlx-core-0.7)
-                       ("rust-stringprep" ,rust-stringprep-0.1)
-                       ("rust-thiserror" ,rust-thiserror-1)
-                       ("rust-time" ,rust-time-0.3)
-                       ("rust-tracing" ,rust-tracing-0.1)
-                       ("rust-uuid" ,rust-uuid-1)
-                       ("rust-whoami" ,rust-whoami-1))))
+       #:cargo-inputs (rust-atoi-2
+                       rust-base64-0.21
+                       rust-bigdecimal-0.3
+                       rust-bit-vec-0.6
+                       rust-bitflags-2
+                       rust-byteorder-1
+                       rust-chrono-0.4
+                       rust-crc-3
+                       rust-dotenvy-0.15
+                       rust-etcetera-0.8
+                       rust-futures-channel-0.3
+                       rust-futures-core-0.3
+                       rust-futures-io-0.3
+                       rust-futures-util-0.3
+                       rust-hex-0.4
+                       rust-hkdf-0.12
+                       rust-hmac-0.12
+                       rust-home-0.5
+                       rust-ipnetwork-0.20
+                       rust-itoa-1
+                       rust-log-0.4
+                       rust-mac-address-1
+                       rust-md-5-0.10
+                       rust-memchr-2
+                       rust-num-bigint-0.4
+                       rust-once-cell-1
+                       rust-rand-0.8
+                       rust-rust-decimal-1
+                       rust-serde-1
+                       rust-serde-json-1
+                       rust-sha2-0.10
+                       rust-smallvec-1
+                       rust-sqlx-core-0.7
+                       rust-stringprep-0.1
+                       rust-thiserror-1
+                       rust-time-0.3
+                       rust-tracing-0.1
+                       rust-uuid-1
+                       rust-whoami-1)))
     (home-page "https://github.com/launchbadge/sqlx")
     (synopsis
      "PostgreSQL driver implementation for SQLx. Not for direct use; see the `sqlx` crate for details")
@@ -1910,45 +1910,45 @@ for details.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-atoi" ,rust-atoi-2)
-                       ("rust-base64" ,rust-base64-0.21)
-                       ("rust-bigdecimal" ,rust-bigdecimal-0.3)
-                       ("rust-bitflags" ,rust-bitflags-2)
-                       ("rust-byteorder" ,rust-byteorder-1)
-                       ("rust-bytes" ,rust-bytes-1)
-                       ("rust-chrono" ,rust-chrono-0.4)
-                       ("rust-crc" ,rust-crc-3)
-                       ("rust-digest" ,rust-digest-0.10)
-                       ("rust-dotenvy" ,rust-dotenvy-0.15)
-                       ("rust-either" ,rust-either-1)
-                       ("rust-futures-channel" ,rust-futures-channel-0.3)
-                       ("rust-futures-core" ,rust-futures-core-0.3)
-                       ("rust-futures-io" ,rust-futures-io-0.3)
-                       ("rust-futures-util" ,rust-futures-util-0.3)
-                       ("rust-generic-array" ,rust-generic-array-0.14)
-                       ("rust-hex" ,rust-hex-0.4)
-                       ("rust-hkdf" ,rust-hkdf-0.12)
-                       ("rust-hmac" ,rust-hmac-0.12)
-                       ("rust-itoa" ,rust-itoa-1)
-                       ("rust-log" ,rust-log-0.4)
-                       ("rust-md-5" ,rust-md-5-0.10)
-                       ("rust-memchr" ,rust-memchr-2)
-                       ("rust-once-cell" ,rust-once-cell-1)
-                       ("rust-percent-encoding" ,rust-percent-encoding-2)
-                       ("rust-rand" ,rust-rand-0.8)
-                       ("rust-rsa" ,rust-rsa-0.9)
-                       ("rust-rust-decimal" ,rust-rust-decimal-1)
-                       ("rust-serde" ,rust-serde-1)
-                       ("rust-sha1" ,rust-sha1-0.10)
-                       ("rust-sha2" ,rust-sha2-0.10)
-                       ("rust-smallvec" ,rust-smallvec-1)
-                       ("rust-sqlx-core" ,rust-sqlx-core-0.7)
-                       ("rust-stringprep" ,rust-stringprep-0.1)
-                       ("rust-thiserror" ,rust-thiserror-1)
-                       ("rust-time" ,rust-time-0.3)
-                       ("rust-tracing" ,rust-tracing-0.1)
-                       ("rust-uuid" ,rust-uuid-1)
-                       ("rust-whoami" ,rust-whoami-1))))
+       #:cargo-inputs (rust-atoi-2
+                       rust-base64-0.21
+                       rust-bigdecimal-0.3
+                       rust-bitflags-2
+                       rust-byteorder-1
+                       rust-bytes-1
+                       rust-chrono-0.4
+                       rust-crc-3
+                       rust-digest-0.10
+                       rust-dotenvy-0.15
+                       rust-either-1
+                       rust-futures-channel-0.3
+                       rust-futures-core-0.3
+                       rust-futures-io-0.3
+                       rust-futures-util-0.3
+                       rust-generic-array-0.14
+                       rust-hex-0.4
+                       rust-hkdf-0.12
+                       rust-hmac-0.12
+                       rust-itoa-1
+                       rust-log-0.4
+                       rust-md-5-0.10
+                       rust-memchr-2
+                       rust-once-cell-1
+                       rust-percent-encoding-2
+                       rust-rand-0.8
+                       rust-rsa-0.9
+                       rust-rust-decimal-1
+                       rust-serde-1
+                       rust-sha1-0.10
+                       rust-sha2-0.10
+                       rust-smallvec-1
+                       rust-sqlx-core-0.7
+                       rust-stringprep-0.1
+                       rust-thiserror-1
+                       rust-time-0.3
+                       rust-tracing-0.1
+                       rust-uuid-1
+                       rust-whoami-1)))
     (home-page "https://github.com/launchbadge/sqlx")
     (synopsis
      "MySQL driver implementation for SQLx. Not for direct use; see the `sqlx` crate for details")
@@ -1971,25 +1971,25 @@ crate for details.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-async-std" ,rust-async-std-1)
-                       ("rust-dotenvy" ,rust-dotenvy-0.15)
-                       ("rust-either" ,rust-either-1)
-                       ("rust-heck" ,rust-heck-0.4)
-                       ("rust-hex" ,rust-hex-0.4)
-                       ("rust-once-cell" ,rust-once-cell-1)
-                       ("rust-proc-macro2" ,rust-proc-macro2-1)
-                       ("rust-quote" ,rust-quote-1)
-                       ("rust-serde" ,rust-serde-1)
-                       ("rust-serde-json" ,rust-serde-json-1)
-                       ("rust-sha2" ,rust-sha2-0.10)
-                       ("rust-sqlx-core" ,rust-sqlx-core-0.7)
-                       ("rust-sqlx-mysql" ,rust-sqlx-mysql-0.7)
-                       ("rust-sqlx-postgres" ,rust-sqlx-postgres-0.7)
-                       ("rust-sqlx-sqlite" ,rust-sqlx-sqlite-0.7)
-                       ("rust-syn" ,rust-syn-1)
-                       ("rust-tempfile" ,rust-tempfile-3)
-                       ("rust-tokio" ,rust-tokio-1)
-                       ("rust-url" ,rust-url-2))))
+       #:cargo-inputs (rust-async-std-1
+                       rust-dotenvy-0.15
+                       rust-either-1
+                       rust-heck-0.4
+                       rust-hex-0.4
+                       rust-once-cell-1
+                       rust-proc-macro2-1
+                       rust-quote-1
+                       rust-serde-1
+                       rust-serde-json-1
+                       rust-sha2-0.10
+                       rust-sqlx-core-0.7
+                       rust-sqlx-mysql-0.7
+                       rust-sqlx-postgres-0.7
+                       rust-sqlx-sqlite-0.7
+                       rust-syn-1
+                       rust-tempfile-3
+                       rust-tokio-1
+                       rust-url-2)))
     (home-page "https://github.com/launchbadge/sqlx")
     (synopsis
      "Macro support core for SQLx, the Rust SQL toolkit. Not intended to be used directly")
@@ -2012,11 +2012,11 @@ directly.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-proc-macro2" ,rust-proc-macro2-1)
-                       ("rust-quote" ,rust-quote-1)
-                       ("rust-sqlx-core" ,rust-sqlx-core-0.7)
-                       ("rust-sqlx-macros-core" ,rust-sqlx-macros-core-0.7)
-                       ("rust-syn" ,rust-syn-1))))
+       #:cargo-inputs (rust-proc-macro2-1
+                       rust-quote-1
+                       rust-sqlx-core-0.7
+                       rust-sqlx-macros-core-0.7
+                       rust-syn-1)))
     (home-page "https://github.com/launchbadge/sqlx")
     (synopsis
      "Macros for SQLx, the rust SQL toolkit. Not intended to be used directly")
@@ -2038,8 +2038,8 @@ directly.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-nom" ,rust-nom-7)
-                       ("rust-unicode-categories" ,rust-unicode-categories-0.1))))
+       #:cargo-inputs (rust-nom-7
+                       rust-unicode-categories-0.1)))
     (home-page "https://github.com/shssoichiro/sqlformat-rs")
     (synopsis "Formats whitespace in a SQL string to make it easier to read")
     (description
@@ -2060,9 +2060,9 @@ directly.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-futures-core" ,rust-futures-core-0.3)
-                       ("rust-lock-api" ,rust-lock-api-0.4)
-                       ("rust-parking-lot" ,rust-parking-lot-0.12))))
+       #:cargo-inputs (rust-futures-core-0.3
+                       rust-lock-api-0.4
+                       rust-parking-lot-0.12)))
     (home-page "https://github.com/Matthias247/futures-intrusive")
     (synopsis
      "Futures based on intrusive data structures - for std and no-std environments.")
@@ -2084,57 +2084,57 @@ directly.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-ahash" ,rust-ahash-0.8)
-                       ("rust-async-io" ,rust-async-io-1)
-                       ("rust-async-std" ,rust-async-std-1)
-                       ("rust-atoi" ,rust-atoi-2)
-                       ("rust-bigdecimal" ,rust-bigdecimal-0.3)
-                       ("rust-bit-vec" ,rust-bit-vec-0.6)
-                       ("rust-bstr" ,rust-bstr-1)
-                       ("rust-byteorder" ,rust-byteorder-1)
-                       ("rust-bytes" ,rust-bytes-1)
-                       ("rust-chrono" ,rust-chrono-0.4)
-                       ("rust-crc" ,rust-crc-3)
-                       ("rust-crossbeam-queue" ,rust-crossbeam-queue-0.3)
-                       ("rust-digest" ,rust-digest-0.10)
-                       ("rust-either" ,rust-either-1)
-                       ("rust-encoding-rs" ,rust-encoding-rs-0.8)
-                       ("rust-event-listener" ,rust-event-listener-2)
-                       ("rust-futures-channel" ,rust-futures-channel-0.3)
-                       ("rust-futures-core" ,rust-futures-core-0.3)
-                       ("rust-futures-intrusive" ,rust-futures-intrusive-0.5)
-                       ("rust-futures-io" ,rust-futures-io-0.3)
-                       ("rust-futures-util" ,rust-futures-util-0.3)
-                       ("rust-hashlink" ,rust-hashlink-0.8)
-                       ("rust-hex" ,rust-hex-0.4)
-                       ("rust-indexmap" ,rust-indexmap-2)
-                       ("rust-ipnetwork" ,rust-ipnetwork-0.20)
-                       ("rust-log" ,rust-log-0.4)
-                       ("rust-mac-address" ,rust-mac-address-1)
-                       ("rust-memchr" ,rust-memchr-2)
-                       ("rust-native-tls" ,rust-native-tls-0.2)
-                       ("rust-num-bigint" ,rust-num-bigint-0.4)
-                       ("rust-once-cell" ,rust-once-cell-1)
-                       ("rust-paste" ,rust-paste-1)
-                       ("rust-percent-encoding" ,rust-percent-encoding-2)
-                       ("rust-regex" ,rust-regex-1)
-                       ("rust-rust-decimal" ,rust-rust-decimal-1)
-                       ("rust-rustls" ,rust-rustls-0.21)
-                       ("rust-rustls-pemfile" ,rust-rustls-pemfile-1)
-                       ("rust-serde" ,rust-serde-1)
-                       ("rust-serde-json" ,rust-serde-json-1)
-                       ("rust-sha1" ,rust-sha1-0.10)
-                       ("rust-sha2" ,rust-sha2-0.10)
-                       ("rust-smallvec" ,rust-smallvec-1)
-                       ("rust-sqlformat" ,rust-sqlformat-0.2)
-                       ("rust-thiserror" ,rust-thiserror-1)
-                       ("rust-time" ,rust-time-0.3)
-                       ("rust-tokio" ,rust-tokio-1)
-                       ("rust-tokio-stream" ,rust-tokio-stream-0.1)
-                       ("rust-tracing" ,rust-tracing-0.1)
-                       ("rust-url" ,rust-url-2)
-                       ("rust-uuid" ,rust-uuid-1)
-                       ("rust-webpki-roots" ,rust-webpki-roots-0.25))))
+       #:cargo-inputs (rust-ahash-0.8
+                       rust-async-io-1
+                       rust-async-std-1
+                       rust-atoi-2
+                       rust-bigdecimal-0.3
+                       rust-bit-vec-0.6
+                       rust-bstr-1
+                       rust-byteorder-1
+                       rust-bytes-1
+                       rust-chrono-0.4
+                       rust-crc-3
+                       rust-crossbeam-queue-0.3
+                       rust-digest-0.10
+                       rust-either-1
+                       rust-encoding-rs-0.8
+                       rust-event-listener-2
+                       rust-futures-channel-0.3
+                       rust-futures-core-0.3
+                       rust-futures-intrusive-0.5
+                       rust-futures-io-0.3
+                       rust-futures-util-0.3
+                       rust-hashlink-0.8
+                       rust-hex-0.4
+                       rust-indexmap-2
+                       rust-ipnetwork-0.20
+                       rust-log-0.4
+                       rust-mac-address-1
+                       rust-memchr-2
+                       rust-native-tls-0.2
+                       rust-num-bigint-0.4
+                       rust-once-cell-1
+                       rust-paste-1
+                       rust-percent-encoding-2
+                       rust-regex-1
+                       rust-rust-decimal-1
+                       rust-rustls-0.21
+                       rust-rustls-pemfile-1
+                       rust-serde-1
+                       rust-serde-json-1
+                       rust-sha1-0.10
+                       rust-sha2-0.10
+                       rust-smallvec-1
+                       rust-sqlformat-0.2
+                       rust-thiserror-1
+                       rust-time-0.3
+                       rust-tokio-1
+                       rust-tokio-stream-0.1
+                       rust-tracing-0.1
+                       rust-url-2
+                       rust-uuid-1
+                       rust-webpki-roots-0.25)))
     (home-page "https://github.com/launchbadge/sqlx")
     (synopsis
      "Core of SQLx, the rust SQL toolkit. Not intended to be used directly")
@@ -2156,11 +2156,11 @@ directly.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-sqlx-core" ,rust-sqlx-core-0.7)
-                       ("rust-sqlx-macros" ,rust-sqlx-macros-0.7)
-                       ("rust-sqlx-mysql" ,rust-sqlx-mysql-0.7)
-                       ("rust-sqlx-postgres" ,rust-sqlx-postgres-0.7)
-                       ("rust-sqlx-sqlite" ,rust-sqlx-sqlite-0.7))))
+       #:cargo-inputs (rust-sqlx-core-0.7
+                       rust-sqlx-macros-0.7
+                       rust-sqlx-mysql-0.7
+                       rust-sqlx-postgres-0.7
+                       rust-sqlx-sqlite-0.7)))
     (home-page "https://github.com/launchbadge/sqlx")
     (synopsis
      "ð§° The Rust SQL Toolkit. An async, pure Rust SQL crate featuring compile-time checked queries without a DSL. Supports PostgreSQL, MySQL, and SQLite")
@@ -2184,9 +2184,9 @@ SQLite.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-proc-macro2" ,rust-proc-macro2-1)
-                       ("rust-quote" ,rust-quote-1)
-                       ("rust-syn" ,rust-syn-2))))
+       #:cargo-inputs (rust-proc-macro2-1
+                       rust-quote-1
+                       rust-syn-2)))
     (home-page "https://serde.rs")
     (synopsis "Macros 1.1 implementation of #[derive(Serialize, Deserialize)]")
     (description
@@ -2207,8 +2207,8 @@ SQLite.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-serde-derive" ,rust-serde-derive-1)
-                       ("rust-serde-derive" ,rust-serde-derive-1))))
+       #:cargo-inputs (rust-serde-derive-1
+                       rust-serde-derive-1)))
     (home-page "https://serde.rs")
     (synopsis "generic serialization/deserialization framework")
     (description
@@ -2229,17 +2229,17 @@ SQLite.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-eyre" ,rust-eyre-0.6)
-                       ("rust-lazy-static" ,rust-lazy-static-1)
-                       ("rust-rand" ,rust-rand-0.8)
-                       ("rust-semver" ,rust-semver-1)
-                       ("rust-serde" ,rust-serde-1)
-                       ("rust-sqlx" ,rust-sqlx-0.7)
-                       ("rust-sysinfo" ,rust-sysinfo-0.30)
-                       ("rust-thiserror" ,rust-thiserror-1)
-                       ("rust-time" ,rust-time-0.3)
-                       ("rust-typed-builder" ,rust-typed-builder-0.18)
-                       ("rust-uuid" ,rust-uuid-1))))
+       #:cargo-inputs (rust-eyre-0.6
+                       rust-lazy-static-1
+                       rust-rand-0.8
+                       rust-semver-1
+                       rust-serde-1
+                       rust-sqlx-0.7
+                       rust-sysinfo-0.30
+                       rust-thiserror-1
+                       rust-time-0.3
+                       rust-typed-builder-0.18
+                       rust-uuid-1)))
     (home-page "https://atuin.sh")
     (synopsis "common library for atuin")
     (description "This package provides common library for atuin.")
@@ -2259,48 +2259,48 @@ SQLite.")
     (build-system cargo-build-system)
     (arguments
      `(#:skip-build? #t
-       #:cargo-inputs (("rust-async-trait" ,rust-async-trait-0.1)
-                       ("rust-atuin-common" ,rust-atuin-common-18)
-                       ("rust-base64" ,rust-base64-0.22)
-                       ("rust-clap" ,rust-clap-4)
-                       ("rust-config" ,rust-config-0.13)
-                       ("rust-crypto-secretbox" ,rust-crypto-secretbox-0.1)
-                       ("rust-directories" ,rust-directories-5)
-                       ("rust-eyre" ,rust-eyre-0.6)
-                       ("rust-fs-err" ,rust-fs-err-2)
-                       ("rust-futures" ,rust-futures-0.3)
-                       ("rust-generic-array" ,rust-generic-array-0.14)
-                       ("rust-hex" ,rust-hex-0.4)
-                       ("rust-humantime" ,rust-humantime-2)
-                       ("rust-indicatif" ,rust-indicatif-0.17)
-                       ("rust-interim" ,rust-interim-0.1)
-                       ("rust-itertools" ,rust-itertools-0.12)
-                       ("rust-log" ,rust-log-0.4)
-                       ("rust-memchr" ,rust-memchr-2)
-                       ("rust-minspan" ,rust-minspan-0.1)
-                       ("rust-rand" ,rust-rand-0.8)
-                       ("rust-regex" ,rust-regex-1)
-                       ("rust-reqwest" ,rust-reqwest-0.11)
-                       ("rust-rmp" ,rust-rmp-0.8)
-                       ("rust-rusty-paserk" ,rust-rusty-paserk-0.4)
-                       ("rust-rusty-paseto" ,rust-rusty-paseto-0.7)
-                       ("rust-semver" ,rust-semver-1)
-                       ("rust-serde" ,rust-serde-1)
-                       ("rust-serde-json" ,rust-serde-json-1)
-                       ("rust-serde-regex" ,rust-serde-regex-1)
-                       ("rust-serde-with" ,rust-serde-with-3)
-                       ("rust-sha2" ,rust-sha2-0.10)
-                       ("rust-shellexpand" ,rust-shellexpand-3)
-                       ("rust-sql-builder" ,rust-sql-builder-3)
-                       ("rust-sqlx" ,rust-sqlx-0.7)
-                       ("rust-thiserror" ,rust-thiserror-1)
-                       ("rust-time" ,rust-time-0.3)
-                       ("rust-tiny-bip39" ,rust-tiny-bip39-1)
-                       ("rust-tokio" ,rust-tokio-1)
-                       ("rust-typed-builder" ,rust-typed-builder-0.18)
-                       ("rust-urlencoding" ,rust-urlencoding-2)
-                       ("rust-uuid" ,rust-uuid-1)
-                       ("rust-whoami" ,rust-whoami-1))))
+       #:cargo-inputs (rust-async-trait-0.1
+                       rust-atuin-common-18
+                       rust-base64-0.22
+                       rust-clap-4
+                       rust-config-0.13
+                       rust-crypto-secretbox-0.1
+                       rust-directories-5
+                       rust-eyre-0.6
+                       rust-fs-err-2
+                       rust-futures-0.3
+                       rust-generic-array-0.14
+                       rust-hex-0.4
+                       rust-humantime-2
+                       rust-indicatif-0.17
+                       rust-interim-0.1
+                       rust-itertools-0.12
+                       rust-log-0.4
+                       rust-memchr-2
+                       rust-minspan-0.1
+                       rust-rand-0.8
+                       rust-regex-1
+                       rust-reqwest-0.11
+                       rust-rmp-0.8
+                       rust-rusty-paserk-0.4
+                       rust-rusty-paseto-0.7
+                       rust-semver-1
+                       rust-serde-1
+                       rust-serde-json-1
+                       rust-serde-regex-1
+                       rust-serde-with-3
+                       rust-sha2-0.10
+                       rust-shellexpand-3
+                       rust-sql-builder-3
+                       rust-sqlx-0.7
+                       rust-thiserror-1
+                       rust-time-0.3
+                       rust-tiny-bip39-1
+                       rust-tokio-1
+                       rust-typed-builder-0.18
+                       rust-urlencoding-2
+                       rust-uuid-1
+                       rust-whoami-1)))
     (home-page "https://atuin.sh")
     (synopsis "client library for atuin")
     (description "This package provides client library for atuin.")
@@ -2320,58 +2320,55 @@ SQLite.")
     (build-system cargo-build-system)
     (arguments
      `(#:tests? #f  ; wants to connect to "postgres://atuin:****@localhost:5432/atuin"
-       #:cargo-inputs (("rust-async-trait" ,rust-async-trait-0.1)
-                       ("rust-atuin-client" ,rust-atuin-client-18)
-                       ("rust-atuin-common" ,rust-atuin-common-18)
-                       ("rust-atuin-daemon" ,rust-atuin-daemon-0.2)
-                       ("rust-atuin-dotfiles" ,rust-atuin-dotfiles-0.3)
-                       ("rust-atuin-history" ,rust-atuin-history-0.2)
-                       ("rust-atuin-server" ,rust-atuin-server-18)
-                       ("rust-atuin-server-postgres" ,rust-atuin-server-postgres-18)
-                       ("rust-base64" ,rust-base64-0.22)
-                       ("rust-clap" ,rust-clap-4)
-                       ("rust-clap-complete" ,rust-clap-complete-4)
-                       ("rust-clap-complete-nushell" ,rust-clap-complete-nushell-4)
-                       ("rust-cli-clipboard" ,rust-cli-clipboard-0.4)
-                       ("rust-colored" ,rust-colored-2)
-                       ("rust-crossterm" ,rust-crossterm-0.27)
-                       ("rust-directories" ,rust-directories-5)
-                       ("rust-env-logger" ,rust-env-logger-0.11)
-                       ("rust-eyre" ,rust-eyre-0.6)
-                       ("rust-fs-err" ,rust-fs-err-2)
-                       ("rust-futures-util" ,rust-futures-util-0.3)
-                       ("rust-fuzzy-matcher" ,rust-fuzzy-matcher-0.3)
-                       ("rust-indicatif" ,rust-indicatif-0.17)
-                       ("rust-interim" ,rust-interim-0.1)
-                       ("rust-itertools" ,rust-itertools-0.12)
-                       ("rust-log" ,rust-log-0.4)
-                       ("rust-ratatui" ,rust-ratatui-0.26)
-                       ("rust-regex" ,rust-regex-1)
-                       ("rust-rpassword" ,rust-rpassword-7)
-                       ("rust-runtime-format" ,rust-runtime-format-0.1)
-                       ("rust-rustix" ,rust-rustix-0.38)
-                       ("rust-semver" ,rust-semver-1)
-                       ("rust-serde" ,rust-serde-1)
-                       ("rust-serde-json" ,rust-serde-json-1)
-                       ("rust-sysinfo" ,rust-sysinfo-0.30)
-                       ("rust-time" ,rust-time-0.3)
-                       ("rust-tiny-bip39" ,rust-tiny-bip39-1)
-                       ("rust-tokio" ,rust-tokio-1)
-                       ("rust-tracing" ,rust-tracing-0.1)
-                       ("rust-tracing-subscriber" ,rust-tracing-subscriber-0.3)
-                       ("rust-unicode-segmentation" ,rust-unicode-segmentation-1)
-                       ("rust-unicode-width" ,rust-unicode-width-0.1)
-                       ("rust-uuid" ,rust-uuid-1)
-                       ("rust-whoami" ,rust-whoami-1))
-       #:cargo-development-inputs (("rust-tracing-tree" ,rust-tracing-tree-0.3))))
+       #:cargo-inputs (rust-async-trait-0.1
+                       rust-atuin-client-18
+                       rust-atuin-common-18
+                       rust-atuin-daemon-0.2
+                       rust-atuin-dotfiles-0.3
+                       rust-atuin-history-0.2
+                       rust-atuin-server-18
+                       rust-atuin-server-postgres-18
+                       rust-base64-0.22
+                       rust-clap-4
+                       rust-clap-complete-4
+                       rust-clap-complete-nushell-4
+                       rust-cli-clipboard-0.4
+                       rust-colored-2
+                       rust-crossterm-0.27
+                       rust-directories-5
+                       rust-env-logger-0.11
+                       rust-eyre-0.6
+                       rust-fs-err-2
+                       rust-futures-util-0.3
+                       rust-fuzzy-matcher-0.3
+                       rust-indicatif-0.17
+                       rust-interim-0.1
+                       rust-itertools-0.12
+                       rust-log-0.4
+                       rust-ratatui-0.26
+                       rust-regex-1
+                       rust-rpassword-7
+                       rust-runtime-format-0.1
+                       rust-rustix-0.38
+                       rust-semver-1
+                       rust-serde-1
+                       rust-serde-json-1
+                       rust-sysinfo-0.30
+                       rust-time-0.3
+                       rust-tiny-bip39-1
+                       rust-tokio-1
+                       rust-tracing-0.1
+                       rust-tracing-subscriber-0.3
+                       rust-unicode-segmentation-1
+                       rust-unicode-width-0.1
+                       rust-uuid-1
+                       rust-whoami-1)
+       #:cargo-development-inputs (rust-tracing-tree-0.3)))
     (native-inputs (list protobuf))
     (home-page "https://atuin.sh")
     (synopsis "atuin - magical shell history")
     (description "This package provides atuin - magical shell history.")
     (license license:expat)))
-
-
-
 
 (define libstdc++
   ;; Libstdc++ matching the default GCC.
@@ -2405,11 +2402,11 @@ SQLite.")
                          "/share/bash-completion/completions/")
                         ("completions/_atuin" "/share/zsh/site-functions/"))
        #:patchelf-plan `(("atuin" ("glibc" "libgccjit" "libstdc++")))))
-    (inputs `(("curl" ,curl)
-              ("libgccjit" ,libgccjit)
-              ("libstdc++" ,libstdc++)
-              ("glibc" ,glibc)
-              ("zlib" ,zlib)))
+    (inputs `(curl
+              libgccjit
+              libstdc++
+              glibc
+              zlib))
     (synopsis "Sync, search and backup shell history")
     (description
      "Atuin replaces your existing shell history with a SQLite database, and records additional context for your commands. Additionally, it provides optional and fully encrypted synchronisation of your history between machines, via an Atuin server.")
