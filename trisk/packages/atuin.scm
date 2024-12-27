@@ -2163,9 +2163,9 @@ directly.")
                        rust-sqlx-sqlite-0.7)))
     (home-page "https://github.com/launchbadge/sqlx")
     (synopsis
-     "ð§° The Rust SQL Toolkit. An async, pure Rust SQL crate featuring compile-time checked queries without a DSL. Supports PostgreSQL, MySQL, and SQLite")
+     "SQLX, The Rust SQL Toolkit. An async, pure Rust SQL crate featuring compile-time checked queries without a DSL. Supports PostgreSQL, MySQL, and SQLite")
     (description
-     "This package provides ð§° The Rust SQL Toolkit.  An async, pure Rust SQL crate featuring compile-time
+     "This package provides SQLX The Rust SQL Toolkit.  An async, pure Rust SQL crate featuring compile-time
 checked queries without a DSL. Supports @code{PostgreSQL}, @code{MySQL}, and
 SQLite.")
     (license (list license:expat license:asl2.0))))
