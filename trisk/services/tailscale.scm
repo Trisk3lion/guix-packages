@@ -11,8 +11,8 @@
   #:use-module (trisk packages tailscale)
   #:export (tailscaled-service-type
             tailscaled-configuration
-            tailescale-up-service-type
-            tailescale-up-configuration)
+            tailscale-up-service-type
+            tailscale-up-configuration)
   )
 
 ;; Taken from https://git.sr.ht/~efraim/my-guix/tree/master/item/dfsg/contrib/services/tailscale.scm
@@ -260,7 +260,7 @@ to #f.")
                      #:log-file #$log-file))
            (stop #~(const #f))))))
 
-(define tailescale-up-service-type
+(define tailscale-up-service-type
   (service-type
    (name 'tailscale-up)
    (extensions
