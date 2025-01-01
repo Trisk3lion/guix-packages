@@ -251,7 +251,7 @@ to #f.")
                              '("--advertise-exit-node")
                              '())
                       #$@(if (maybe-value-set? authkey?)
-                             (list "--authkey" authkey)
+                             (list "--authkey" authkey?)
                              '())
                       "--login-server" #$login-server
                       "--socket" #$socket
