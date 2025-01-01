@@ -142,7 +142,7 @@ to #f.")
         (system* #$(file-append (tailscaled-configuration-tailscale config)
                                 "/sbin/tailscaled") "--cleanup"))))
 
-(define (tailscale-log-rotations config)
+(define (tailscaled-log-rotations config)
   (list (log-rotation
          (files (list (tailscaled-configuration-log-file config))))))
 
@@ -185,7 +185,7 @@ to #f.")
           (service-extension profile-service-type
                              (compose list tailscaled-configuration-tailscale))
           (service-extension rottlog-service-type
-                             tailscale-log-rotations)))
+                             tailscaled-log-rotations)))
    (default-value (tailscaled-configuration))
    (description "Run tailscaled.")))
 
@@ -220,14 +220,13 @@ to #f.")
    "Path of the service UNIX socket.")
 
   (log-file
-   (string "/var/log/tailscaled.log")
+   (string "/var/log/tailscale-up.log")
    "Path to log file.")
 
   (extra-options
    (list-of-strings '())
    "List of extra options.")
   (no-serialization))
-
 
 (define tailscale-up-shepherd-service
   (match-record-lambda <tailscale-up-configuration>
@@ -243,28 +242,34 @@ to #f.")
                       #$(file-append tailscale "/bin/tailscale")
                       "up"
                       #$@(if ssh?
-                             '()
-                             '("--ssh"))
+                             '("--ssh")
+                             '())
                       #$@(if subroutes?
-                             '()
-                             '("--accept-routes"))
+                             '("--accept-routes")
+                             '())
                       #$@(if exit-node?
-                             '()
-                             '("--advertise-exit-node"))
+                             '("--advertise-exit-node")
+                             '())
                       #$@(if (maybe-value-set? authkey?)
-                             '()
-                             '("--authkey" #$authkey))
+                             (list "--authkey" authkey)
+                             '())
                       "--login-server" #$login-server
                       "--socket" #$socket
                       #$@extra-options)
                      #:log-file #$log-file))
            (stop #~(const #f))))))
 
+(define (tailscale-up-log-rotations config)
+  (list (log-rotation
+         (files (list (tailscale-up-configuration-log-file config))))))
+
 (define tailscale-up-service-type
   (service-type
    (name 'tailscale-up)
    (extensions
     (list (service-extension shepherd-root-service-type
-                             tailscale-up-shepherd-service)))
+                             tailscale-up-shepherd-service)
+          (service-extension rottlog-service-type
+                             tailscale-up-log-rotations)))
    (default-value (tailscale-up-configuration))
    (description "Run tailscale up")))
