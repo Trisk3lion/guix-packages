@@ -207,9 +207,9 @@ to #f.")
    (boolean #f)
    "Advertise this node as an exit node?")
 
-  (auth-key?
+  (authkey?
    maybe-string
-   "Authkey used for connection to your tailscale account")
+   "Authkey used for connection to your tailscale account.")
 
   (login-server
    (string "https://controlplane.tailscale.com")
