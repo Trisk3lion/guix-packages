@@ -240,6 +240,7 @@ to #f.")
            (start #~(make-forkexec-constructor
                      (list
                       #$(file-append tailscale "/bin/tailscale")
+                      "--socket" #$socket
                       "up"
                       #$@(if ssh?
                              '("--ssh")
@@ -254,7 +255,6 @@ to #f.")
                              (list "--authkey" authkey?)
                              '())
                       "--login-server" #$login-server
-                      "--socket" #$socket
                       #$@extra-options)
                      #:log-file #$log-file))
            (stop #~(const #f))))))

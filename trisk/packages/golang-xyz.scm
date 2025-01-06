@@ -633,9 +633,6 @@ provide charting capabilities.")
 POSIX/GNU-style --flags.")
     (license license:bsd-3)))
 
-
-
-
 (define-public go-k8s-io-git-sync
   (package
     (name "go-k8s-io-git-sync")
