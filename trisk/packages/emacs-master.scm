@@ -63,18 +63,6 @@
   (emacs->emacs-master emacs-no-x))
 (define-public trisk-emacs-master
   (emacs->emacs-master emacs))
-(define-public trisk-emacs-master-xwidgets
-  (emacs->emacs-master emacs-xwidgets))
-(define-public trisk-emacs-master-pgtk
-  (emacs->emacs-master emacs-pgtk))
-(define-public trisk-emacs-master-pgtk-xwidgets
-  (emacs->emacs-master emacs-pgtk-xwidgets))
-(define-public trisk-emacs-master-motif
-  (emacs->emacs-master emacs-motif))
-(define-public trisk-emacs-master-no-x-toolkit
-  (emacs->emacs-master emacs-no-x-toolkit))
-(define-public trisk-emacs-master-wide-int
-  (emacs->emacs-master emacs-wide-int))
 
 ;; (define-public trisk-emacs-master
 ;;   (package
