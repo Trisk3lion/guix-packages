@@ -12,8 +12,6 @@
   #:use-module (gnu packages golang-check)
   #:use-module (trisk packages golang-xyz))
 
-
-
 (define-public gpodder2go
   (package
     (name "gpodder2go")
