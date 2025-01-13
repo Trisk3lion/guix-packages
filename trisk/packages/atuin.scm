@@ -19,6 +19,7 @@
   #:use-module (gnu packages crates-tls)
   #:use-module (gnu packages crates-web)
   #:use-module (gnu packages crates-windows)
+  #:use-module (gnu packages crates-shell)
   #:use-module (gnu packages shells)
   #:use-module (gnu packages protobuf)
   #:use-module ((guix licenses) #:prefix license:)
