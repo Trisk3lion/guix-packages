@@ -6,7 +6,9 @@
   #:use-module (guix packages)
   #:use-module (guix git-download)
   #:use-module (guix build-system go)
+  #:use-module (gnu packages xiph)
   #:use-module (gnu packages pkg-config)
+  #:use-module (gnu packages linux)
   #:use-module (gnu packages golang)
   #:use-module (gnu packages golang-xyz)
   #:use-module (gnu packages golang-build)
@@ -296,6 +298,7 @@ abstractions and extensibility and far fewer dependencies.")
      (list
       #:go go-1.22
       #:import-path "github.com/devgianlu/go-librespot"))
+    (native-inputs (list libogg libvorbis alsa-lib))
     (propagated-inputs (list go-nhooyr-io-websocket
                              go-google-golang-org-protobuf
                              go-golang-org-x-oauth2

@@ -2790,7 +2790,7 @@ by `lock_api`.")
                        ("rust-thiserror" ,rust-thiserror-1)
                        ("rust-tokio" ,rust-tokio-1)
                        ("rust-url" ,rust-url-2))))
-    (native-inputs (list pkg-config alsa-lib ))
+    (native-inputs (list pkg-config alsa-lib))
     (home-page "https://github.com/librespot-org/librespot")
     (synopsis
      "An open source client library for Spotify, with support for Spotify Connect")
