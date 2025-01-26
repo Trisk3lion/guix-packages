@@ -101,10 +101,10 @@ the local network.")
        (method git-fetch)
        (uri (git-reference
              (url "https://github.com/jfreymuth/pulse")
-             (commit (string-append "v" version))))
+             (commit "4ffb35054b53c3d59304f99f68b6f8ad80e26ac4")))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "1ykwvns7p62sdykhxg5cjwnrgjywibdd12pidkg1r0bl7sbybhvx"))))
+        (base32 "0qic6fgjwdl5v2f89jbs8l2ifv47kb0h2xpmpgy7v7l8wb220gm5"))))
     (build-system go-build-system)
     (arguments
      (list
@@ -296,12 +296,15 @@ abstractions and extensibility and far fewer dependencies.")
     (build-system go-build-system)
     (arguments
      (list
+      #:install-source? #f
       #:go go-1.22
-      #:import-path "github.com/devgianlu/go-librespot"))
-    (native-inputs (list libogg libvorbis alsa-lib))
+      #:import-path "github.com/devgianlu/go-librespot/cmd/daemon"
+      #:unpack-path "github.com/devgianlu/go-librespot"))
+    (native-inputs (list pkg-config libogg libvorbis alsa-lib))
     (propagated-inputs (list go-nhooyr-io-websocket
                              go-google-golang-org-protobuf
                              go-golang-org-x-oauth2
+                             go-github-com-fsnotify-fsnotify
                              go-golang-org-x-net
                              go-golang-org-x-exp
                              go-golang-org-x-crypto
