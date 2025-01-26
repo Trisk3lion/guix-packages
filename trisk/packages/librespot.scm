@@ -7,6 +7,7 @@
   #:use-module (guix build-system cargo)
   #:use-module (gnu packages crates-apple)
   #:use-module (gnu packages crates-audio)
+  #:use-module (gnu packages crates-compression)
   #:use-module (gnu packages crates-gtk)
   #:use-module (gnu packages crates-graphics)
   #:use-module (gnu packages crates-crypto)
