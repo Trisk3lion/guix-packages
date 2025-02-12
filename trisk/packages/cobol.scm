@@ -13,7 +13,7 @@
 (define-public che-lsp-for-cobol
   (package
     (name "che-lsp-for-cobol")
-    (version "2.1.2")
+    (version "2.3.0")
     (source
      (origin
        (method url-fetch)
@@ -21,7 +21,7 @@
              "https://github.com/eclipse-che4z/che-che4z-lsp-for-cobol/releases/download/"
              version "/cobol-language-support-linux-x64-" version ".vsix"))
        (sha256
-        (base32 "16r21bs5h20q7qr4xrcn5lkciaxm5g2pp3dnsmccqqw41bgqy2s2"))))
+        (base32 "1vbjz82i87lsag94mz47xxlh67cgf22kx257rsnpvnkad1ssxaji"))))
     (build-system copy-build-system)
     (supported-systems '("x86_64-linux" "i686-linux"))
     (arguments
