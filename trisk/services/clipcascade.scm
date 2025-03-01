@@ -10,7 +10,10 @@
   #:use-module (gnu services databases)
   #:use-module (gnu services docker)
   #:use-module (gnu system shadow)
-  #:use-module (trisk packages clipcascade))
+  #:use-module (trisk packages clipcascade)
+  #:export (clipcascade-service-type
+            clipcascade-configuration
+            clipcascade-configuration?))
 
 (define-configuration/no-serialization clipcascade-configuration
   (clipcascade
@@ -46,7 +49,7 @@
   (match-record config <clipcascade-configuration>
     (clipcascade port origins user group)
     (list (shepherd-service
-           (documentation "Run the Forgejo Git forge")
+           (documentation "Run the Clipcascade server.")
            (requirement '(networking user-processes))
            (provision '(clipcascade))
            (actions (list (shepherd-configuration-action clipcascade-cfg)))
