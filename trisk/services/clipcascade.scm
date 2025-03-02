@@ -17,7 +17,7 @@
 
 (define-configuration/no-serialization clipcascade-configuration
   (clipcascade
-   (file-like clipcascade)
+   (file-like clipcascade-server)
    "The clipcascade package.")
 
   (host
