@@ -80,7 +80,10 @@ build-ciopfs: trisk/packages/ciopfs.scm
 	guix build --load-path=. ciopfs
 
 build-scrutiny-collector: trisk/packages/scrutiny.scm
-	guix build --load-path=. go-github-com-analogj-scrutiny-collector
+	guix build --load-path=. scrutiny-collector
+
+build-scrutiny-web: trisk/packages/scrutiny.scm
+	guix build --load-path=. scrutiny-web
 
 build-tailscale-vendored: trisk/packages/tailscale.scm
 	guix build --load-path=. tailscale-vendored
