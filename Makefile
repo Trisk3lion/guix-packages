@@ -79,6 +79,9 @@ build-guile-lsp: trisk/packages/mermaid.scm
 build-ciopfs: trisk/packages/ciopfs.scm
 	guix build --load-path=. ciopfs
 
+build-scrutiny-collector: trisk/packages/scrutiny.scm
+	guix build --load-path=. go-github-com-analogj-scrutiny-collector
+
 build-tailscale-vendored: trisk/packages/tailscale.scm
 	guix build --load-path=. tailscale-vendored
 

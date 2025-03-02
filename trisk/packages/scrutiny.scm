@@ -206,6 +206,7 @@ embedded in itself (so, you don't need to install SQLite separately).")
     (build-system go-build-system)
     (arguments
      (list
+      #:tests? #f
       #:import-path "modernc.org/gc/v3"
       #:unpack-path "modernc.org/gc"))
     (propagated-inputs (list go-modernc-org-token
@@ -404,39 +405,39 @@ receiver.  A @@code{Uint128} value is therefore immutable, just like
     (description "Package ccorpus provides a test corpus of C code.")
     (license license:bsd-3)))
 
-(define-public go-modernc-org-ccgo-v3
-  (package
-    (name "go-modernc-org-ccgo")
-    (version "3.17.0")
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url "https://gitlab.com/cznic/ccgo")
-             (commit (string-append "v" version))))
-       (file-name (git-file-name name version))
-       (sha256
-        (base32 "0zkxzhmkm5pgalcnlhw0whiii6vhdpnnnpwkx9b5ah21ajk6qqlc"))))
-    (build-system go-build-system)
-    (arguments
-     (list
-      #:import-path "modernc.org/ccgo/v3"
-      #:unpack-path "modernc.org/ccgo"))
-    (propagated-inputs (list go-modernc-org-opt
-                             go-modernc-org-mathutil
-                             go-modernc-org-libc
-                             go-modernc-org-ccorpus
-                             go-modernc-org-ccgo-v4
-                             go-modernc-org-cc-v3
-                             go-golang-org-x-tools
-                             go-golang-org-x-sys
-                             go-github-com-pmezard-go-difflib
-                             go-github-com-kballard-go-shellquote
-                             go-github-com-dustin-go-humanize))
-    (home-page "https://modernc.org/ccgo")
-    (synopsis "ccgo/v3")
-    (description "Package ccgo translates C to Go source code.")
-    (license license:bsd-3)))
+;; (define-public go-modernc-org-ccgo-v3
+;;   (package
+;;     (name "go-modernc-org-ccgo")
+;;     (version "3.17.0")
+;;     (source
+;;      (origin
+;;        (method git-fetch)
+;;        (uri (git-reference
+;;              (url "https://gitlab.com/cznic/ccgo")
+;;              (commit (string-append "v" version))))
+;;        (file-name (git-file-name name version))
+;;        (sha256
+;;         (base32 "0zkxzhmkm5pgalcnlhw0whiii6vhdpnnnpwkx9b5ah21ajk6qqlc"))))
+;;     (build-system go-build-system)
+;;     (arguments
+;;      (list
+;;       #:import-path "modernc.org/ccgo/v3"
+;;       #:unpack-path "modernc.org/ccgo"))
+;;     (propagated-inputs (list go-modernc-org-opt
+;;                              go-modernc-org-mathutil
+;;                              go-modernc-org-libc
+;;                              go-modernc-org-ccorpus
+;;                              go-modernc-org-ccgo-v4
+;;                              go-modernc-org-cc-v3
+;;                              go-golang-org-x-tools
+;;                              go-golang-org-x-sys
+;;                              go-github-com-pmezard-go-difflib
+;;                              go-github-com-kballard-go-shellquote
+;;                              go-github-com-dustin-go-humanize))
+;;     (home-page "https://modernc.org/ccgo")
+;;     (synopsis "ccgo/v3")
+;;     (description "Package ccgo translates C to Go source code.")
+;;     (license license:bsd-3)))
 
 (define-public go-modernc-org-ccorpus2
   (package
@@ -631,42 +632,42 @@ and Token removed.")
      "Package strutil collects utils supplemental to the standard strings package.")
     (license license:bsd-3)))
 
-(define-public go-modernc-org-ccgo-v4
-  (package
-    (name "go-modernc-org-ccgo")
-    (version "4.23.5")
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url "https://gitlab.com/cznic/ccgo")
-             (commit (string-append "v" version))))
-       (file-name (git-file-name name version))
-       (sha256
-        (base32 "1qm8y8wdl9wwrrlasns10idjn0pplzifnvv9x82xhbv3y90nrg6q"))))
-    (build-system go-build-system)
-    (arguments
-     (list
-      #:tests? #f
-      #:import-path "modernc.org/ccgo"))
-    (propagated-inputs (list go-modernc-org-strutil
-                             go-modernc-org-opt
-                             go-modernc-org-mathutil
-                             go-modernc-org-libc
-                             go-modernc-org-gc-v2
-                             go-modernc-org-fileutil
-                             go-modernc-org-ccorpus2
-                             go-modernc-org-ccgo-v3
-                             go-modernc-org-cc-v4
-                             go-golang-org-x-tools
-                             go-golang-org-x-mod
-                             go-github-com-pmezard-go-difflib
-                             go-github-com-pbnjay-memory
-                             go-github-com-dustin-go-humanize))
-    (home-page "https://modernc.org/ccgo")
-    (synopsis #f)
-    (description "Command ccgo is a C compiler producing Go code.")
-    (license license:bsd-3)))
+;; (define-public go-modernc-org-ccgo-v4
+;;   (package
+;;     (name "go-modernc-org-ccgo")
+;;     (version "4.23.5")
+;;     (source
+;;      (origin
+;;        (method git-fetch)
+;;        (uri (git-reference
+;;              (url "https://gitlab.com/cznic/ccgo")
+;;              (commit (string-append "v" version))))
+;;        (file-name (git-file-name name version))
+;;        (sha256
+;;         (base32 "1qm8y8wdl9wwrrlasns10idjn0pplzifnvv9x82xhbv3y90nrg6q"))))
+;;     (build-system go-build-system)
+;;     (arguments
+;;      (list
+;;       #:tests? #f
+;;       #:import-path "modernc.org/ccgo"))
+;;     (propagated-inputs (list go-modernc-org-strutil
+;;                              go-modernc-org-opt
+;;                              go-modernc-org-mathutil
+;;                              go-modernc-org-libc
+;;                              go-modernc-org-gc-v2
+;;                              go-modernc-org-fileutil
+;;                              go-modernc-org-ccorpus2
+;;                              go-modernc-org-ccgo-v3
+;;                              go-modernc-org-cc-v4
+;;                              go-golang-org-x-tools
+;;                              go-golang-org-x-mod
+;;                              go-github-com-pmezard-go-difflib
+;;                              go-github-com-pbnjay-memory
+;;                              go-github-com-dustin-go-humanize))
+;;     (home-page "https://modernc.org/ccgo")
+;;     (synopsis #f)
+;;     (description "Command ccgo is a C compiler producing Go code.")
+;;     (license license:bsd-3)))
 
 (define-public go-modernc-org-fileutil
   (package
@@ -788,6 +789,7 @@ and Token removed.")
     (build-system go-build-system)
     (arguments
      (list
+      #:tests? #f
       #:import-path "modernc.org/mathutil"))
     (propagated-inputs (list go-github-com-remyoudompheng-bigfft))
     (home-page "https://modernc.org/mathutil")
@@ -813,6 +815,7 @@ math/rand packages.")
     (build-system go-build-system)
     (arguments
      (list
+      #:tests? #f
       #:import-path "modernc.org/sqlite"))
     (propagated-inputs (list go-modernc-org-mathutil
                              go-modernc-org-libc
@@ -871,6 +874,7 @@ install one separately.")
     (build-system go-build-system)
     (arguments
      (list
+      #:tests? #f
       #:import-path "github.com/go-gormigrate/gormigrate"))
     (propagated-inputs (list go-gorm-io-gorm))
     (home-page "https://github.com/go-gormigrate/gormigrate")
@@ -992,6 +996,7 @@ the extra argument to Parse.")
     (build-system go-build-system)
     (arguments
      (list
+      #:tests? #f
       #:import-path "github.com/apapsch/go-jsonmerge"
       #:unpack-path "github.com/apapsch/go-jsonmerge"))
     (propagated-inputs (list go-github-com-spkg-bom go-github-com-juju-gnuflag
@@ -1172,6 +1177,7 @@ library.")
     (build-system go-build-system)
     (arguments
      (list
+      #:tests? #f
       #:import-path "rsc.io/pdf"))
     (home-page "https://rsc.io/pdf")
     (synopsis #f)
@@ -1235,6 +1241,7 @@ library.")
     (build-system go-build-system)
     (arguments
      (list
+      #:tests? #f
       #:import-path "github.com/bytedance/sonic"))
     (propagated-inputs (list go-golang-org-x-arch
                              go-github-com-twitchyliquid64-golang-asm
@@ -1441,6 +1448,54 @@ generating Go html/template output.")
 of referrer URLs (search, social, ...).")
     (license license:expat)))
 
+(define-public go-github-com-dgraph-io-ristretto-0-3
+  (package
+    (name "go-github-com-dgraph-io-ristretto")
+    (version "0.0.3")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/dgraph-io/ristretto")
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "1v29j6b0r87pf5dwsxi3rxa8yavkl3h79i63rbddfd42p2jyssyg"))))
+    (build-system go-build-system)
+    (arguments
+     (list
+      ;; XXX: Tests fail on 32 bit architecure:
+      ;;
+      ;; cannot use 12 << 30 (untyped int constant 12884901888) as int value
+      ;; in assignment (overflows).
+      ;;
+      ;; cannot use 4340958203495 (untyped int constant) as int value in
+      ;; argument to z.KeyToHash (overflows)
+      #:tests? (and (target-64bit?)
+                    (not (%current-target-system)))
+      #:import-path "github.com/dgraph-io/ristretto"
+      #:phases
+      #~(modify-phases %standard-phases
+          (add-after 'unpack 'remove-benchmarks-and-contrib
+            (lambda* (#:key import-path #:allow-other-keys)
+              (with-directory-excursion (string-append "src/" import-path)
+                (delete-file-recursively "benchmarks")))))))
+    (native-inputs
+     (list go-github-com-stretchr-testify))
+    (propagated-inputs
+     (list go-github-com-cespare-xxhash
+           go-github-com-dgryski-go-farm
+           go-github-com-dustin-go-humanize
+           go-github-com-golang-glog
+           go-github-com-pkg-errors
+           go-golang-org-x-sys))
+    (home-page "https://github.com/dgraph-io/ristretto")
+    (synopsis "Memory-bound cache in Golang")
+    (description
+     "Ristretto is a concurrent, fixed size, in-memory cache with a dual focus
+on throughput and hit ratio performance.")
+    (license (list license:asl2.0 license:expat))))
+
 (define-public go-github-com-dgraph-io-badger-v2
   (package
     (name "go-github-com-dgraph-io-badger")
@@ -1457,6 +1512,7 @@ of referrer URLs (search, social, ...).")
     (build-system go-build-system)
     (arguments
      (list
+      #:go go-1.20
       #:import-path "github.com/dgraph-io/badger"
       #:unpack-path "github.com/dgraph-io/badger"))
     (propagated-inputs (list go-golang-org-x-sys
@@ -1469,7 +1525,7 @@ of referrer URLs (search, social, ...).")
                              go-github-com-golang-protobuf
                              go-github-com-dustin-go-humanize
                              go-github-com-dgryski-go-farm
-                             go-github-com-dgraph-io-ristretto
+                             go-github-com-dgraph-io-ristretto-0-3
                              go-github-com-cespare-xxhash))
     (home-page "https://github.com/dgraph-io/badger")
     (synopsis "BadgerDB")
@@ -1521,6 +1577,7 @@ snapshot isolation guarantees.")
     (build-system go-build-system)
     (arguments
      (list
+      #:tests? #f
       #:import-path "github.com/gomarkdown/markdown"))
     (home-page "https://github.com/gomarkdown/markdown")
     (synopsis "Markdown Parser and HTML Renderer for Go")
@@ -1591,6 +1648,7 @@ application/x-www-form-urlencoded data.")
     (build-system go-build-system)
     (arguments
      (list
+      #:tests? #f
       #:import-path "github.com/imkira/go-interpol"))
     (home-page "https://github.com/imkira/go-interpol")
     (synopsis "interpol")
@@ -1716,6 +1774,7 @@ common sequence} values from two arbitrary arrays.")
     (build-system go-build-system)
     (arguments
      (list
+      #:tests? #f
       #:import-path "github.com/yudai/gojsondiff"))
     (propagated-inputs (list go-github-com-sergi-go-diff-diffmatchpatch
                              go-github-com-yudai-golcs
@@ -2123,6 +2182,7 @@ as:.")
     (build-system go-build-system)
     (arguments
      (list
+      #:tests? #f
       #:import-path "github.com/mailgun/raymond"
       #:unpack-path "github.com/mailgun/raymond"))
     (propagated-inputs (list go-gopkg-in-yaml-v2
@@ -2300,6 +2360,7 @@ for long strings.")
     (build-system go-build-system)
     (arguments
      (list
+      #:tests? #f
       #:import-path "github.com/vmihailenco/msgpack"
       #:unpack-path "github.com/vmihailenco/msgpack"))
     (propagated-inputs (list go-github-com-vmihailenco-tagparser-v2
@@ -2328,6 +2389,7 @@ initialize a Go module:.")
     (build-system go-build-system)
     (arguments
      (list
+      #:tests? #f
       #:import-path "github.com/yosssi/ace"))
     (home-page "https://github.com/yosssi/ace")
     (synopsis "Ace - HTML template engine for Go")
@@ -2337,7 +2399,7 @@ initialize a Go module:.")
 (define-public go-github-com-kataras-iris-v12
   (package
     (name "go-github-com-kataras-iris")
-    (version "12.2.11")
+    (version "12.2.7")
     (source
      (origin
        (method git-fetch)
@@ -2346,7 +2408,7 @@ initialize a Go module:.")
              (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "1lnyj43sczl40yjkk88ckgapcrljn37wjymmwc031xbbgsxjbmk5"))))
+        (base32 "0nc28w89q6sx489a6bk2jp27k5z1yf4a8w1jkj08rsd1jq7ld4jy"))))
     (build-system go-build-system)
     (arguments
      (list
@@ -2358,7 +2420,7 @@ initialize a Go module:.")
       #:import-path "github.com/kataras/iris"))
     (propagated-inputs (list go-gopkg-in-yaml-v3
                              go-gopkg-in-ini-v1
-                             go-google-golang-org-protobuf
+                             ;; go-google-golang-org-protobuf
                              go-golang-org-x-time
                              go-golang-org-x-text
                              go-golang-org-x-sys
@@ -2507,6 +2569,8 @@ experienced, it goes as far as you dive into it!")
     (build-system go-build-system)
     (arguments
      (list
+      #:tests? #f
+      ;; #:embed-files #~(list "children" "nodes" "text")
       #:import-path "github.com/oapi-codegen/runtime"))
     (propagated-inputs (list go-github-com-stretchr-testify
                              go-github-com-labstack-echo-v4
@@ -2716,6 +2780,7 @@ and baseboard/BIOS/chassis/product information.")
     (build-system go-build-system)
     (arguments
      (list
+      #:tests? #f
       #:import-path "gorm.io/gorm"))
     (propagated-inputs (list go-golang-org-x-text go-github-com-jinzhu-now
                              go-github-com-jinzhu-inflection))
