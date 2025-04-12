@@ -1,0 +1,36 @@
+From c5002d20a80529918e386601ec2fc6ba413c895f Mon Sep 17 00:00:00 2001
+From: Giacomo Leidi <goodoldpaul@autistici.org>
+Date: Mon, 26 Aug 2024 00:38:06 +0200
+Subject: [PATCH] Add Meson configure option to set the path for Polkit
+ actions.
+
+---
+ meson.build       | 2 +-
+ meson_options.txt | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/meson.build b/meson.build
+index a78b2b010..68116d92b 100644
+--- a/meson.build
++++ b/meson.build
+@@ -250,7 +250,7 @@ if polkit.found()
+   if polkit.version().version_compare('>= 0.114')
+     conf.set('HAVE_POLKIT_0_114', '1')
+   endif
+-  conf.set_quoted ('POLKIT_ACTIONDIR', polkit.get_variable(pkgconfig: 'actiondir'))
++  conf.set_quoted ('POLKIT_ACTIONDIR', get_option('POLKIT_ACTIONDIR'))
+ endif
+ if build_daemon
+   if not polkit.found()
+diff --git a/meson_options.txt b/meson_options.txt
+index c0e3ba35c..27f3a0667 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -70,3 +70,4 @@ option('fish_completion', type: 'boolean', value : true, description : 'enable f
+ option('offline', type: 'feature', description : 'Allow installing firmware using a pre-boot systemd target', deprecated: {'true': 'enabled', 'false': 'disabled'})
+ option('compat_cli', type: 'boolean', value : false, description : 'enable legacy commands: fwupdagent,dfu-tool,fwupdate')
+ option('hsi', type: 'feature', description : ' Host Security Information', deprecated: {'true': 'enabled', 'false': 'disabled'})
++option('POLKIT_ACTIONDIR', type : 'string', description: 'path for polkit actions')
+-- 
+2.45.2
+
