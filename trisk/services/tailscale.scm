@@ -195,6 +195,10 @@ to #f.")
    (file-like tailscale-amd64-bin)
    "The tailscale package to use.")
 
+  (operator
+   (string "")
+    "Operator who can control tailscale.")
+
   (ssh?
    (boolean #f)
    "Accept ssh connnections over tailscale?")
@@ -207,8 +211,8 @@ to #f.")
    (boolean #f)
    "Advertise this node as an exit node?")
 
-  (authkey?
-   maybe-string
+  (authkey
+   (string "")
    "Authkey used for connection to your tailscale account.")
 
   (login-server
@@ -230,7 +234,7 @@ to #f.")
 
 (define tailscale-up-shepherd-service
   (match-record-lambda <tailscale-up-configuration>
-      (tailscale ssh? subroutes? exit-node? authkey?
+      (tailscale ssh? subroutes? exit-node? authkey operator
                  socket login-server extra-options log-file)
     (list (shepherd-service
            (documentation "Run tailscale up")
@@ -242,6 +246,8 @@ to #f.")
                       #$(file-append tailscale "/bin/tailscale")
                       "--socket" #$socket
                       "up"
+                      "--authkey" #$authkey
+                      "--operator" #$operator
                       #$@(if ssh?
                              '("--ssh")
                              '())
@@ -250,9 +256,6 @@ to #f.")
                              '())
                       #$@(if exit-node?
                              '("--advertise-exit-node")
-                             '())
-                      #$@(if (maybe-value-set? authkey?)
-                             (list "--authkey" authkey?)
                              '())
                       "--login-server" #$login-server
                       #$@extra-options)
