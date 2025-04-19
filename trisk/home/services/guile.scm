@@ -10,12 +10,12 @@
   #:export (home-guile-service-type home-guile-configuration))
 
 (define-configuration/no-serialization home-guile-configuration
-                                       (guile (file-like guile-3.0-latest)
-                                        "The @code{guile} package to use.")
-                                       (packages (list '())
-                                        "List of guile package symbols to be added.")
-                                       (config (list '())
-                                        "List of strings that make up a @file{.guileinit} configuration."))
+  (guile (file-like guile-3.0-latest)
+         "The @code{guile} package to use.")
+  (packages (list '())
+            "List of guile package symbols to be added.")
+  (config (list '())
+          "List of strings that make up a @file{.guileinit} configuration."))
 
 ;; (define (home-guile-profile-service config)
 ;;   (list (home-guile-configuration-guile config)))
@@ -49,9 +49,10 @@
 
 (define home-guile-service-type
   (service-type (name 'home-guile)
-                (extensions (list (service-extension home-files-service-type
-                                                     home-guile-config-files)
-                                  (service-extension home-profile-service-type
-                                   add-guile-packages)))
+                (extensions
+                 (list (service-extension home-files-service-type
+                                          home-guile-config-files)
+                       (service-extension home-profile-service-type
+                                          add-guile-packages)))
                 (default-value (home-guile-configuration))
                 (description "Configure guile")))
