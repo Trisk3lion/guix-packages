@@ -38,7 +38,7 @@
 
 (define (keyd-configuration-file config)
   `(("keyd/config.conf" . ,(plain-file "config.conf"
-                                       (string-join (keyd-configuration-config config)
+                                       (string-append (keyd-configuration-config config)
                                                     "\n")))))
 
 (define (keyd-shepherd-service config)
