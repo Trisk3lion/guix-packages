@@ -37,7 +37,7 @@
    "Keyd config as a string."))
 
 (define (keyd-configuration-file config)
-  `(("keyd/config.conf" . ,(plain-file "config.conf"
+  `(("keyd/config.conf" ,(plain-file "config.conf"
                                        (string-append (keyd-configuration-config config)
                                                     "\n")))))
 
