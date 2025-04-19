@@ -108,7 +108,7 @@
    "Path to log file.")
 
   (socket
-   (string "/run/tailscale/tailscaled.sock")
+   (string "/var/run/tailscale/tailscaled.sock")
    "Path of the service UNIX socket.")
 
   (state-directory
@@ -220,7 +220,7 @@ to #f.")
    "Base URL of control server")
 
   (socket
-   (string "/run/tailscale/tailscaled.sock")
+   (string "/var/run/tailscale/tailscaled.sock")
    "Path of the service UNIX socket.")
 
   (log-file
