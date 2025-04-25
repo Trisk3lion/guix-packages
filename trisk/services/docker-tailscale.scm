@@ -14,7 +14,7 @@
 
 (define-configuration docker-tailscale-configuration
   (docker-image
-   (string "almeidapaulopt/tsdproxy:latest")
+   (string "almeidapaulopt/tsdproxy:1")
    "Docker image to use.")
   (data-directory
    (string "/opt/docker-tailscale/data")
