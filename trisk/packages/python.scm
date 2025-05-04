@@ -18,17 +18,13 @@
     (version "0.3.8")
     (source
      (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url "https://github.com/basilisp-lang/basilisp")
-             (commit (string-append "v" version))))
-        (file-name (git-file-name name version))
+       (method url-fetch)
+       (uri (pypi-uri "basilisp" version))
        (sha256
-        (base32 "1hrvnh049q6yvr4rjzs80sl6qb904im6znbl07hqjp34yb6whfiz"))))
+        (base32 "19mdi18l28s7ylqrgb6w5s89q7gdsxzrb8js5asr9c8lrmqs4hnb"))))
+    (properties '(("upstream-name" . "basilisp")))
     (build-system pyproject-build-system)
-    (arguments
-     (list
-      #:tests? #f))
+    (arguments `(#:tests? #f))
       ;; #:test-flags #~(list "-k" "not test_sys_executable")))
     (propagated-inputs (list python-attrs
                              python-immutables
@@ -41,5 +37,7 @@
     (home-page "https://basilisp.readthedocs.io/en/latest/")
     (synopsis "A Clojure-like lisp written for Python")
     (description
-     "This package provides a Clojure-like lisp written for Python.")
+     "This package provides a Clojure-like lisp written for Python.
+PYTHONPYCACHEPREFIX needs to be set to a folder outside the /gnu/store in order for $code{basilisp} to byte compile it's namespaces;
+@code{export PYTHONPYCACHEPREFIX=/path/to/project/.pycache}")
     (license license:expat)))
