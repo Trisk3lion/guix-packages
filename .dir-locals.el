@@ -118,7 +118,11 @@
   (eval . (with-eval-after-load 'geiser-guile
             (let ((root-dir
                    (file-name-directory
-                    (locate-dominating-file default-directory ".dir-locals.el"))))
+                    (locate-dominating-file default-directory ".dir-locals.el")))
+                  (guix-dir (expand-file-name "~/src/guix/")))
+              (unless (member guix-dir geiser-guile-load-path)
+                (setq-local geiser-guile-load-path
+                            (cons root-dir geiser-guile-load-path)))
               (unless (member root-dir geiser-guile-load-path)
                 (setq-local geiser-guile-load-path
                             (cons root-dir geiser-guile-load-path))))))))

@@ -71,8 +71,8 @@
               (modules '((guix build utils)))
               (snippet '(begin
                           (delete-file-recursively "package_support")
-                          (delete-file-recursively "recover_os")
-                          (delete-file-recursively "recover_os_build")))))
+                          (delete-file-recursively "recovery_os")
+                          (delete-file-recursively "recovery_os_build")))))
     (build-system copy-build-system)
     (arguments
     `(#:phases (modify-phases %standard-phases
