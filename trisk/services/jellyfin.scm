@@ -45,8 +45,7 @@
 (define jellyfin-log-rotations
   (match-record-lambda <jellyfin-configuration>
       (log-file)
-    (list (log-rotation
-           (files (list log-file))))))
+    (list log-file)))
 
 (define jellyfin-activation
   (match-record-lambda <jellyfin-configuration>
@@ -89,7 +88,7 @@
                              (const %jellyfin-accounts))
           (service-extension activation-service-type
                              jellyfin-activation)
-          (service-extension rottlog-service-type
+          (service-extension log-rotation-service-type
                              jellyfin-log-rotations)
           (service-extension oci-container-service-type
                              jellyfin-oci-containers)))
