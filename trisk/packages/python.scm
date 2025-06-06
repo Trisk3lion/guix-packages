@@ -9,10 +9,12 @@
   #:use-module (guix git-download)
   #:use-module (gnu packages python)
   #:use-module (gnu packages python-xyz)
+  #:use-module (gnu packages python-web)
   #:use-module (gnu packages python-build)
   #:use-module (gnu packages base)
   #:use-module (gnu packages swig)
   #:use-module (gnu packages check)
+  #:use-module (gnu packages databases)
   #:use-module (guix build-system pyproject)
   #:use-module (guix build-system python)
   #:use-module (guix build-system gnu))
@@ -204,3 +206,24 @@ PYTHONPYCACHEPREFIX needs to be set to a folder outside the /gnu/store in order 
     (description
      "Keybow 3 and 12 key, backlit mechanical keyboard add-ons for the Raspberry Pi.")
     (license license:expat)))
+
+
+(define-public python-bscpylgtv
+  (package
+    (name "python-bscpylgtv")
+    (version "0.4.8")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "bscpylgtv" version))
+       (sha256
+        (base32 "0dazhn6lai3hwbkz3hmrx3v15iwlr143p277vyknrgxca37x5lgx"))))
+    (build-system pyproject-build-system)
+    (arguments
+     (list #:tests? #f))
+    (propagated-inputs (list python-sqlitedict python-websockets))
+    (native-inputs (list python-setuptools python-wheel))
+    (home-page "https://github.com/chros73/bscpylgtv")
+    (synopsis "Library to control webOS based LG TV devices.")
+    (description "Library to control @code{webOS} based LG TV devices.")
+    (license #f)))
