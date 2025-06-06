@@ -16,7 +16,7 @@
          (hash (cond
                   ((equal? system "x86_64-linux") "1vbplsq85x6s5wjqbryhc8p0qbdll6nyi6rbdrrizqxcw9l2hwk1"))))
     (package
-      (name "ntfy-bin")
+      (name "ntfy")
       (version "2.11.0")
       (source (origin
                 (method url-fetch)
