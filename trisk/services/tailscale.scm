@@ -15,85 +15,6 @@
             tailscale-up-configuration)
   )
 
-;; Taken from https://git.sr.ht/~efraim/my-guix/tree/master/item/dfsg/contrib/services/tailscale.scm
-
-;; (define-record-type* <tailscaled-configuration>
-;;   tailscaled-configuration make-tailscaled-configuration
-;;   tailscaled-configuration?
-;;   (package      tailscaled-configuration-package
-;;                 (default tailscale-amd64-bin))   ; package
-;;   (listen-port  tailscaled-configuration-listen-port
-;;                 (default 41641))     ; number
-;;   (state-file   tailscaled-configuration-state-file
-;;                 (default "/var/lib/tailscale/tailscaled.state"))  ; path
-;;   (socket-file  tailscaled-configuration-socket-file
-;;                 (default "/var/run/tailscale/tailscaled.sock"))   ; path
-;;   (no-logs?     tailscaled-configuration-no-logs
-;;                 (default #f))
-;;   (dev-net-tun? tailscaled-configuration-dev-net-tun
-;;                 (default #t))
-;;   (verbosity    tailscaled-configuration-verbosity
-;;                 (default 0)))          ; number
-
-;; (define (tailscaled-activation config)
-;;   "Create the necessary directories for tailscale and run 'tailscaled
-;; --cleanup' at startup, as recommended."
-;;   (with-imported-modules '((guix build utils))
-;;     #~(begin
-;;         (use-modules (guix build utils))
-;;         (mkdir-p (dirname #$(tailscaled-configuration-state-file config)))
-;;         (mkdir-p (dirname #$(tailscaled-configuration-socket-file config)))
-;;         (system* #$(file-append (tailscaled-configuration-package config)
-;;                                 "/sbin/tailscaled") "--cleanup"))))
-
-;; ;; Can this service be limited to /var/lib/tailscale, /var/run/tailscale and /var/log?
-;; (define (tailscaled-shepherd-service config)
-;;   "Return a <shepherd-service> for Tailscaled with CONFIG"
-;;   (match-record config <tailscaled-configuration>
-;;                 (package listen-port state-file socket-file no-logs? dev-net-tun? verbosity)
-;;     (list
-;;       (shepherd-service
-;;         (provision '(tailscaled))
-;;         (documentation "Tailscaled networking daemon")
-;;         (requirement '(networking))
-;;         (start #~(make-forkexec-constructor
-;;                    (list #$(file-append package "/sbin/tailscaled")
-;;                          #$@(if dev-net-tun?
-;;                               '()
-;;                               '("--tun=userspace-networking"))
-;;                          "-state" #$state-file
-;;                          "-socket" #$socket-file
-;;                          "-port" (number->string #$listen-port)
-;;                          #$@(if no-logs?
-;;                               '("-no-logs-no-support")
-;;                               '())
-;;                          "-verbose" (number->string #$verbosity))
-;;                    #:log-file "/var/log/tailscaled.log"))
-;;         (stop #~(make-kill-destructor))))))
-
-;; (define %tailscaled-log-rotation
-;;   (list (log-rotation
-;;           (files '("/var/log/tailscaled.log"))
-;;           (options `("rotate 4"
-;;                      ,@%default-log-rotation-options)))))
-
-;; (define tailscaled-service-type
-;;   (service-type
-;;     (name 'tailscaled)
-;;     (extensions
-;;       (list (service-extension shepherd-root-service-type
-;;                                tailscaled-shepherd-service)
-;;             (service-extension activation-service-type
-;;                                tailscaled-activation)
-;;             (service-extension rottlog-service-type
-;;                                (const %tailscaled-log-rotation))
-;;             (service-extension profile-service-type
-;;                                (compose list tailscaled-configuration-package))))
-;;     (default-value (tailscaled-configuration))
-;;     (description "Launch tailscaled.")))
-
-(define-maybe/no-serialization string)
-
 (define-configuration tailscaled-configuration
   (tailscale
    (file-like tailscale-amd64-bin)
@@ -122,6 +43,10 @@ possible.")
    "Whether to upload logs or not, technical support is also disabled when set
 to #f.")
 
+  (dev-net-tun?
+   (boolean #t)
+   "Use dev-net-tun")
+
   (verbosity
    (integer 0)
    "Log verbosity level; 0 is default, 1 or higher are increasingly verbose.")
@@ -143,8 +68,7 @@ to #f.")
                                 "/sbin/tailscaled") "--cleanup"))))
 
 (define (tailscaled-log-rotations config)
-  (list (log-rotation
-         (files (list (tailscaled-configuration-log-file config))))))
+  (list (tailscaled-configuration-log-file config)))
 
 (define tailscaled-shepherd-service
   (match-record-lambda <tailscaled-configuration>
@@ -166,6 +90,9 @@ to #f.")
                         #$@(if upload-log?
                                '()
                                '("-no-logs-no-support"))
+                        #$@(if dev-net-tun?
+                              '()
+                              '("--tun=userspace-networking"))
                         "-socket" #$socket
                         "-statedir" #$state-directory
                         "-verbose" #$(number->string verbosity)
@@ -184,7 +111,7 @@ to #f.")
                              tailscaled-activation)
           (service-extension profile-service-type
                              (compose list tailscaled-configuration-tailscale))
-          (service-extension rottlog-service-type
+          (service-extension log-rotation-service-type
                              tailscaled-log-rotations)))
    (default-value (tailscaled-configuration))
    (description "Run tailscaled.")))
@@ -263,8 +190,7 @@ to #f.")
            (stop #~(const #f))))))
 
 (define (tailscale-up-log-rotations config)
-  (list (log-rotation
-         (files (list (tailscale-up-configuration-log-file config))))))
+  (list (tailscale-up-configuration-log-file config)))
 
 (define tailscale-up-service-type
   (service-type
@@ -272,7 +198,7 @@ to #f.")
    (extensions
     (list (service-extension shepherd-root-service-type
                              tailscale-up-shepherd-service)
-          (service-extension rottlog-service-type
+          (service-extension log-rotation-service-type
                              tailscale-up-log-rotations)))
    (default-value (tailscale-up-configuration))
    (description "Run tailscale up")))
