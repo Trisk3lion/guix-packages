@@ -73,7 +73,7 @@ to #f.")
 (define tailscaled-shepherd-service
   (match-record-lambda <tailscaled-configuration>
       (tailscale iptables log-file socket state-directory
-                 upload-log? verbosity extra-options)
+                 upload-log? dev-net-tun? verbosity extra-options)
     (let ((environment
            #~(list (string-append "PATH="
                                   (string-join
