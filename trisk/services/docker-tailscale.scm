@@ -53,8 +53,7 @@
 (define docker-tailscale-log-rotations
   (match-record-lambda <docker-tailscale-configuration>
       (log-file)
-    (list (log-rotation
-           (files (list log-file))))))
+    (list log-file)))
 
 ;; Check out `transmission-daemon-computed-settings-file' for example of transforming config file to json.
 (define docker-tailscale-activation
@@ -99,7 +98,7 @@
                              (const %docker-tailscale-accounts))
           (service-extension activation-service-type
                              docker-tailscale-activation)
-          (service-extension rottlog-service-type
+          (service-extension log-rotation-service-type
                              docker-tailscale-log-rotations)
           (service-extension oci-container-service-type
                              docker-tailscale-oci-containers)))

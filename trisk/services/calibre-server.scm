@@ -116,6 +116,6 @@ Should be a comma separated list of address or network specifications.")
                              calibre-server-accounts)
           (service-extension activation-service-type
                              calibre-server-activation)
-          (service-extension rottlog-service-type
+          (service-extension log-rotation-service-type
                              calibre-server-log-rotations)))
    (default-value (calibre-server-configuration))))

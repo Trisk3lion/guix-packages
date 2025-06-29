@@ -85,7 +85,7 @@
                 (call-with-output-string
                   (lambda (port)
                     (match-record config <autofs-configuration>
-                                  (autofs pid-file config-file mounts)
+                                  (autofs pid-file config-file mounts options)
                       (for-each (lambda (mount)
                                   (match-record mount <autofs-mount-configuration>
                                                 (target source options)
@@ -94,9 +94,7 @@
                                     (newline port)))
                                 mounts))))))
     (mixed-text-file "autofs.conf"
-                     "/- " autofs-mounts-configuration-file " --timeout=10"
-                                        ;; (autofs-configuration-options config)
-                                        ))
+                     "/- " autofs-mounts-configuration-file " " (autofs-configuration-options config)))
 
 (define (autofs-activation config)
   "Return the activation gexp for CONFIG."
@@ -125,8 +123,7 @@
            (actions (list (shepherd-configuration-action config-file)))))))
 
 (define %autofs-log-rotations
-  (list (log-rotation
-         (files (list %autofs-log-file)))))
+  (list %autofs-log-file))
 
 (define autofs-service-type
   (service-type
@@ -136,7 +133,7 @@
                              autofs-activation)
           (service-extension shepherd-root-service-type
                              autofs-shepherd-service)
-          (service-extension rottlog-service-type
+          (service-extension log-rotation-service-type
                              (const %autofs-log-rotations))))
    (default-value (autofs-configuration))
    (description

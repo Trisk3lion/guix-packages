@@ -50,8 +50,7 @@
 (define squeezelite-log-rotations
   (match-record-lambda <squeezelite-configuration>
       (log-file)
-    (list (log-rotation
-           (files (list log-file))))))
+    (list log-file)))
 
 (define %lazy-group (make-symbol "%lazy-group"))
 
@@ -138,5 +137,5 @@
 			     squeezelite-account)
           (service-extension shepherd-root-service-type
                              squeezelite-shepherd-service)
-          (service-extension rottlog-service-type
+          (service-extension log-rotation-service-type
                              squeezelite-log-rotations)))))
