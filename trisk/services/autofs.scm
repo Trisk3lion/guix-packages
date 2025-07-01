@@ -85,7 +85,7 @@
                 (call-with-output-string
                   (lambda (port)
                     (match-record config <autofs-configuration>
-                                  (autofs pid-file config-file mounts options)
+                                  (autofs pid-file config-file mounts)
                       (for-each (lambda (mount)
                                   (match-record mount <autofs-mount-configuration>
                                                 (target source options)
