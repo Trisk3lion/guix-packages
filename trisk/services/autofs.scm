@@ -85,8 +85,21 @@
     #~(begin
         (use-modules (guix build utils))
         (mkdir-p "/etc/autofs")
+        (call-with-output-file "/etc/autofs.conf"
+            (lambda (port)
+              (display (string-append "
+[ autofs ]
+master_map_name = " #$(autofs-configuration-file config) "
+timeout = 300
+") )))
         (for-each mkdir-p '#$targets))))
 
+;; (call-with-output-file "/etc/autofs.conf"
+;;                                (lambda (f) (put-string f "
+;; [ autofs ]
+;; master_map_name = /etc/auto.master
+;; timeout = 300
+;; ")))
 (define (autofs-shepherd-service config)
   ;; Return a <shepherd-service> running autofs.
   (match-record config <autofs-configuration>
