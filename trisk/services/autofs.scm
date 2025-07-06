@@ -37,7 +37,7 @@
 
 (define-maybe/no-serialization list)
 
-(define-configuration/no-serialization autofs-configuration
+(define-configuration autofs-configuration
   (autofs
    (file-like autofs)
    "The autofs package to use.")
@@ -48,15 +48,17 @@
    (file-like %dummy-config)
    "Empty dummy config file.")
   (mounts
-   (list-of-autofs-mount-configurations? '()))
+   (list-of-autofs-mount-configurations? '())
+   "List of mount configuration.")
   (caching-timeout
    (integer 60)
    "The default timeout for caching failed key lookups. The default is 60 seconds.")
   (unmount-timeout
    (integer 600)
-   "The Global minimum timeout, in seconds, until directories are unmounted. The default is 10 minutes. Setting the timeout to zero disables umounts completely."))
+   "The Global minimum timeout, in seconds, until directories are unmounted. The default is 10 minutes. Setting the timeout to zero disables umounts completely.")
+  (no-serialization))
 
-(define-configuration/no-serialization autofs-mount-configuration
+(define-configuration autofs-mount-configuration
   (target
    (string)
    "Mount point target.")
@@ -65,7 +67,8 @@
    "Mount point source.")
   (options
    maybe-list
-   "List of string representing mount options."))
+   "List of string representing mount options.")
+  (no-serialization))
 
 (define (autofs-configuration-file config)
 
