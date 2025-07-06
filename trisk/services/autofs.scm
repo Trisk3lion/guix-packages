@@ -15,11 +15,8 @@
   #:export (autofs-configuration
             autofs-configuration?
             autofs-service-type
-
             autofs-mount-configuration
             autofs-mount-configuration?
-
-            ;; XXX: Don't need to export autofs-configuration-file
             autofs-configuration-file))
 
 ;;; Commentary:
@@ -32,69 +29,54 @@
 (define %autofs-log-file
   "/var/log/autofs.log")
 
-;; (define (list-of-autofs-mount-configurations? lst)
-;;   (every autofs-mount-configuration? lst))
+(define (list-of-autofs-mount-configurations? lst)
+  (every autofs-mount-configuration? lst))
 
-;; (define-maybe list)
+(define-maybe/no-serialization list)
 
-;; (define-configuration autofs-configuration
-;;   (autofs
-;;    (file-like autofs)
-;;    "The autofs package to use")
-;;   (mounts
-;;    (list-of-autofs-mount-configurations? '())))
+(define-configuration/no-serialization autofs-configuration
+  (autofs
+   (file-like autofs)
+   "The autofs package to use")
+  (pid-file
+   (string "/var/run/autofs")
+   "Location of the PID file.")
+  (mounts
+   (list-of-autofs-mount-configurations? '()))
+  (caching-timeout
+   (integer 60)
+   "The default timeout for caching failed key lookups. The default is 60 seconds.")
+  (unmount-timeout
+   (integer 600)
+   "The Global minimum timeout, in seconds, until directories are unmounted. The default is 10 minutes. Setting the timeout to zero disables umounts completely."))
 
-;; (define-configuration autofs-mount-configuration
-;;   (target
-;;    (string)
-;;    "Mount point target.")
-;;   (source
-;;    (string)
-;;    "Mount point source.")
-;;   (options
-;;    maybe-list
-;;    "List of string representing mount options."))
-
-(define-record-type* <autofs-configuration>
-  autofs-configuration make-autofs-configuration
-  autofs-configuration?
-  (autofs autofs-configuration-autofs                   ; file-like
-          (default autofs))
-  (pid-file autofs-configuration-pid-file               ; string
-            (default "/var/run/autofs"))
-  (config-file autofs-configuration-config-file         ; sring | file-like object
-               (default (plain-file "empty" "")))
-  (mounts autofs-configuration-mounts ;list of <autofs-mount-configuration>
-          (default '()))
-  (options autofs-configuration-options
-           (default "--timeout=5")))
-
-(define-record-type* <autofs-mount-configuration>
-  autofs-mount-configuration make-autofs-mount-configuration
-  autofs-mount-configuration?
-  (target autofs-mount-configuration-target   ; string
-          (default #f))
-  (source autofs-mount-configuration-source   ; string
-          (default #f))
-  (options autofs-mount-configuration-options ; list of strings
-          (default '())))
+(define-configuration/no-serialization autofs-mount-configuration
+  (target
+   (string)
+   "Mount point target.")
+  (source
+   (string)
+   "Mount point source.")
+  (options
+   maybe-list
+   "List of string representing mount options."))
 
 (define (autofs-configuration-file config)
+
   (define autofs-mounts-configuration-file
-    (plain-file "autofs-mounts.conf"
+    (plain-file "autofs.mounts.conf"
                 (call-with-output-string
                   (lambda (port)
-                    (match-record config <autofs-configuration>
-                                  (autofs pid-file config-file mounts)
-                      (for-each (lambda (mount)
-                                  (match-record mount <autofs-mount-configuration>
+                    (match-record config <autofs-configuration> (mounts)
+                                  (for-each (lambda (mount)
+                                              (match-record mount <autofs-mount-configuration>
                                                 (target source options)
-                                    (display (string-join (list target (string-join options ",") source))
-                                             port)
-                                    (newline port)))
-                                mounts))))))
-    (mixed-text-file "autofs.conf"
-                     "/- " autofs-mounts-configuration-file " " (autofs-configuration-options config)))
+                                                (let ((opts (if (maybe-value-set options)
+                                                                (string-join options ",") "")))
+                                                  (format port "~a ~a ~a\n" target opts source))))
+                                            mounts))))))
+    (mixed-text-file "autofs.master"
+                     "/- " autofs-mounts-configuration-file))
 
 (define (autofs-activation config)
   "Return the activation gexp for CONFIG."
@@ -108,7 +90,7 @@
 (define (autofs-shepherd-service config)
   ;; Return a <shepherd-service> running autofs.
   (match-record config <autofs-configuration>
-    (autofs pid-file config-file mounts)
+    (autofs pid-file config-file mounts caching-timeout unmount-timeout)
     (list (shepherd-service
            (provision '(autofs))
            (documentation "Run autofs daemon.")
@@ -116,6 +98,8 @@
            (start #~(make-forkexec-constructor
                      (list #$(file-append autofs "/sbin/automount")
                            "-f" "-p" #$pid-file
+                           "-t" #$unmount-timeout
+                           "-n" #$caching-timeout
                            #$(autofs-configuration-file config))
                      #:pid-file #$pid-file
                      #:log-file #$%autofs-log-file))
