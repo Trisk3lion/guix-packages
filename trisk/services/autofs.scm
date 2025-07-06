@@ -48,7 +48,7 @@
    (file-like %dummy-config)
    "Empty dummy config file.")
   (mounts
-   (list-of-autofs-mount-configurations? '())
+   (list-of-autofs-mount-configurations '())
    "List of mount configuration.")
   (caching-timeout
    (integer 60)
