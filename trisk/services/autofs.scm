@@ -29,6 +29,9 @@
 (define %autofs-log-file
   "/var/log/autofs.log")
 
+(define %dummy-config
+  (plain-file "empty" ""))
+
 (define (list-of-autofs-mount-configurations? lst)
   (every autofs-mount-configuration? lst))
 
@@ -37,10 +40,13 @@
 (define-configuration/no-serialization autofs-configuration
   (autofs
    (file-like autofs)
-   "The autofs package to use")
+   "The autofs package to use.")
   (pid-file
    (string "/var/run/autofs")
    "Location of the PID file.")
+  (config-file
+   (file-like %dummy-config)
+   "Empty dummy config file.")
   (mounts
    (list-of-autofs-mount-configurations? '()))
   (caching-timeout
@@ -94,16 +100,10 @@ timeout = 300
 ") )))
         (for-each mkdir-p '#$targets))))
 
-;; (call-with-output-file "/etc/autofs.conf"
-;;                                (lambda (f) (put-string f "
-;; [ autofs ]
-;; master_map_name = /etc/auto.master
-;; timeout = 300
-;; ")))
 (define (autofs-shepherd-service config)
   ;; Return a <shepherd-service> running autofs.
   (match-record config <autofs-configuration>
-    (autofs pid-file config-file mounts caching-timeout unmount-timeout)
+    (autofs pid-file mounts caching-timeout unmount-timeout)
     (list (shepherd-service
            (provision '(autofs))
            (documentation "Run autofs daemon.")
