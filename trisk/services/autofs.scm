@@ -81,7 +81,7 @@
                                   (for-each (lambda (mount)
                                               (match-record mount <autofs-mount-configuration>
                                                 (target source options)
-                                                (let ((opts (if (maybe-value-set options)
+                                                (let ((opts (if (maybe-value-set? options)
                                                                 (string-join options ",") "")))
                                                   (format port "~a ~a ~a\n" target opts source))))
                                             mounts))))))
