@@ -12,6 +12,7 @@
   #:use-module (guix store)
   #:use-module (gnu packages file-systems)
   #:use-module (ice-9 match)
+  #:use-module (srfi srfi-1)
   #:export (autofs-configuration
             autofs-configuration?
             autofs-service-type
