@@ -33,10 +33,22 @@
 (define %dummy-config
   (plain-file "empty" ""))
 
+(define-maybe/no-serialization list)
+
+(define-configuration autofs-mount-configuration
+  (target
+   string
+   "Mount point target.")
+  (source
+   string
+   "Mount point source.")
+  (options
+   maybe-list
+   "List of string representing mount options.")
+  (no-serialization))
+
 (define (list-of-autofs-mount-configurations? lst)
   (every autofs-mount-configuration? lst))
-
-(define-maybe/no-serialization list)
 
 (define-configuration autofs-configuration
   (autofs
@@ -57,18 +69,6 @@
   (unmount-timeout
    (integer 600)
    "The Global minimum timeout, in seconds, until directories are unmounted. The default is 10 minutes. Setting the timeout to zero disables umounts completely.")
-  (no-serialization))
-
-(define-configuration autofs-mount-configuration
-  (target
-   string
-   "Mount point target.")
-  (source
-   string
-   "Mount point source.")
-  (options
-   maybe-list
-   "List of string representing mount options.")
   (no-serialization))
 
 (define (autofs-configuration-file config)
