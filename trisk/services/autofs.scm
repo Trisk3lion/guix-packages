@@ -61,10 +61,10 @@
 
 (define-configuration autofs-mount-configuration
   (target
-   (string)
+   string
    "Mount point target.")
   (source
-   (string)
+   string
    "Mount point source.")
   (options
    maybe-list
