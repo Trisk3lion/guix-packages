@@ -76,7 +76,7 @@
                                                   (format port "~a ~a ~a\n" target opts source))))
                                             mounts))))))
     (mixed-text-file "autofs.master"
-                     "/- " autofs-mounts-configuration-file))
+                     "/- " autofs-mounts-configuration-file "\n"))
 
 (define (autofs-activation config)
   "Return the activation gexp for CONFIG."
