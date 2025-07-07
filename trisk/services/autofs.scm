@@ -110,14 +110,15 @@
   ;; Return a <shepherd-service> running autofs.
   (match-record config <autofs-configuration>
     (autofs pid-file mounts caching-timeout)
-    (let ((config-file (autofs-configuration-file config)))
+    (let ((config-file (autofs-configuration-file config))
+          (cache (number->string caching-timeout)))
       (list (shepherd-service
              (provision '(autofs))
              (documentation "Run autofs daemon.")
              (requirement '(user-processes networking)) ;; loopback? networking also?
              (start #~(make-forkexec-constructor
                        (list #$(file-append autofs "/sbin/automount")
-                             "-f" "-p" #$pid-file "-n" #$caching-timeout
+                             "-f" "-p" #$pid-file "-n" #$cache
                              #$config-file)
                        #:pid-file #$pid-file
                        #:log-file #$%autofs-log-file))
