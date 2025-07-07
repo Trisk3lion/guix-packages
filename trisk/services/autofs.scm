@@ -85,9 +85,10 @@
                                                                 (string-join options ",") "")))
                                                   (format port "~a ~a ~a\n" target opts source))))
                                             mounts))))))
+  (match-record config <autofs-configuration> (unmount-config)
     (mixed-text-file "autofs.master"
                      "/- " autofs-mounts-configuration-file
-                     (format #f " --timeout=" (auto-fs-configuration-unmount-timeout config)) "\n"))
+                     (format #f " --timeout=" unmount-config) "\n")))
 
 (define (autofs-activation config)
   "Return the activation gexp for CONFIG."
