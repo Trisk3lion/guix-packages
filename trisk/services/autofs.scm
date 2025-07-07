@@ -30,8 +30,8 @@
 (define %autofs-log-file
   "/var/log/autofs.log")
 
-(define %dummy-config
-  (plain-file "empty" ""))
+;; (define %dummy-config
+;;   (plain-file "empty" ""))
 
 (define-maybe/no-serialization list)
 
@@ -57,9 +57,9 @@
   (pid-file
    (string "/var/run/autofs")
    "Location of the PID file.")
-  (config-file
-   (file-like %dummy-config)
-   "Empty dummy config file.")
+  ;; (config-file
+  ;;  (file-like %dummy-config)
+  ;;  "Empty dummy config file.")
   (mounts
    (list-of-autofs-mount-configurations '())
    "List of mount configuration.")
@@ -97,31 +97,32 @@
     #~(begin
         (use-modules (guix build utils))
         (mkdir-p "/etc/autofs")
-        (call-with-output-file "/etc/autofs.conf"
-            (lambda (port)
-              (display (string-append "
-[ autofs ]
-master_map_name = " #$(autofs-configuration-file config) "
-timeout = 300
-") port)))
+        ;; (call-with-output-file "/etc/autofs.conf"
+;;             (lambda (port)
+;;               (display (string-append "
+;; [ autofs ]
+;; master_map_name = " #$(autofs-configuration-file config) "
+;; timeout = 300
+;; ") port)))
         (for-each mkdir-p '#$targets))))
 
 (define (autofs-shepherd-service config)
   ;; Return a <shepherd-service> running autofs.
   (match-record config <autofs-configuration>
-    (autofs pid-file config-file mounts caching-timeout)
-    (list (shepherd-service
-           (provision '(autofs))
-           (documentation "Run autofs daemon.")
-           (requirement '(user-processes networking)) ;; loopback? networking also?
-           (start #~(make-forkexec-constructor
-                     (list #$(file-append autofs "/sbin/automount")
-                           "-f" "-p" #$pid-file "-n" #$caching-timeout
-                           #$(autofs-configuration-file config))
-                     #:pid-file #$pid-file
-                     #:log-file #$%autofs-log-file))
-           (stop #~(make-kill-destructor))
-           (actions (list (shepherd-configuration-action config-file)))))))
+    (autofs pid-file mounts caching-timeout)
+    (let ((config-file (autofs-configuration-file config)))
+      (list (shepherd-service
+             (provision '(autofs))
+             (documentation "Run autofs daemon.")
+             (requirement '(user-processes networking)) ;; loopback? networking also?
+             (start #~(make-forkexec-constructor
+                       (list #$(file-append autofs "/sbin/automount")
+                             "-f" "-p" #$pid-file "-n" #$caching-timeout
+                             #$config-file)
+                       #:pid-file #$pid-file
+                       #:log-file #$%autofs-log-file))
+             (stop #~(make-kill-destructor))
+             (actions (list (shepherd-configuration-action config-file)))))))
 
 (define %autofs-log-rotations
   (list %autofs-log-file))
