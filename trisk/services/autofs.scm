@@ -69,6 +69,12 @@
   (unmount-timeout
    (integer 600)
    "The Global minimum timeout, in seconds, until directories are unmounted. The default is 10 minutes. Setting the timeout to zero disables umounts completely.")
+  (verbose?
+   (boolean #f)
+   "Enable verbose logging.")
+  (extra-options
+   (list-of-strings '())
+   "List of extra options.")
   (no-serialization))
 
 (define (autofs-configuration-file config)
@@ -109,7 +115,7 @@
 (define (autofs-shepherd-service config)
   ;; Return a <shepherd-service> running autofs.
   (match-record config <autofs-configuration>
-    (autofs pid-file mounts caching-timeout)
+    (autofs pid-file mounts caching-timeout verbose? extra-options)
     (let ((config-file (autofs-configuration-file config))
           (cache (number->string caching-timeout)))
       (list (shepherd-service
@@ -118,7 +124,13 @@
              (requirement '(user-processes networking)) ;; loopback? networking also?
              (start #~(make-forkexec-constructor
                        (list #$(file-append autofs "/sbin/automount")
-                             "-f" "-p" #$pid-file "-n" #$cache
+                             "-f"
+                             "-p" #$pid-file
+                             "-n" #$cache
+                             #$(if verbose?
+                                   "--verbose"
+                                   "")
+                             #$@extra-options
                              #$config-file)
                        #:pid-file #$pid-file
                        #:log-file #$%autofs-log-file))
