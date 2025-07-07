@@ -88,7 +88,7 @@
   (match-record config <autofs-configuration> (unmount-timeout)
     (mixed-text-file "autofs.master"
                      "/- " autofs-mounts-configuration-file
-                     (format #f " --timeout=" unmount-timeout) "\n")))
+                     (format #f " --timeout=~a" unmount-timeout) "\n")))
 
 (define (autofs-activation config)
   "Return the activation gexp for CONFIG."
