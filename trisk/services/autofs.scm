@@ -122,7 +122,7 @@
                        #:pid-file #$pid-file
                        #:log-file #$%autofs-log-file))
              (stop #~(make-kill-destructor))
-             (actions (list (shepherd-configuration-action config-file)))))))
+             (actions (list (shepherd-configuration-action config-file))))))))
 
 (define %autofs-log-rotations
   (list %autofs-log-file))
