@@ -88,7 +88,7 @@
   (match-record config <autofs-configuration> (unmount-timeout)
     (mixed-text-file "autofs.master"
                      "/- " autofs-mounts-configuration-file
-                     (format #f " --timeout=" unmount-config) "\n")))
+                     (format #f " --timeout=" unmount-timeout) "\n")))
 
 (define (autofs-activation config)
   "Return the activation gexp for CONFIG."
@@ -109,15 +109,14 @@ timeout = 300
 (define (autofs-shepherd-service config)
   ;; Return a <shepherd-service> running autofs.
   (match-record config <autofs-configuration>
-    (autofs pid-file config-file mounts caching-timeout unmount-timeout)
+    (autofs pid-file config-file mounts caching-timeout)
     (list (shepherd-service
            (provision '(autofs))
            (documentation "Run autofs daemon.")
            (requirement '(user-processes networking)) ;; loopback? networking also?
            (start #~(make-forkexec-constructor
                      (list #$(file-append autofs "/sbin/automount")
-                           "-f" "-p" #$pid-file
-                           "-n" #$caching-timeout
+                           "-f" "-p" #$pid-file "-n" #$caching-timeout
                            #$(autofs-configuration-file config))
                      #:pid-file #$pid-file
                      #:log-file #$%autofs-log-file))
