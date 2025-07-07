@@ -85,7 +85,7 @@
                                                                 (string-join options ",") "")))
                                                   (format port "~a ~a ~a\n" target opts source))))
                                             mounts))))))
-  (match-record config <autofs-configuration> (unmount-config)
+  (match-record config <autofs-configuration> (unmount-timeout)
     (mixed-text-file "autofs.master"
                      "/- " autofs-mounts-configuration-file
                      (format #f " --timeout=" unmount-config) "\n")))
