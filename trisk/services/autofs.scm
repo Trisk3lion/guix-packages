@@ -107,7 +107,7 @@ timeout = 300
 (define (autofs-shepherd-service config)
   ;; Return a <shepherd-service> running autofs.
   (match-record config <autofs-configuration>
-    (autofs pid-file mounts caching-timeout unmount-timeout)
+    (autofs pid-file config-file mounts caching-timeout unmount-timeout)
     (list (shepherd-service
            (provision '(autofs))
            (documentation "Run autofs daemon.")
