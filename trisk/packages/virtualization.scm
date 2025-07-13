@@ -10,6 +10,7 @@
   #:use-module (gnu packages assembly)
   #:use-module (gnu packages perl)
   #:use-module (gnu packages python)
+  #:use-module (gnu packages web)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages virtualization)
   #:use-module (guix build-system copy)
@@ -58,7 +59,8 @@
       (list qemu
             cdrtools
             edk2-tools
-            spice-gtk))
+            spice-gtk
+            jq))
     (home-page "https://github.com/quickemu-project/quickemu")
     (synopsis "Quickly create and run optimised Windows, macOS and Linux virtual
 machines")
