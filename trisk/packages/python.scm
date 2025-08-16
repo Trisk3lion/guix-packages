@@ -10,6 +10,7 @@
   #:use-module (gnu packages python)
   #:use-module (gnu packages python-xyz)
   #:use-module (gnu packages python-web)
+  #:use-module (gnu packages python-crypto)
   #:use-module (gnu packages python-build)
   #:use-module (gnu packages base)
   #:use-module (gnu packages swig)
@@ -48,6 +49,29 @@ PYTHONPYCACHEPREFIX needs to be set to a folder outside the /gnu/store in order 
 @code{export PYTHONPYCACHEPREFIX=/path/to/project/.pycache}")
     (license license:expat)))
 
+
+(define-public svtplay-dl
+  (package
+    (name "svtplay-dl")
+    (version "4.131")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "svtplay_dl" version))
+       (sha256
+        (base32 "03g56fy72kz1ygj4kvdg22v138ggp9blnx2r3ffmv0za4kyajwpl"))))
+    (build-system pyproject-build-system)
+    (propagated-inputs (list python-cryptography
+                             python-pysocks
+                             python-pyyaml
+                             python-requests))
+    (native-inputs (list python-setuptools python-wheel))
+    (home-page "https://svtplay-dl.se")
+    (synopsis
+     "Command-line program to download videos from various video on demand sites")
+    (description
+     "Command-line program to download videos from various video on demand sites.")
+    (license license:expat)))
 
 (define-public lgpio
   (package
