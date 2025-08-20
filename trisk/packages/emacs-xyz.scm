@@ -22,7 +22,7 @@
         (base32 "08szibb4h1x8d9x2nacwa71z32mxr4wjgw8g6j4yxj2fs61ilj63"))))))
 
 (define-public emacs-claude-code-ide
-  (let ((commit "853440e3d8cebfef49ba9da5e2991422b8c778f4")
+  (let ((commit "907f28ed82b743b0fff945ebe772d10953d78bfe")
         (revision "0"))
     (package
       (name "emacs-claude-code-ide")
@@ -35,12 +35,10 @@
                 (file-name (git-file-name name version))
                 (sha256
                  (base32
-                  "1z26y2pcn0pi7aqs4vsh9rinhh68w0fq1vqxzgxmzpibacs235hq"))))
+                  "1zhbwdsy83514afxg81aywgl72sjnc5w5aibryyd44kp45qbf5wx"))))
       (build-system emacs-build-system)
       (arguments (list #:tests? #f))
-      ;; (inputs (list emacs-flycheck))
       (propagated-inputs (list emacs-vterm emacs-websocket emacs-transient emacs-flycheck))
-      ;; (native-inputs (list emacs-ert-runner))
       (home-page "https://github.com/manzaltu/claude-code-ide.el")
       (synopsis "Claude Code in Emacs")
       (description

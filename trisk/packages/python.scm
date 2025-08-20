@@ -16,6 +16,7 @@
   #:use-module (gnu packages swig)
   #:use-module (gnu packages check)
   #:use-module (gnu packages databases)
+  #:use-module (gnu packages compression)
   #:use-module (guix build-system pyproject)
   #:use-module (guix build-system python)
   #:use-module (guix build-system gnu))
@@ -231,7 +232,6 @@ PYTHONPYCACHEPREFIX needs to be set to a folder outside the /gnu/store in order 
      "Keybow 3 and 12 key, backlit mechanical keyboard add-ons for the Raspberry Pi.")
     (license license:expat)))
 
-
 (define-public python-bscpylgtv
   (package
     (name "python-bscpylgtv")
@@ -251,3 +251,44 @@ PYTHONPYCACHEPREFIX needs to be set to a folder outside the /gnu/store in order 
     (synopsis "Library to control webOS based LG TV devices.")
     (description "Library to control @code{webOS} based LG TV devices.")
     (license #f)))
+
+
+;; (define-public python-winshell
+;;   (package
+;;     (name "python-winshell")
+;;     (version "0.6")
+;;     (source
+;;      (origin
+;;        (method url-fetch)
+;;        (uri (pypi-uri "winshell" version ".zip"))
+;;        (sha256
+;;         (base32 "0h8dx820iaivca8kls1rly325r89x1klsyvh1dn1sfa3db6jz08n"))))
+;;     (build-system pyproject-build-system)
+;;     (arguments
+;;      (list
+;;       #:phases
+;;       #~(modify-phases %standard-phases
+;;           (delete 'sanity-check))))
+;;     (native-inputs (list python-setuptools python-wheel unzip))
+;;     (home-page "https://github.com/tjguk/winshell")
+;;     (synopsis "Windows shell functions")
+;;     (description "Windows shell functions.")
+;;     (license #f)))
+
+;; (define-public savestate
+;;   (package
+;;     (name "savestate")
+;;     (version "1.4.3")
+;;     (source (origin
+;;               (method url-fetch)
+;;               (uri (string-append "https://github.com/Matteo842/SaveState/releases/download/" version "/SaveState-" version "-Linux.zip"))
+;;               (sha256
+;;                (base32 "0sjjj9z1dhilhpc8pq4154czrb79z9cm044jvn75kxcjv6v5l2m5"))))
+;;     (build-system python-build-system)
+;;     (propagated-inputs (list python-pyside-6
+;;                              python-vdf
+;;                              python-winshell))
+;;     (home-page "https://github.com/Matteo842/SaveState/releases/download/1.4.3/SaveState-1.4.3-Linux.zip")
+;;     (synopsis "Save files manager.")
+;;     (description "Manages savefiles")
+;;     (license license:expat)))
