@@ -126,15 +126,16 @@ You can capture audio with your input device (microphone) or choose a media file
       (build-system emacs-build-system)
       (arguments
        (list
-       #:phases
-         #~(modify-phases %standard-phases
+        #:phases
+          #~(modify-phases %standard-phases
            (add-after 'unpack 'substitute-whisper-path
              (lambda* (#:key inputs #:allow-other-keys)
-               (let ((eca (string-append
-                                   (assoc-ref inputs "editor-code-assistant") "/bin/eca")))
-               (emacs-substitute-variables "eca-process.el"
-                 ("eca-server-install-path" eca))))))))
-      ;; (arguments (list #:tests? #f))
+               (let* ((eca (assoc-ref inputs "editor-code-assistant"))
+                      (eca-bin (string-append eca "/bin/eca")))
+               (emacs-substitute-sexps "eca-process.el"
+                 ("(defun eca-process--server-command ()
+  \"Return the command to start server.\"
+  (let ((system-command" eca-bin))))))))
       (propagated-inputs (list editor-code-assistant
                                emacs-transient
                                emacs-dash
