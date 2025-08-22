@@ -1,6 +1,7 @@
 (define-module (trisk packages emacs-xyz)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix packages)
+  #:use-module (guix gexp)
   #:use-module (guix git-download)
   #:use-module (guix build-system emacs)
   #:use-module (gnu packages emacs-xyz)
@@ -87,7 +88,17 @@
                  (base32
                   "0f72sa92hz0nxq469ajgwjnriwqbqq6snwxqhrzz0izhwmnkmks5"))))
       (build-system emacs-build-system)
-      (arguments (list #:tests? #f))
+      (arguments
+       (list
+       #:phases
+         #~(modify-phases %standard-phases
+           (add-after 'unpack 'substitute-whisper-path
+             (lambda* (#:key inputs #:allow-other-keys)
+               (let ((whisper-dir (string-append
+                                   (assoc-ref inputs "whisper-cpp") "/bin/")))
+               (emacs-substitute-variables "whisper.el"
+                 ("whisper-install-directory" whisper-dir)
+                 ("whisper-install-whispercpp" '(quote manual)))))))))
       (propagated-inputs (list whisper-cpp))
       (home-page "https://github.com/natrys/whisper.el")
       (synopsis "Emacs interface to whisper")
@@ -113,7 +124,17 @@ You can capture audio with your input device (microphone) or choose a media file
                  (base32
                   "1xrd6vfpv7xlpbmkvm4dflbsxdk0083jfay3mdq3ag2nw6whk7br"))))
       (build-system emacs-build-system)
-      (arguments (list #:tests? #f))
+      (arguments
+       (list
+       #:phases
+         #~(modify-phases %standard-phases
+           (add-after 'unpack 'substitute-whisper-path
+             (lambda* (#:key inputs #:allow-other-keys)
+               (let ((eca (string-append
+                                   (assoc-ref inputs "editor-code-assistant") "/bin/eca")))
+               (emacs-substitute-variables "eca-process.el"
+                 ("eca-server-install-path" eca))))))))
+      ;; (arguments (list #:tests? #f))
       (propagated-inputs (list editor-code-assistant
                                emacs-transient
                                emacs-dash
