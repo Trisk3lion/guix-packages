@@ -2,11 +2,14 @@
   #:use-module (guix)
   #:use-module (guix packages)
   #:use-module (gnu packages linux)
+  #:use-module (gnu packages compression)
+  #:use-module (gnu packages gcc)
   #:use-module (guix gexp)
   #:use-module (guix utils)
   #:use-module (guix build-system copy)
   #:use-module (guix download)
   #:use-module (guix git-download)
+  #:use-module (nonguix build-system binary)
   #:use-module ((guix licenses) #:prefix license:))
 
 (define-public ntfy-bin
@@ -99,6 +102,39 @@ can easily do so since ntfy is open source.")
       (supported-systems '("x86_64-linux"))
       (license license:expat))))
 
+
+;; https://github.com/editor-code-assistant/eca/releases/download/0.32.4/eca-native-static-linux-amd64.zip
+(define-public editor-code-assistant
+  (package
+    (name "editor-code-assistant")
+    (version "0.32.4")
+    (source (origin
+              (method url-fetch/zipbomb)
+              (uri (string-append "https://github.com/editor-code-assistant/eca/"
+                                  "/releases/download/" version
+                                  "/eca-native-static-linux-amd64.zip"))
+              (sha256
+               (base32
+                "1g183r84kyls5cxvb74cxkaqzk8pb1yphf1xr3nvi6sx5fm9vmaf"))))
+    (build-system binary-build-system)
+    (arguments
+     `(#:install-plan
+       '(("./eca" "/bin/"))
+       #:phases
+       (modify-phases %standard-phases
+         (add-after 'unpack 'chmod
+           (lambda _
+             (chmod "./eca" #o755))))))
+    (inputs (list `(,gcc "lib") zlib))
+    (supported-systems '("x86_64-linux"))
+    (home-page "https://github.com/clojure-lsp/clojure-lsp")
+    (synopsis "Clojure & ClojureScript Language Server (LSP) implementation")
+    (description "This package provides a Language Server for Clojure and ClojureScript
+languages.  The goal of this project is to bring great editing tools for
+Clojure/Clojurescript to all editors and programatically via its CLI and API.
+It aims to work alongside you to help you navigate, identify and fix errors,
+perform refactors and more.")
+    (license license:expat)))
 
 (define babashka-git-version
   "1.3.189")

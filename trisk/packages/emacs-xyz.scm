@@ -4,7 +4,9 @@
   #:use-module (guix git-download)
   #:use-module (guix build-system emacs)
   #:use-module (gnu packages emacs-xyz)
-  #:use-module (gnu packages emacs-build))
+  #:use-module (gnu packages emacs-build)
+  #:use-module (gnu packages machine-learning)
+  #:use-module (trisk packages binaries))
 
 (define-public emacs-transient-latest
   (package
@@ -67,4 +69,59 @@
       (synopsis "Claude Code in Emacs")
       (description
        "This package provides an Emacs library to manage vterm buffers.")
+      (license license:gpl3+))))
+
+(define-public emacs-whisper
+  (let ((commit "6198ce3d9bff0555cf098a77b78d6c2d79baf4f9")
+        (revision "0"))
+    (package
+      (name "emacs-whisper")
+      (version (git-version "1.0" revision commit))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/natrys/whisper.el")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "0f72sa92hz0nxq469ajgwjnriwqbqq6snwxqhrzz0izhwmnkmks5"))))
+      (build-system emacs-build-system)
+      (arguments (list #:tests? #f))
+      (propagated-inputs (list whisper-cpp))
+      (home-page "https://github.com/natrys/whisper.el")
+      (synopsis "Emacs interface to whisper")
+      (description
+       "Speech-to-Text interface for Emacs using OpenAI’s whisper speech recognition model. For inference, it uses the C/C++ port whisper.cpp that can run on consumer grade CPU without requiring a high end GPU.
+
+You can capture audio with your input device (microphone) or choose a media file on disk, and have the transcribed text inserted into your Emacs buffer, optionally after translating to English from your local language. This runs offline without having to use non-free cloud services (though quality varies depending on the language).")
+      (license license:gpl3+))))
+
+(define-public emacs-editor-code-assistant
+  (let ((commit "6a340d318171eeb8d43b9f9ce24a0d90b3a6b59a")
+        (revision "0"))
+    (package
+      (name "emacs-editor-code-assistant")
+      (version (git-version "1.0" revision commit))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/editor-code-assistant/eca-emacs")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "1xrd6vfpv7xlpbmkvm4dflbsxdk0083jfay3mdq3ag2nw6whk7br"))))
+      (build-system emacs-build-system)
+      (arguments (list #:tests? #f))
+      (propagated-inputs (list editor-code-assistant
+                               emacs-transient
+                               emacs-dash
+                               emacs-f
+                               emacs-markdown-mode
+                               emacs-compat))
+      (home-page "https://github.com/editor-code-assistant/eca-emacs")
+      (synopsis "ECA; Editor Code Assistant for Emacs")
+      (description
+       "ECA (Editor Code Assistant) Emacs is an AI-powered pair-programming client for Emacs. Inspired by lsp-mode’s JSONRPC handling, it connects to an external eca server process to provide interactive chat, code suggestions, context management and more..")
       (license license:gpl3+))))
