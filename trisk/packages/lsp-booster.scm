@@ -8,6 +8,14 @@
   #:use-module (trisk packages rust-crates)
   )
 
+
+;; Generera declaration för beroenden:
+;; guix import --insert=trisk/packages/rust-crates.scm \
+;;     crate --lockfile=/path/to/Cargo.lock PACKAGE
+;; Generera paket deklaration:
+;; guix import crate PACKAGE
+
+
 (define-public emacs-lsp-booster
   (package
     (name "emacs-lsp-booster")
