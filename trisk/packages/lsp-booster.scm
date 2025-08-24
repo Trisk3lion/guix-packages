@@ -5,8 +5,7 @@
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix packages)
   #:use-module (guix gexp)
-  #:use-module (trisk packages rust-crates)
-  )
+  #:use-module (trisk packages rust-crates))
 
 
 ;; Generera declaration för beroenden:
@@ -29,7 +28,8 @@
         (base32 "1j0ayr0sdanssbv2c4kprzxfn2m3ihk7h5kzvgh7m8wavxv9wc0k"))))
     (build-system cargo-build-system)
     (arguments
-     `(#:tests? #f))
+     `(#:tests? #f
+       #:install-source? #f))
     (inputs (cargo-inputs 'emacs-lsp-booster))
     (home-page "https://github.com/blahgeek/emacs-lsp-booster")
     (synopsis "Emacs LSP performance booster")
