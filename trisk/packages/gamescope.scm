@@ -133,7 +133,7 @@
                                       (map (cut this-package-native-input <>)
                                            (list "stb-image"
                                                  "stb-image-write"
-                                                 "stb-image-resize")))))
+                                                 "stb-image-resize2")))))
                 (copy-recursively (string-append stb-files-dir "/include")
                                   "subprojects/stb"))
               (copy-recursively "subprojects/packagefiles/stb"
@@ -155,7 +155,7 @@ directory = stb
                          spirv-headers
                          stb-image
                          stb-image-write
-                         stb-image-resize
+                         stb-image-resize2
                          vulkan-headers))
     (inputs (list benchmark
                   glm
