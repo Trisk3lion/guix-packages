@@ -1,3 +1,11 @@
+build-all:
+	guix build -L . --quiet --keep-going \
+		$$(guix package -A | grep "trisk/packages" | awk '{ print $1 "@" $2 }')
+
+lint-all:
+	guix lint -L . --no-network \
+		$${guix package -A | grep "trisk/packages" | awk -F "[: \t]" '{ print $4 }'}
+
 build-emacs-pgtk:
 	guix build --load-path=. trisk-emacs-master-pgtk
 
@@ -99,6 +107,9 @@ build-docker-compose: trisk/packages/docker.scm
 
 build-atuin: trisk/packages/atuin.scm
 	guix build --load-path=. atuin
+
+build-ghostty: trisk/packages/atuin.scm
+	guix build --load-path=. ghostty
 
 update:
 	emacs --script update-packages.el
