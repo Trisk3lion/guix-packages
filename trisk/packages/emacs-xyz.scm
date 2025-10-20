@@ -109,7 +109,7 @@ You can capture audio with your input device (microphone) or choose a media file
       (license license:gpl3+))))
 
 (define-public emacs-editor-code-assistant
-  (let ((commit "6a340d318171eeb8d43b9f9ce24a0d90b3a6b59a")
+  (let ((commit "95d5c3b47a6182c624d15802f37623bdcccfe9af")
         (revision "0"))
     (package
       (name "emacs-editor-code-assistant")
@@ -122,7 +122,7 @@ You can capture audio with your input device (microphone) or choose a media file
                 (file-name (git-file-name name version))
                 (sha256
                  (base32
-                  "1xrd6vfpv7xlpbmkvm4dflbsxdk0083jfay3mdq3ag2nw6whk7br"))))
+                  "0492yb6s3wc7h2nv6jpg5hk94ipq4lzp2k25lq4k4m6fawzbc6r7"))))
       (build-system emacs-build-system)
       (arguments
        (list

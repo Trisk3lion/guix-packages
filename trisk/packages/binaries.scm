@@ -107,7 +107,7 @@ can easily do so since ntfy is open source.")
 (define-public editor-code-assistant
   (package
     (name "editor-code-assistant")
-    (version "0.32.4")
+    (version "0.71.0")
     (source (origin
               (method url-fetch/zipbomb)
               (uri (string-append "https://github.com/editor-code-assistant/eca/"
