@@ -25,6 +25,12 @@
   (url-prefix
    maybe-string
    "Serve all URL's prefixed by url-prefix.")
+  (interface
+   (string "0.0.0.0")
+   "The interface which to listen to connections, for example: ::1 or 0.0.0.0.")
+  (port
+   (number 8080)
+   "The port which to listen to connections.")
   (user
    (string "calibre")
    "User name for the user that should run the server. Should be the same user that owns the files in calibre library folder.")
