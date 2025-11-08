@@ -2327,6 +2327,7 @@ and baseboard/BIOS/chassis/product information.")
     (build-system go-build-system)
     (arguments
      (list
+      #:tests? #f
       #:import-path "github.com/samber/lo"))
     (propagated-inputs (list go-golang-org-x-text))
     (home-page "https://github.com/samber/lo")
@@ -3063,4 +3064,299 @@ enables it to self-document.")
     (synopsis "duf")
     (description
      "Disk Usage/Free Utility (Linux, BSD, @code{macOS} & Windows).")
+    (license license:expat)))
+
+(define-public go-github-com-openpeedeep-xdg
+  (package
+    (name "go-github-com-openpeedeep-xdg")
+    (version "1.0.0")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/OpenPeeDeeP/xdg")
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "1yk4hlji28pp69bvvv9m1ja1bn6njfhf8p0rwwyszjbk0qnpf8q6"))))
+    (build-system go-build-system)
+    (arguments
+     (list
+      #:import-path "github.com/OpenPeeDeeP/xdg"))
+    (propagated-inputs (list go-github-com-stretchr-testify))
+    (home-page "https://github.com/OpenPeeDeeP/xdg")
+    (synopsis "XDG")
+    (description
+     "Package xdg implements the XDG standard for application file locations.")
+    (license license:bsd-3)))
+
+(define-public go-github-com-boz-go-throttle
+  (package
+    (name "go-github-com-boz-go-throttle")
+    (version "0.0.0-20160922054636-fdc4eab740c1")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/boz/go-throttle")
+             (commit (go-version->git-ref version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "1lfilrr694cm8ydz37c9p6bvlg4l20g1ccq6zrxk4f0xd7a1r2lv"))))
+    (build-system go-build-system)
+    (arguments
+     (list
+      #:tests? #f
+      #:import-path "github.com/boz/go-throttle"))
+    (home-page "https://github.com/boz/go-throttle")
+    (synopsis #f)
+    (description #f)
+    (license #f)))
+
+(define-public go-github-com-cloudfoundry-jibber-jabber
+  (package
+    (name "go-github-com-cloudfoundry-jibber-jabber")
+    (version "0.0.0-20151120183258-bcc4c8345a21")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/cloudfoundry-attic/jibber_jabber")
+             (commit (go-version->git-ref version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "0q31q03sxfwrdgbv559bgm9gr5cmyzp1al0zli9nlkwa2v9hw5fi"))))
+    (build-system go-build-system)
+    (arguments
+     (list
+      #:tests? #f
+      #:import-path "github.com/cloudfoundry/jibber_jabber"))
+    (home-page "https://github.com/cloudfoundry/jibber_jabber")
+    (synopsis "Jibber Jabber")
+    (description
+     "Jibber Jabber is a @code{GoLang} Library that can be used to detect an operating
+system's current language.")
+    (license license:asl2.0)))
+
+(define-public go-github-com-imdario-mergo
+  (package
+    (name "go-github-com-imdario-mergo")
+    (version "1.0.2")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/darccio/mergo")
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "1q61904rd858ac19vsmmhz69b1hvn0y9rjfb9d2gc4abg64dva57"))))
+    (build-system go-build-system)
+    (arguments
+     (list
+      #:tests? #f
+      #:import-path "github.com/imdario/mergo"))
+    (home-page "https://github.com/imdario/mergo")
+    (synopsis "Mergo")
+    (description
+     "This package provides a helper to merge structs and maps in Golang.  Useful for
+configuration default values, avoiding messy if-statements.")
+    (license license:bsd-3)))
+
+(define-public go-github-com-integrii-flaggy
+  (package
+    (name "go-github-com-integrii-flaggy")
+    (version "1.8.0")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/integrii/flaggy")
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "1s5da58ydd8698yajdqisigw7ppilbx51q34vbznxk2401fggq08"))))
+    (build-system go-build-system)
+    (arguments
+     (list
+      #:go go-1.25
+      #:import-path "github.com/integrii/flaggy"))
+    (home-page "https://github.com/integrii/flaggy")
+    (synopsis "Installation")
+    (description
+     "Package flaggy is a input flag parsing package that supports recursive
+subcommands, positional values, and any-position flags without unnecessary
+complexeties.")
+    (license license:unlicense)))
+
+(define-public go-github-com-jesseduffield-asciigraph
+  (package
+    (name "go-github-com-jesseduffield-asciigraph")
+    (version "0.4.1")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/jesseduffield/asciigraph")
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "1qvsnhrrgpg198wb00rpd5avqcgnmnv7qpknqkcryxjq2z9rpyv4"))))
+    (build-system go-build-system)
+    (arguments
+     (list
+      #:tests? #f
+      #:import-path "github.com/jesseduffield/asciigraph"))
+    (home-page "https://github.com/jesseduffield/asciigraph")
+    (synopsis #f)
+    (description #f)
+    (license license:bsd-3)))
+
+(define-public go-github-com-jesseduffield-gocui
+  (package
+    (name "go-github-com-jesseduffield-gocui")
+    (version "0.3.0")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/jesseduffield/gocui")
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "01xac0my3jkiykbqylfldx7yj1xcwjqhxm1d9fqy1gmy3bwwzvkg"))))
+    (build-system go-build-system)
+    (arguments
+     (list
+      #:import-path "github.com/jesseduffield/gocui"))
+    (propagated-inputs (list go-github-com-nsf-termbox-go))
+    (home-page "https://github.com/jesseduffield/gocui")
+    (synopsis "GOCUI - Go Console User Interface")
+    (description "Package gocui allows to create console user interfaces.")
+    (license license:bsd-3)))
+
+(define-public go-github-com-jesseduffield-kill
+  (package
+    (name "go-github-com-jesseduffield-kill")
+    (version "0.0.0-20250101124109-e216ddbe133a")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/jesseduffield/kill")
+             (commit (go-version->git-ref version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "16kjka2gm0i390j5hnc3rh8x00i61nhhs6xpmw552nj4f8a6cwcn"))))
+    (build-system go-build-system)
+    (arguments
+     (list
+      #:import-path "github.com/jesseduffield/kill"))
+    (propagated-inputs (list go-golang-org-x-sys))
+    (home-page "https://github.com/jesseduffield/kill")
+    (synopsis "Kill")
+    (description
+     "Go package for killing processes across different platforms.  Handles killing
+children of processes as well as the process itself.")
+    (license license:expat)))
+
+(define-public go-github-com-jesseduffield-lazycore
+  (package
+    (name "go-github-com-jesseduffield-lazycore")
+    (version "0.0.0-20221023210126-718a4caea996")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/jesseduffield/lazycore")
+             (commit (go-version->git-ref version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "05x45q86yf033npddc4bk110j9p1l3qikgjilsqb4wjd3mxfrh52"))))
+    (build-system go-build-system)
+    (arguments
+     (list
+      #:tests? #f
+      #:skip-build? #t
+      #:import-path "github.com/jesseduffield/lazycore/pkg"
+      #:unpack-path "github.com/jesseduffield/lazycore"))
+    (propagated-inputs (list go-github-com-stretchr-testify
+                             go-github-com-samber-lo))
+    (home-page "https://github.com/jesseduffield/lazycore")
+    (synopsis "lazycore")
+    (description "Shared functionality for lazygit, lazydocker, etc.")
+    (license license:expat)))
+
+(define-public go-github-com-jesseduffield-yaml
+  (package
+    (name "go-github-com-jesseduffield-yaml")
+    (version "0.0.0-20190702115811-b900b7e08b56")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/jesseduffield/yaml")
+             (commit (go-version->git-ref version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "1k2p3f85zl17946g5w8pvx930prd4da6n2d48gsh9br3b1z0wqqg"))))
+    (build-system go-build-system)
+    (arguments
+     (list
+      #:import-path "github.com/jesseduffield/yaml"))
+    (propagated-inputs (list go-gopkg-in-check-v1))
+    (home-page "https://github.com/jesseduffield/yaml")
+    (synopsis "YAML support for the Go language")
+    (description "Package yaml implements YAML support for the Go language.")
+    (license license:asl2.0)))
+
+(define-public go-github-com-mcuadros-go-lookup
+  (package
+    (name "go-github-com-mcuadros-go-lookup")
+    (version "0.0.0-20230627150232-5415b5b32da8")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/mcuadros/go-lookup")
+             (commit (go-version->git-ref version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "1g33kpywl6xh0ncsprvmrrk31xvknnppw1qjmwv495lfkvg19qpg"))))
+    (build-system go-build-system)
+    (arguments
+     (list
+      #:import-path "github.com/mcuadros/go-lookup"))
+    (propagated-inputs (list go-gopkg-in-check-v1))
+    (home-page "https://github.com/mcuadros/go-lookup")
+    (synopsis "go-lookup")
+    (description
+     "Small library on top of reflect for make lookups to Structs or Maps.  Using a
+very simple DSL you can access to any property, key or value of any value of Go.")
+    (license license:expat)))
+
+(define-public go-github-com-mgutz-str
+  (package
+    (name "go-github-com-mgutz-str")
+    (version "1.2.0")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/mgutz/str")
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "1g3dq618mcnpfyw7q6m32dy08wjzkyvlbd0f2nvwvck682749i1j"))))
+    (build-system go-build-system)
+    (arguments
+     (list
+      #:tests? #f
+      #:import-path "github.com/mgutz/str"))
+    (home-page "https://github.com/mgutz/str")
+    (synopsis "str")
+    (description
+     "Package str is a comprehensive set of string functions to build more Go
+awesomeness.  Str complements Go's standard packages and does not duplicate
+functionality found in `strings` or `strconv`.")
     (license license:expat)))
