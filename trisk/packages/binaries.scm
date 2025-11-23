@@ -107,15 +107,15 @@ can easily do so since ntfy is open source.")
 (define-public editor-code-assistant
   (package
     (name "editor-code-assistant")
-    (version "0.71.0")
-    (source (origin
-              (method url-fetch/zipbomb)
-              (uri (string-append "https://github.com/editor-code-assistant/eca/"
-                                  "/releases/download/" version
-                                  "/eca-native-static-linux-amd64.zip"))
-              (sha256
-               (base32
-                "1g183r84kyls5cxvb74cxkaqzk8pb1yphf1xr3nvi6sx5fm9vmaf"))))
+    (version "0.79.0")
+    (source
+     (origin
+       (method url-fetch/zipbomb)
+       (uri (string-append "https://github.com/editor-code-assistant/eca/"
+                           "/releases/download/" version
+                           "/eca-native-static-linux-amd64.zip"))
+       (sha256
+        (base32 "1i9zvwa6rdp20af58axbhgghyvgh9j7y5662fb8qfdwby2dqpskn"))))
     (build-system binary-build-system)
     (arguments
      `(#:install-plan
