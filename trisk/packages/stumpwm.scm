@@ -69,3 +69,43 @@ mouse control mode for StumpWM.")
     (description
      "This package provides Auto Complete and Company back-ends for PHP.")
     (license license:gpl3+))))
+
+(define stumpwm-contrib
+  (let ((commit "c4f077b1fe97cd8da6d710e5cbe390eb680629bd")
+        (revision "7"))
+    (package
+      (name "stumpwm-contrib")
+      (version (git-version "0.0.1" revision commit)) ;no upstream release
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/stumpwm/stumpwm-contrib")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32 "0fdv4d0rlca64p4dakp1l60701vls2s6kx3gzlflmcf2l49kdbnn"))))
+      (build-system asdf-build-system/sbcl)
+      (inputs
+       (list stumpwm))
+      (home-page "https://github.com/stumpwm/stumpwm-contrib")
+      (synopsis "StumpWM extra modules")
+      (description "This package provides extra modules for StumpWM.")
+      (license (list license:gpl2+ license:gpl3+ license:bsd-2)))))
+
+(define-public sbcl-stumpwm-mpd
+  (package
+    (inherit stumpwm-contrib)
+    (name "sbcl-stumpwm-mpd")
+    (arguments
+     '(#:asd-systems '("mpd")
+       #:tests? #f
+       #:phases
+       (modify-phases %standard-phases
+         (add-after 'unpack 'chdir
+           (lambda _ (chdir "minor-mode/mpd"))))))
+    (home-page "https://github.com/stumpwm/stumpwm-contrib")
+    (synopsis "Minor-mode for controlling mpd")
+    (description "This package provides a keyboard-driven divide-and-conquer
+mouse control mode for StumpWM.")
+    (license (list license:gpl2+ license:gpl3+ license:bsd-2))))
