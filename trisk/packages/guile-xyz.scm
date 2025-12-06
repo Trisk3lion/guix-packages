@@ -72,6 +72,9 @@
       (synopsis
        "Swaybar generator written in Guile Scheme.")
       (description
-       "A bar generator for sway using the swaybar-protocol, written\nand configured with Guile Scheme. It is similar to a program like i3blocks where\nyou can define your own blocks or use some of the provided blocks, which will\nthen be displayed in the bar.")
+       "A bar generator for sway using the swaybar-protocol, written
+nand configured with Guile Scheme. It is similar to a program like i3blocks where
+you can define your own blocks or use some of the provided blocks, which will
+then be displayed in the bar.")
       (home-page "https://codeberg.org/trevarj/gubar")
       (license license:gpl3+))))

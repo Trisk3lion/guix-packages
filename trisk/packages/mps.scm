@@ -17,7 +17,7 @@
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with this file.  If not, see <http://www.gnu.org/licenses/>.
 
-(define-module (mps)
+(define-module (trisk packages mps)
   #:use-module (gnu packages autotools)
   #:use-module (gnu packages sqlite)
   #:use-module (guix build-system gnu)
