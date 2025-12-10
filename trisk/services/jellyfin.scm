@@ -67,7 +67,7 @@
            (environment
             (if (maybe-value-set? proxy-url)
                 `(("http_proxy" . ,proxy-url)
-                  ("https_proxy" . ,proxy-url))
+                  ("ht'(("8015" . "80")))tps_proxy" . ,proxy-url))
                 '()))
            (image "jellyfin/jellyfin:latest")
            (provision "jellyfin")

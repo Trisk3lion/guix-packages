@@ -1,6 +1,5 @@
 (define-module (trisk packages python)
-  #:use-module ((guix licenses)
-                #:prefix license:)
+  #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu)
   #:use-module (guix gexp)
   #:use-module (guix utils)
@@ -10,16 +9,208 @@
   #:use-module (gnu packages python)
   #:use-module (gnu packages python-xyz)
   #:use-module (gnu packages python-web)
+  #:use-module (gnu packages python-check)
   #:use-module (gnu packages python-crypto)
   #:use-module (gnu packages python-build)
   #:use-module (gnu packages base)
+  #:use-module (gnu packages bash)
+  #:use-module (gnu packages freedesktop)
+  #:use-module (gnu packages gettext)
   #:use-module (gnu packages swig)
   #:use-module (gnu packages check)
+  #:use-module (gnu packages glib)
+  #:use-module (gnu packages gtk)
+  #:use-module (gnu packages linux)
+  #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages databases)
   #:use-module (gnu packages compression)
   #:use-module (guix build-system pyproject)
   #:use-module (guix build-system python)
   #:use-module (guix build-system gnu))
+
+(define-public python-dasbus
+  (package
+    (name "python-dasbus")
+    (version "1.7")
+    (source (origin
+              (method url-fetch)
+              (uri (pypi-uri "dasbus" version))
+              (sha256
+               (base32
+                "1xmn6q00v3kif5q8jcq6vi84k6xb97s2ry5rgdgyxs6z3a20v1d8"))))
+    (build-system pyproject-build-system)
+    (arguments
+     (list #:tests? #f))  ; Enable tests
+    (native-inputs
+     (list python-pytest
+           python-setuptools
+           python-wheel))
+    (propagated-inputs
+     (list python-pygobject))
+    (home-page "https://github.com/rhinstaller/dasbus")
+    (synopsis "DBus library in Python")
+    (description
+     "Dasbus is a DBus library written in Python 3, based on GLib and inspired
+by pydbus.  It is designed to be easy to use and providing unified interface
+for D-Bus.  The library is intended for creating applications that use D-Bus
+for IPC and for accessing D-Bus services.
+
+Features include:
+@itemize
+@item Object-oriented API
+@item Support for standard D-Bus interfaces
+@item Automatic type conversion
+@item Proxy objects for D-Bus services
+@item Support for D-Bus signals
+@item Compatible with asyncio
+@end itemize")
+    (license license:lgpl2.1+)))
+
+;; (define-public input-remapper
+;;   (package
+;;     (name "input-remapper")
+;;     (version "2.2.0")
+;;     (source
+;;      (origin
+;;        (method git-fetch)
+;;        (uri (git-reference
+;;              (url "https://github.com/sezanzeb/input-remapper")
+;;              (commit version)))
+;;        (file-name (git-file-name name version))
+;;        (sha256
+;;         (base32
+;;          ;; To compute this hash:
+;;          ;; guix download https://github.com/sezanzeb/input-remapper/archive/refs/tags/2.2.0.tar.gz
+;;          ;; Then run: guix hash /gnu/store/...-2.2.0.tar.gz
+;;          "0hpim23028008jlwwc0cymphj807dlvi23qz3iqgk6rjiz8vi4ri"))))
+;;     (build-system python-build-system)
+;;     (arguments
+;;      (list
+;;       #:tests? #f  ; Tests require dbus session and GUI environment
+;;       #:phases
+;;       #~(modify-phases %standard-phases
+;;           (add-after 'unpack 'patch-paths
+;;             (lambda* (#:key inputs #:allow-other-keys)
+;;               ;; Fix FHS paths to point to store locations
+;;               (substitute* "inputremapper/configs/data.py"
+;;                 (("/usr/share")
+;;                  (string-append #$output "/usr/share")))
+
+;;               ;; Patch systemd service file
+;;               (substitute* "data/input-remapper.service"
+;;                 (("ExecStart=/usr/bin/input-remapper-service")
+;;                  (string-append "ExecStart=" #$output "/bin/input-remapper-service")))
+
+;;               ;; Patch udev rules
+;;               (substitute* "data/99-input-remapper.rules"
+;;                 (("RUN\\+=\"/bin/input-remapper-control")
+;;                  (string-append "RUN+=\"" #$output "/bin/input-remapper-control")))
+
+;;               ;; Patch autostart desktop file to use absolute bash path
+;;               (substitute* "data/input-remapper-autoload.desktop"
+;;                 (("Exec=bash")
+;;                  (string-append "Exec=" (search-input-file inputs "/bin/bash"))))))
+
+;;           (add-after 'unpack 'set-commit-hash
+;;             (lambda _
+;;               ;; Set the commit hash for --version output
+;;               (call-with-output-file "inputremapper/commit_hash.py"
+;;                 (lambda (port)
+;;                   (format port "COMMIT_HASH = '~a'~%" #$version)))))
+
+;;           ;; The setup.py already handles most installation,
+;;           ;; but we need to ensure system integration files go to correct locations
+;;           (add-after 'install 'install-system-files
+;;             (lambda* (#:key outputs #:allow-other-keys)
+;;               (let ((out (assoc-ref outputs "out")))
+;;                 ;; The setup.py installs to /usr, but we need to move/install
+;;                 ;; system integration files to proper Guix locations
+
+;;                 ;; Note: setup.py already installs these, but to /usr prefix
+;;                 ;; The build system should handle prefix correctly, but we ensure
+;;                 ;; the files are in the right place
+
+;;                 ;; Create directories if they don't exist
+;;                 ;; (mkdir-p (string-append out "/lib/systemd/system"))
+;;                 (mkdir-p (string-append out "/lib/udev/rules.d"))
+;;                 (mkdir-p (string-append out "/share/polkit-1/actions"))
+;;                 (mkdir-p (string-append out "/etc/dbus-1/system.d"))
+;;                 (mkdir-p (string-append out "/etc/xdg/autostart"))
+;;                 (mkdir-p (string-append out "/share/metainfo"))
+;;                 (mkdir-p (string-append out "/share/applications"))
+;;                 (mkdir-p (string-append out "/share/icons/hicolor/scalable/apps"))
+
+;;                 ;; Install files that may not be in the right place
+;;                 (unless (file-exists? (string-append out "/lib/systemd/system/input-remapper.service"))
+;;                   (install-file "data/input-remapper.service"
+;;                                (string-append out "/lib/systemd/system")))
+
+;;                 (unless (file-exists? (string-append out "/lib/udev/rules.d/99-input-remapper.rules"))
+;;                   (install-file "data/99-input-remapper.rules"
+;;                                (string-append out "/lib/udev/rules.d")))
+
+;;                 #t))))))
+
+;;     (native-inputshttps://github.com/SorkinType/Merriweather
+;;      (list gettext-minimal
+;;            gobject-introspection
+;;            pkg-config))
+
+;;     (inputs
+;;      (list bash-minimal
+;;            dbus
+;;            gtk+
+;;            gtksourceview-4))
+
+;;     (propagated-inputs
+;;      (list python-dasbus
+;;            python-evdev
+;;            python-pydantic
+;;            python-psutil
+;;            python-pygobject
+;;            python-setuptools))  ; Needed for pkg_resources at runtime
+
+;;     (home-page "https://github.com/sezanzeb/input-remapper")
+;;     (synopsis "Input device button mapping tool for Linux")
+;;     (description
+;;      "Input Remapper is an easy to use tool to change the mapping of your input
+;; device buttons.  It supports X11, Wayland, combinations, programmable macros,
+;; joysticks, wheels, triggers, keys, mouse movements and more.  It can map any
+;; input to any other input.
+
+;; Key features:
+;; @itemize
+;; @item Remap keyboard keys, mouse buttons, and joystick/gamepad inputs
+;; @item Create complex macros with delays and repeats
+;; @item Support for key combinations and sequences
+;; @item Works with both X11 and Wayland
+;; @item GTK-based graphical user interface
+;; @item Map mouse movements and scroll wheel events
+;; @item Per-device configuration presets
+;; @item Automatic loading of presets on device connection
+;; @item System tray integration for quick access
+;; @end itemize
+
+;; The package includes several components:
+;; @itemize
+;; @item @command{input-remapper-gtk} - Graphical configuration interface
+;; @item @command{input-remapper-service} - Background service that applies mappings
+;; @item @command{input-remapper-control} - Command-line control utility
+;; @item @command{input-remapper-reader-service} - Device reader service
+;; @end itemize
+
+;; @strong{System Integration:} To use Input Remapper, you need to:
+;; @enumerate
+;; @item Enable the systemd service: @code{systemctl enable --now input-remapper}
+;; @item Ensure your user is in the @code{input} group
+;; @item Install the included udev rules, D-Bus configuration, and polkit policy
+;; @end enumerate
+
+;; On Guix System, you can add appropriate service configurations to your system
+;; configuration file.  On foreign distributions, you may need to manually symlink
+;; the configuration files from the package output to the appropriate system
+;; locations.")
+;;     (license license:gpl3+)))
 
 (define-public python-basilisp
   (package
