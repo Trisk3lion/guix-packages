@@ -27,7 +27,7 @@
    (string "")
    "Email address to the admin of Wallabag.")
   (domain-name
-   (string "localhost")
+   (string "http://localhost")
    "Domain name.")
   (server-name
    (string "wallabag")
@@ -106,7 +106,7 @@
           ,(string-append "SYMFONY__ENV__FROM_EMAIL=" email)
           ,(string-append "SYMFONY__ENV__DOMAIN_NAME=" domain-name)
           ,(string-append "SYMFONY__ENV__SERVER_NAME=\"" server-name "\"")))
-       (port
+       (ports
         `((,(number->string expose-port) . "80")))
        (log-file log-file)
        (respawn? #t)
