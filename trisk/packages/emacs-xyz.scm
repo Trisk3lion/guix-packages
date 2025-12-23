@@ -122,7 +122,7 @@ You can capture audio with your input device (microphone) or choose a media file
                 (file-name (git-file-name name version))
                 (sha256
                  (base32
-                  "0492yb6s3wc7h2nv6jpg5hk94ipq4lzp2k25lq4k4m6fawzbc6r7"))))
+                  "11jmf48ij7qg332xhacwvc1ssyrsyda6y9jcmd4g1w7jba6g1y99"))))
       (build-system emacs-build-system)
       (arguments
        (list
