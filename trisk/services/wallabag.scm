@@ -89,8 +89,8 @@
 
 (define wallabag-oci-containers
   (match-record-lambda <wallabag-configuration>
-      (cache-directory data-directory email domain-name server-name
-                       expose-port log-file requirement extra-options)
+      (tag cache-directory data-directory email domain-name
+           server-name expose-port log-file requirement extra-options)
     (list
      (oci-container-configuration
        (provision "wallabag-oci")
