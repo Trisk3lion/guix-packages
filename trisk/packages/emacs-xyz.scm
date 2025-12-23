@@ -110,7 +110,7 @@ You can capture audio with your input device (microphone) or choose a media file
 
 (define-public emacs-editor-code-assistant
   (let ((commit "46ad8fe1e3d3638cbe58ce8bcb8338551598da0d")
-        (revision "0"))
+        (revision "1"))
     (package
       (name "emacs-editor-code-assistant")
       (version (git-version "1.0" revision commit))
