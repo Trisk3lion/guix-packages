@@ -114,7 +114,6 @@
          (log-file log-file)
          (respawn? #t)
          (requirement requirement)
-         (network "host")
          (volumes
           `((,cache-directory . "/var/www/wallabag/web/assets/images")
             (,data-directory . "/var/www/wallabag/data")))
