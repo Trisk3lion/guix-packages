@@ -91,31 +91,33 @@
   (match-record-lambda <wallabag-configuration>
       (tag cache-directory data-directory email domain-name
            server-name expose-port log-file requirement extra-options)
-    (list
-     (oci-container-configuration
-       (provision "wallabag-oci")
-       (user "wallabag")
-       (group "docker")
-       (image (string-append "wallabag/wallabag:" tag))
-       (environment
-        `("SYMFONY__ENV__DATABASE_DRIVER=pdo_sqlite"
-          "SYMFONY__ENV__DATABASE_HOST=127.0.0.1"
-          "SYMFONY__ENV__MAILER_HOST=127.0.0.1"
-          "SYMFONY__ENV__TWOFACTOR_AUTH=false"
-          "SYMFONY__ENV__FOSUSER_REGISTRATION=true"
-          ,(string-append "SYMFONY__ENV__FROM_EMAIL=" email)
-          ,(string-append "SYMFONY__ENV__DOMAIN_NAME=" domain-name)
-          ,(string-append "SYMFONY__ENV__SERVER_NAME=\"" server-name "\"")))
-       (ports
-        `((,(number->string expose-port) . "80")))
-       (log-file log-file)
-       (respawn? #t)
-       (requirement requirement)
-       (network "host")
-       (volumes
-        `((,cache-directory . "/var/www/wallabag/web/assets/images")
-          (,data-directory . "/var/www/wallabag/data")))
-       (extra-arguments extra-options)))))
+    (oci-extension
+     (containers
+      (list
+       (oci-container-configuration
+         (provision "wallabag-oci")
+         (user "wallabag")
+         (group "docker")
+         (image (string-append "wallabag/wallabag:" tag))
+         (environment
+          `("SYMFONY__ENV__DATABASE_DRIVER=pdo_sqlite"
+            "SYMFONY__ENV__DATABASE_HOST=127.0.0.1"
+            "SYMFONY__ENV__MAILER_HOST=127.0.0.1"
+            "SYMFONY__ENV__TWOFACTOR_AUTH=false"
+            "SYMFONY__ENV__FOSUSER_REGISTRATION=true"
+            ,(string-append "SYMFONY__ENV__FROM_EMAIL=" email)
+            ,(string-append "SYMFONY__ENV__DOMAIN_NAME=" domain-name)
+            ,(string-append "SYMFONY__ENV__SERVER_NAME=\"" server-name "\"")))
+         (ports
+          `((,(number->string expose-port) . "80")))
+         (log-file log-file)
+         (respawn? #t)
+         (requirement requirement)
+         (network "host")
+         (volumes
+          `((,cache-directory . "/var/www/wallabag/web/assets/images")
+            (,data-directory . "/var/www/wallabag/data")))
+         (extra-arguments extra-options)))))))
 
 (define oci-wallabag-service-type
   (service-type
@@ -127,7 +129,7 @@
                              wallabag-activation)
           (service-extension log-rotation-service-type
                              wallabag-log-rotations)
-          (service-extension oci-container-service-type
+          (service-extension oci-service-type
                              wallabag-oci-containers)))
    (default-value (wallabag-configuration))
    (description "Run Wallab, a read-it-later application.")))

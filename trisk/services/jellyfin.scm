@@ -61,24 +61,27 @@
 (define jellyfin-oci-containers
   (match-record-lambda <jellyfin-configuration>
       (cache-directory config-directory proxy-url log-file requirement extra-options)
-    (list (oci-container-configuration
-           (user "jellyfin")
-           (group "docker")
-           (environment
-            (if (maybe-value-set? proxy-url)
-                `(("http_proxy" . ,proxy-url)
-                  ("ht'(("8015" . "80")))tps_proxy" . ,proxy-url))
-                '()))
-           (image "jellyfin/jellyfin:latest")
-           (provision "jellyfin")
-           (log-file log-file)
-           (respawn? #t)
-           (requirement requirement)
-           (network "host")
-           (volumes
-            `((,cache-directory . "/cache")
-              (,config-directory . "/config")))
-           (extra-arguments extra-options)))))
+    (oci-extension
+     (containers
+      (list
+       (oci-container-configuration
+         (user "jellyfin")
+         (group "docker")
+         (environment
+          (if (maybe-value-set? proxy-url)
+              `(("http_proxy" . ,proxy-url)
+                ("ht'(("8015" . "80")))tps_proxy" . ,proxy-url))
+              '()))
+         (image "jellyfin/jellyfin:latest")
+         (provision "jellyfin")
+         (log-file log-file)
+         (respawn? #t)
+         (requirement requirement)
+         (network "host")
+         (volumes
+          `((,cache-directory . "/cache")
+            (,config-directory . "/config")))
+         (extra-arguments extra-options)))))))
 
 (define jellyfin-service-type
   (service-type
@@ -90,7 +93,7 @@
                              jellyfin-activation)
           (service-extension log-rotation-service-type
                              jellyfin-log-rotations)
-          (service-extension oci-container-service-type
+          (service-extension oci-service-type
                              jellyfin-oci-containers)))
    (default-value (jellyfin-configuration))
    (description "Run Jellyfin, a media system.")))
