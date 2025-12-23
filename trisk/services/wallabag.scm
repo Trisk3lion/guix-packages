@@ -7,6 +7,7 @@
   #:use-module (gnu services configuration)
   #:use-module (gnu services databases)
   #:use-module (gnu services docker)
+  #:use-module (gnu services containers)
   #:use-module (gnu system shadow)
   #:export (wallabag-configuration
             oci-wallabag-service-type))
