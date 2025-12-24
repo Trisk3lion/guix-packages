@@ -38,6 +38,9 @@
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26))
 
+
+;; Taken from:
+;; https://github.com/aurtzy/guix-config/blob/master/modules/my-guix/packages/game-client.scm
 ;; In anticipation for this to be included in Guix proper: https://issues.guix.gnu.org/70493
 
 ;; Upstream strongly recommends using some of its pinned dependencies due to
