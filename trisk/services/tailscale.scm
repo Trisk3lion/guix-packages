@@ -150,6 +150,11 @@ to #f.")
    (string "/var/run/tailscale/tailscaled.sock")
    "Path of the service UNIX socket.")
 
+  (accept-dns?
+   (bollean #t)
+  "Whatever to accept Tailscale DNS settings from the admin panel or not.
+This will prompt tailscale to overwrite your /etc/resolv.conf file.")
+
   (log-file
    (string "/var/log/tailscale-up.log")
    "Path to log file.")
@@ -162,7 +167,7 @@ to #f.")
 (define tailscale-up-shepherd-service
   (match-record-lambda <tailscale-up-configuration>
       (tailscale ssh? subroutes? exit-node? authkey operator
-                 socket login-server extra-options log-file)
+                 accept-dns? socket login-server extra-options log-file)
     (list (shepherd-service
            (documentation "Run tailscale up")
            (provision '(tailscale))
@@ -184,6 +189,9 @@ to #f.")
                       #$@(if exit-node?
                              '("--advertise-exit-node")
                              '())
+                      #$@(if accept-dns?
+                             '("--accept-dns=true")
+                             '("--accept-dns=false"))
                       "--login-server" #$login-server
                       #$@extra-options)
                      #:log-file #$log-file))
