@@ -15,6 +15,9 @@
   #:use-module (gnu packages ocaml)
   #:use-module (gnu packages perl)
   #:use-module (gnu packages compression)
+  #:use-module (gnu packages pkg-config)
+  #:use-module (gnu packages tls)
+  #:use-module (gnu packages rust)
   #:use-module (trisk packages rust-crates))
 
 
@@ -33,8 +36,12 @@
         (base32 "1n248ncxhh9x1iaggy9w0rgzmazzk2jwxx7jiv3ml9wb9z6xmfz5"))))
     (build-system cargo-build-system)
     (arguments
-     `(#:install-source? #f))
-    (inputs (cargo-inputs 'mod-installer))
+     `(#:install-source? #f
+       #:rust ,rust-1.88))
+    (native-inputs (list pkg-config))
+    (inputs (cons* openssl
+                   `(,zstd "lib")
+                   (cargo-inputs 'mod-installer #:module '(trisk packages rust-crates))))
     (home-page "https://github.com/dark0dave/mod_installer")
     (synopsis
      "The Infinity Engine Mod Installer is a tool designed to automate the installation of mods for Infinity Engine games such as Baldur's Gate, Icewind Dale, and Planescape: Torment. It uses a file called 'weidu.log' to determine which mods to install and how to install them")
