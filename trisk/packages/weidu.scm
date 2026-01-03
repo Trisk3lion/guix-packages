@@ -3,6 +3,7 @@
   #:use-module (guix download)
   #:use-module (guix git-download)
   #:use-module (guix build-system gnu)
+  #:use-module (guix build-system cargo)
   #:use-module (guix build-system cmake)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix utils)
@@ -13,7 +14,38 @@
   #:use-module (gnu packages base)
   #:use-module (gnu packages ocaml)
   #:use-module (gnu packages perl)
-  #:use-module (gnu packages compression))
+  #:use-module (gnu packages compression)
+  #:use-module (trisk packages rust-crates))
+
+
+(define-public mod-installer
+  (package
+    (name "mod-installer")
+    (version "12.1.1")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+              (url "https://github.com/dark0dave/mod_installer")
+              (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "1n248ncxhh9x1iaggy9w0rgzmazzk2jwxx7jiv3ml9wb9z6xmfz5"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:install-source? #f))
+    (inputs (cargo-inputs 'mod-installer))
+    (home-page "https://github.com/dark0dave/mod_installer")
+    (synopsis
+     "The Infinity Engine Mod Installer is a tool designed to automate the installation of mods for Infinity Engine games such as Baldur's Gate, Icewind Dale, and Planescape: Torment. It uses a file called 'weidu.log' to determine which mods to install and how to install them")
+    (description
+     "This package provides The Infinity Engine Mod Installer is a tool designed to automate the
+installation of mods for Infinity Engine games such as Baldur's Gate, Icewind
+Dale, and Planescape: Torment.  It uses a file called weidu.log to determine
+which mods to install and how to install them.")
+    (properties
+     `((upstream-name . "mod_installer")))
+    (license license:expat)))
 
 (define-public elkhound
   (package
