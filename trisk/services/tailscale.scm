@@ -151,7 +151,7 @@ to #f.")
    "Path of the service UNIX socket.")
 
   (accept-dns?
-   (bollean #t)
+   (boolean #t)
   "Whatever to accept Tailscale DNS settings from the admin panel or not.
 This will prompt tailscale to overwrite your /etc/resolv.conf file.")
 
