@@ -293,3 +293,107 @@ thousands of community mods relying on it.")
      `((upstream-name . "WeiDU")))
 
     (license license:gpl2)))
+
+(define-public weidu-latest
+  (let ((rev "6143572e42111ca0daa5feed30b70c214214e40a"))
+    (package
+      (name "weidu-latest")
+      (version (git-version "249" "1" (string-drop-right rev 33)))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                       (url "https://github.com/WeiDUorg/weidu")
+                       (commit rev)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "18dml206cf94f7bxgnyww0ba0dp50zcsjqs3yx7c0bv7bx93m0d5"))))
+      (build-system gnu-build-system)
+      (arguments
+       (list
+        #:tests? #f  ; No test suite in the repository
+        #:parallel-build? #f
+        #:make-flags
+        #~(list "weidu" "weinstall" "tolower")
+        #:phases
+        #~(modify-phases %standard-phases
+            (delete 'configure)  ; No configure script
+
+            (add-after 'unpack 'patch-and-config
+              (lambda* (#:key inputs #:allow-other-keys)
+                ;; Set correct paths in Configuration file
+                (let ((ocaml-bin (string-append (assoc-ref inputs "ocaml-unsafe-string") "/bin"))
+                      (elkhound (search-input-file inputs "/bin/elkhound")))
+                  (substitute* "Configuration"
+                    (("/usr/bin") ocaml-bin)
+                    (("/usr/local/bin") ocaml-bin)
+                    ;; Point to actual elkhound binary
+                    (("elkhound") elkhound)))
+
+                ;; Create necessary build directories
+                (mkdir-p "obj/.depend")
+                (mkdir-p "obj/x86_LINUX")))
+            (replace 'install
+              (lambda _
+                (let ((bin (string-append #$output "/bin"))
+                      (doc (string-append #$output "/share/doc/weidu")))
+                  ;; Install the three main binaries
+                  ;; Binaries are named *.asm.exe
+                  (for-each
+                   (lambda (prog)
+                     (let* ((exe-name (string-append prog ".asm.exe"))
+                            (dest-name (string-append bin "/" exe-name))
+                            (new-name (string-append bin "/" prog)))
+                       (install-file exe-name bin)
+                       ;; Rename from .asm.exe to just the program name
+                       (rename-file dest-name new-name)
+                       ;; Make executable
+                       (unless (executable-file? new-name)
+                         (chmod new-name #o555))))
+                   '("weidu" "weinstall" "tolower"))
+                  ;; Install documentation
+                  (for-each
+                   (lambda (file)
+                     (install-file file doc))
+                   '("README.md" "COPYING" "README-WeiDU-Changes.txt"))))))))
+      (native-inputs (list elkhound
+                           perl
+                           which))
+
+      (inputs (list ocaml-unsafe-string  ;  Weidu relias on unsafe strings!
+                    zlib))
+
+      (home-page "https://weidu.org/")
+      (synopsis "InfinityEngine modding tool")
+      (description
+       "WeiDU (Weimer Dialogue Utility) is a program used to develop, distribute,
+and install modifications (mods) for games based on the Infinity Engine.
+Supported games include:
+
+@itemize
+@item Baldur's Gate and Baldur's Gate II (including Enhanced Editions)
+@item Icewind Dale and Icewind Dale II (including Enhanced Editions)
+@item Planescape: Torment (including Enhanced Edition)
+@end itemize
+
+WeiDU provides a high-level scripting language (WeiDU DSL) for describing game
+modifications.  It handles binary patching of game files, manages complex mod
+installation dependencies, tracks installation order, and provides automatic
+backup and restoration capabilities.
+
+The package includes three command-line programs:
+
+@itemize
+@item @command{weidu}: The main modding tool for installing and developing mods
+@item @command{weinstall}: Uninstalls previously installed mods
+@item @command{tolower}: Converts game filenames to lowercase, required when
+running Windows-based Infinity Engine games on case-sensitive filesystems
+@end itemize
+
+WeiDU has become the de facto standard for Infinity Engine modding, with
+thousands of community mods relying on it.")
+
+      (properties
+       `((upstream-name . "WeiDU")))
+
+      (license license:gpl2))))
