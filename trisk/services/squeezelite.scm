@@ -119,8 +119,6 @@
                      ;; #:user user
                      ;; #:group group
                      #:environment-variables
-                     ;; Set HOME so MPD can infer default paths, such as
-                     ;; for the database file.
                      (cons (string-append "HOME=" home)
                            '#$environment-variables)
                      ;; #:pid-file #$pid-file

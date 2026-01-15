@@ -295,7 +295,7 @@ thousands of community mods relying on it.")
     (license license:gpl2)))
 
 (define-public weidu-latest
-  (let ((rev "6143572e42111ca0daa5feed30b70c214214e40a"))
+  (let ((rev "53a40b9a659467b0282b2451d8fe858079dde8e6"))
     (package
       (name "weidu-latest")
       (version (git-version "249" "1" (string-drop-right rev 33)))
@@ -307,7 +307,7 @@ thousands of community mods relying on it.")
                 (file-name (git-file-name name version))
                 (sha256
                  (base32
-                  "18dml206cf94f7bxgnyww0ba0dp50zcsjqs3yx7c0bv7bx93m0d5"))))
+                  "12fvkrn2n4523cpv7sbhq9f9bw557cnmfwg0h2x2j2xn7wj7s3sf"))))
       (build-system gnu-build-system)
       (arguments
        (list
