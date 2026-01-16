@@ -1,6 +1,4 @@
 (define-module (trisk packages cobol)
-  #:use-module ((guix licenses)
-                #:prefix license:)
   #:use-module (guix packages)
   #:use-module (guix gexp)
   #:use-module (guix utils)
@@ -8,7 +6,8 @@
   #:use-module (guix build utils)
   #:use-module (guix build-system copy)
   #:use-module (gnu packages java)
-  #:use-module (gnu packages compression))
+  #:use-module (gnu packages compression)
+  #:use-module ((guix licenses) #:prefix license:))
 
 (define-public che-lsp-for-cobol
   (package
@@ -21,7 +20,7 @@
              "https://github.com/eclipse-che4z/che-che4z-lsp-for-cobol/releases/download/"
              version "/cobol-language-support-linux-x64-" version ".vsix"))
        (sha256
-        (base32 "05krf1rlmi79y7cmi6xcayv13160zsz1dd84xnlw5597gpbm9qkp"))))q
+        (base32 "05krf1rlmi79y7cmi6xcayv13160zsz1dd84xnlw5597gpbm9qkp"))))
     (build-system copy-build-system)
     (supported-systems '("x86_64-linux" "i686-linux"))
     (arguments
@@ -36,13 +35,13 @@
                         (with-output-to-file wrapper
                           (lambda _
                             (display (string-append "#!/bin/sh\n\n"
-                                      (assoc-ref inputs "openjdk")
-                                      "/bin/java "
-                                      "-Dline.speparator=\\r\\n "
-                                      "-Xmx768M "
-                                      "-jar "
-                                      out
-                                      "/share/java/server.jar pipeEnabled\n"))))
+                                                    (assoc-ref inputs "openjdk")
+                                                    "/bin/java "
+                                                    "-Dline.speparator=\\r\\n "
+                                                    "-Xmx768M "
+                                                    "-jar "
+                                                    out
+                                                    "/share/java/server.jar pipeEnabled\n"))))
                         (chmod wrapper #o555)) #t)))
        #:install-plan '(("extension/server/native/server-linux"
                          "bin/cobol-lsp-native")

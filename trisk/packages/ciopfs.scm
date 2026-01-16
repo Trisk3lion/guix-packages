@@ -1,5 +1,4 @@
 (define-module (trisk packages ciopfs)
-  #:use-module (gnu)
   #:use-module (gnu packages)
   #:use-module (guix packages)
   #:use-module (guix download)
@@ -29,13 +28,9 @@
     (build-system gnu-build-system)
     (arguments
      `(#:tests? #f
-       #:make-flags (list (string-append "CC="
-                                         ,(cc-for-target))
+       #:make-flags (list (string-append "CC=" ,(cc-for-target))
                           "PREFIX="
                           (string-append "DESTDIR=" (assoc-ref %outputs "out")))
-       ;; #~(list (string-append "CC=" #$(cc-for-target))
-       ;;             (string-append "DESTDIR=" #$output)
-       ;;             "PREFIX=''")
        #:phases (modify-phases %standard-phases
                                (add-after 'unpack 'set-file-names
                                           (lambda* (#:key inputs outputs #:allow-other-keys)
