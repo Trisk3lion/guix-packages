@@ -12,7 +12,7 @@
 
 
 (define-public sbcl-stumpwm-stumpbuffer
-  (let ((commit "a7158765b9e31deba50a1147ded8776a002565dd")
+  (let ((commit "5ac33d10f0252eb8e17cf42029de878801afc606")
         (revision "0"))
     (package
       (name "sbcl-stumpwm-stumpbuffer")
@@ -20,12 +20,12 @@
       (source (origin
                 (method git-fetch)
                 (uri (git-reference
-                       (url "https://github.com/juki-pub/stumpbuffer/")
+                       (url "https://github.com/Trisk3lion/stumpbuffer/")
                        (commit commit)))
                 (file-name (git-file-name name version))
                 (sha256
                  (base32
-                  "1gkxrwjrkfz4rykk6nndkmigqdrihmvnq58m9r1177zp54bhs9vd"))))
+                  "0zkvywk7hg8q2624vckw3armn71dcxkik6kr5dizb0g2z1dx58c3"))))
       (build-system asdf-build-system/sbcl)
       (arguments
        '(#:asd-systems '("stumpbuffer")
@@ -42,7 +42,7 @@ mouse control mode for StumpWM.")
       (license (list license:gpl2+ license:gpl3+ license:bsd-2)))))
 
 (define-public emacs-stumpbuffer
-  (let ((commit "a7158765b9e31deba50a1147ded8776a002565dd")
+  (let ((commit "5ac33d10f0252eb8e17cf42029de878801afc606")
         (revision "0"))
   (package
     (name "emacs-stumpbuffer")
@@ -50,12 +50,12 @@ mouse control mode for StumpWM.")
     (source (origin
               (method git-fetch)
               (uri (git-reference
-                     (url "https://github.com/juki-pub/stumpbuffer/")
+                     (url "https://github.com/Trisk3lion/stumpbuffer/")
                      (commit commit)))
               (file-name (git-file-name name version))
               (sha256
                (base32
-                "1gkxrwjrkfz4rykk6nndkmigqdrihmvnq58m9r1177zp54bhs9vd"))))
+                "0zkvywk7hg8q2624vckw3armn71dcxkik6kr5dizb0g2z1dx58c3"))))
     (build-system emacs-build-system)
     (arguments
      '(#:tests? #f
