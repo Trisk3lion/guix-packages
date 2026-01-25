@@ -73,14 +73,14 @@
   #~(begin
       (use-modules (guix build utils))
       ;; (mkdir-p "/etc/keyd")
-      (system* #$(file-append (keyd-configuration-keyd config)
-                              "/bin/keyd" "reload"))
+      (system* #$(file-append (keyd-configuration-keyd config) "/bin/keyd")
+               "reload"))
 
       ;; (let ((user (getpwnam "keyd")))
       ;;   (chown "/srv/keyd"
       ;;          (passwd:uid user)
       ;;          (passwd:gid user)))
-      )))
+      ))
 
 (define keyd-service-type
   (service-type (name 'keyd)
