@@ -8,7 +8,8 @@
   #:use-module (gnu packages texinfo)
   #:use-module (gnu packages perl)
   #:use-module (gnu packages python)
-  #:use-module (gnu packages python-xyz))
+  #:use-module (gnu packages python-xyz)
+  #:use-module (gnu packages python-build))
 
 (define-public bashdb
   (package
