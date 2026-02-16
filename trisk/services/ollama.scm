@@ -12,7 +12,7 @@
   #:export (ollama-service-type
             ollama-configuration))
 
-(define-configuration/no-serialization ollam-configuration
+(define-configuration/no-serialization ollama-configuration
   (ollama
    (file-like ollama)
    "Ollama")
