@@ -165,9 +165,7 @@
    "Doc...")
    (log-file
     (string "/var/log/ntfy.log")
-    "File to log to."
-    empty-serializer)
-   )
+    "File to log to."))
 
 (define (ntfy-activation config)
   (match-record config <ntfy-configuration>
