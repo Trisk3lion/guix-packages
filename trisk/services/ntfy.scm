@@ -163,9 +163,9 @@
   (attachment-cache-dir
    (string "/var/cache/ntfy/attachment")
    "Doc...")
-   (log-file
-    (string "/var/log/ntfy.log")
-    "File to log to."))
+  (log-file
+   (string "/var/log/ntfy.log")
+   "File to log to."))
 
 (define (ntfy-activation config)
   (match-record config <ntfy-configuration>
@@ -197,18 +197,18 @@
 (define (ntfy-shepherd-service config)
   (match-record config <ntfy-configuration>
                 (ntfy base-url cache-file attachment-cache-dir log-file)
-    (shepherd-service
-      (documentation "nftfy notification service")
-      (provision '(ntfy))
-      (requirement '(user-processes networking))
-      (start #~(make-forexec-constructor
-                (list #$(file-append ntfy "/bin/ntfy")
-                      "serve"
-                      "--base-url" #$base-url
-                      "--cache-file" #$cache-file
-                      "--cache-startup-queries" "pragma journal_mode = WAL;"
-                      "--attachment-cache-dir" #$attachment-cache-dir)
-                #:log-file #$log-file)))))
+                (list (shepherd-service
+                       (documentation "nftfy notification service")
+                       (provision '(ntfy))
+                       (requirement '(user-processes networking))
+                       (start #~(make-forexec-constructor
+                                 (list #$(file-append ntfy "/bin/ntfy")
+                                       "serve"
+                                       "--base-url" #$base-url
+                                       "--cache-file" #$cache-file
+                                       "--cache-startup-queries" "pragma journal_mode = WAL;"
+                                       "--attachment-cache-dir" #$attachment-cache-dir)
+                                 #:log-file #$log-file))))))
 
 (define ntfy-service-type
   (service-type
