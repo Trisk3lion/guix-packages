@@ -16,56 +16,56 @@
   #:export (ntfy-service-type
             ntfy-configuration))
 
-(define (uglify-field-name field-name)
-  (let ((str (symbol->string field-name)))
-    (if (string-suffix? "?" str)
-        (string-drop-right str 1)
-        str)))
+;; (define (uglify-field-name field-name)
+;;   (let ((str (symbol->string field-name)))
+;;     (if (string-suffix? "?" str)
+;;         (string-drop-right str 1)
+;;         str)))
 
 ;; (define (strings? lst)
 ;;   (every string? lst))
 
-(define (serialize-field field-name value)
-  #~(string-append #$(uglify-field-name field-name)
-                   ": "
-                   #$value
-                   "\n"))
+;; (define (serialize-field field-name value)
+;;   #~(string-append #$(uglify-field-name field-name)
+;;                    ": "
+;;                    #$value
+;;                    "\n"))
 
 ;; $#(format #f "~a: ~a~%" #$field-name #$value)
 
-(define (serialize-string field-name value)
-  (serialize-field field-name (format #f "\"~s\""value)))
+;; (define (serialize-string field-name value)
+;;   (serialize-field field-name (format #f "\"~s\""value)))
 
-(define (serialize-symbol field-name value)
-  (serialize-field field-name (symbol->string value)))
+;; (define (serialize-symbol field-name value)
+;;   (serialize-field field-name (symbol->string value)))
 
-(define (serialize-integer field-name value)
-  (serialize-field field-name (number->string value)))
+;; (define (serialize-integer field-name value)
+;;   (serialize-field field-name (number->string value)))
 
-(define (serialize-boolean field-name value)
-  (serialize-string field-name (if value "true" "false")))
+;; (define (serialize-boolean field-name value)
+;;   (serialize-string field-name (if value "true" "false")))
 
-(define (serialize-ntfy-configuration configuration)
-  (mixed-text-file
-   "ntfy.conf"
-   #~(string-append #$(serialize-configuration
-                       configuration ntfy-configuration-fields))))
+;; (define (serialize-ntfy-configuration configuration)
+;;   (mixed-text-file
+;;    "ntfy.conf"
+;;    #~(string-append #$(serialize-configuration
+;;                        configuration ntfy-configuration-fields))))
 
-(define (sql-query? value)
-  (and (string? value) (string-suffix? ";" value)))
+;; (define (sql-query? value)
+;;   (and (string? value) (string-suffix? ";" value)))
 
-(define (sql-queries? value)
-  (every sql-query? value))
+;; (define (sql-queries? value)
+;;   (every sql-query? value))
 
-(define (serialize-sql-queries field-name strings)
-  (serialize-field field-name (format #f "|~%~{~4_~s~%~}" strings)))
+;; (define (serialize-sql-queries field-name strings)
+;;   (serialize-field field-name (format #f "|~%~{~4_~s~%~}" strings)))
 
-(define (serialize-sql-queries-test field-name strings)
-  (serialize-field field-name (if (eq? strings '()) ""
-                                  (format #f "|~%~{~4_~s~%~}" strings))))
+;; (define (serialize-sql-queries-test field-name strings)
+;;   (serialize-field field-name (if (eq? strings '()) ""
+;;                                   (format #f "|~%~{~4_~s~%~}" strings))))
 
-(define-maybe integer)
-(define-maybe string)
+;; (define-maybe integer)
+;; (define-maybe string)
 
 ;; (define-configuration ntfy-configuration
 ;;   (ntfy
@@ -221,4 +221,4 @@
                              ntfy-shepherd-service)
           (service-extension activation-service-type
                              ntfy-activation)))
-   (default-value ntfy-configuration)))
+   (default-value (ntfy-configuration))))
