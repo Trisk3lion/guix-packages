@@ -170,19 +170,19 @@
    )
 
 (define (ntfy-activation config)
-  (match-config <ntfy-configuration> config
-                (cache-file attachment-cache-dir))
-  (with-imported-modules '((guix build utils))
-    #~(begin
-        (use-modules (guix build utils))
-        (let ((user (getpwnam "ntfy"))
-              (cache-dir (dirname $#cache-file)))
-          (for-each (lambda (dir)
-                      (mkdir-p dir)
-                      (chown dir (passwd:uid user)
-                             (passwd:gid user)))
-                    (list cache-dir
-                          #$attachment-cache-dir))))))
+  (match-record config <ntfy-configuration>
+    (cache-file attachment-cache-dir)
+    (with-imported-modules '((guix build utils))
+      #~(begin
+          (use-modules (guix build utils))
+          (let ((user (getpwnam "ntfy"))
+                (cache-dir (dirname $#cache-file)))
+            (for-each (lambda (dir)
+                        (mkdir-p dir)
+                        (chown dir (passwd:uid user)
+                               (passwd:gid user)))
+                      (list cache-dir
+                            #$attachment-cache-dir)))))))
 
 (define %ntfy-accounts
   (list (user-group
