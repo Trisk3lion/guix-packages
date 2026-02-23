@@ -157,6 +157,9 @@
      - iOS push notifications for self-hosted servers
        (to calculate the Firebase poll_request topic)
      - Matrix Push Gateway (to validate that the pushkey is correct)")
+  (listen-http
+   (string ":80")
+   "Listen address for the HTTP web server".)
   (cache-file
    (string "/var/cache/ntfy/cache.db")
    "Doc...")
@@ -196,7 +199,7 @@
 
 (define (ntfy-shepherd-service config)
   (match-record config <ntfy-configuration>
-                (ntfy base-url cache-file attachment-cache-dir log-file)
+                (ntfy base-url listen-http cache-file attachment-cache-dir log-file)
                 (list (shepherd-service
                        (documentation "nftfy notification service")
                        (provision '(ntfy))
@@ -205,6 +208,7 @@
                                  (list #$(file-append ntfy "/bin/ntfy")
                                        "serve"
                                        "--base-url" #$base-url
+                                       "--listen-http" #$listen-http
                                        "--cache-file" #$cache-file
                                        "--cache-startup-queries" "pragma journal_mode = WAL;"
                                        "--attachment-cache-dir" #$attachment-cache-dir)
