@@ -159,7 +159,7 @@
      - Matrix Push Gateway (to validate that the pushkey is correct)")
   (listen-http
    (string ":80")
-   "Listen address for the HTTP web server".)
+   "Listen address for the HTTP web server")
   (cache-file
    (string "/var/cache/ntfy/cache.db")
    "Doc...")
