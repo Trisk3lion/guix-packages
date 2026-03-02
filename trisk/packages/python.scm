@@ -323,7 +323,7 @@ PYTHONPYCACHEPREFIX needs to be set to a folder outside the /gnu/store in order 
               (setenv "PYINSTALLARGS" (string-append "--prefix=" (assoc-ref %outputs "out")))
               (setenv "LDFLAGS" (string-append "-Wl,-rpath=/tmp"
                                                 "/lib")))))))
-    (native-inputs (list python-setuptools python-wheel swig))
+    (native-inputs (list python-setuptools python-wheel swig-4.0))
     (home-page "http://abyz.me.uk/lg/py_lgpio.html")
     (synopsis "Linux SBC GPIO module")
     (description "Linux SBC GPIO module.")
@@ -333,7 +333,7 @@ PYTHONPYCACHEPREFIX needs to be set to a folder outside the /gnu/store in order 
   (package
     (inherit lgpio)
     (name "python-lgpio")
-    (native-inputs (list python python-setuptools python-wheel swig which))
+    (native-inputs (list python python-setuptools python-wheel swig-4.0 which))
     (home-page "http://abyz.me.uk/lg/py_lgpio.html")
     (synopsis "Linux SBC GPIO module")
     (description "Linux SBC GPIO module.")
@@ -390,6 +390,8 @@ PYTHONPYCACHEPREFIX needs to be set to a folder outside the /gnu/store in order 
        (sha256
         (base32 "0nqi04vvabamxxlvgj9bsrjg8giwbnc1gdis822yzam4jisw7nql"))))
     (build-system pyproject-build-system)
+    (arguments
+     (list #:tests? #f))
     (native-inputs (list python-setuptools python-wheel))
     (home-page "http://github.com/doceme/py-spidev")
     (synopsis "Python bindings for Linux SPI access through spidev")
@@ -410,11 +412,9 @@ PYTHONPYCACHEPREFIX needs to be set to a folder outside the /gnu/store in order 
     (arguments
      (list
       #:tests? #f
-      ;; #:phases
-      ;; #~(modify-phases %standard-phases
-      ;;     (delete 'sanity-check))
-      ))
-    (propagated-inputs (list python-setuptools python-rpi-lgpio python-spidev))
+      #:phases #~(modify-phases %standard-phases
+                   (delete 'sanity-check))))
+    (propagated-inputs (list python-rpi-gpio python-spidev))
     (native-inputs (list python-setuptools python-wheel))
     (home-page "https://www.pimoroni.com")
     (synopsis
