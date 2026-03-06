@@ -13,7 +13,7 @@
 (define-public rdrview
   (package
     (name "rdrview")
-    (version "0.1.1")
+    (version "0.1.5")
     (source
      (origin
        (method url-fetch)
@@ -21,7 +21,7 @@
              "https://github.com/eafer/rdrview/archive/refs/tags/v" version
              ".tar.gz"))
        (sha256
-        (base32 "0qrzvzbbhazfp2gc4c4gjindlraj8jza6wkgrydbh32gsxzxfma6"))))
+        (base32 "1awaiqp1rdggcznss7jn88acwl1364gis41k6hps85iv5v5nccp8"))))
     (build-system gnu-build-system)
     (arguments
      `(#:tests? #f ;Test suite needs work.
@@ -33,8 +33,7 @@
                   (delete 'configure) ;no configure script.
                   (add-before 'check 'pre-check
                     (lambda _
-                      (setenv "HOME"
-                              (getcwd))
+                      (setenv "HOME" (getcwd))
                       (with-output-to-file ".mailcap"
                         (lambda ()
                           (display
@@ -46,13 +45,9 @@
                       (if tests?
                           (with-directory-excursion "tests"
                             (invoke "./check" "-V")) #t))))))
-    ;; (native-inputs
-    ;; `(("links" ,(@ (gnu packages web-browsers) links))
-    ;; ("tidy" ,(@ (gnu packages web) tidy))
-    ;; ("valgrind" ,(@ (gnu packages valgrind) valgrind))))
-    (inputs `(("curl" ,curl)
-              ("libseccomp" ,libseccomp)
-              ("libxml2" ,libxml2)))
+    (inputs (list curl
+                  libseccomp
+                  libxml2))
     (home-page "https://github.com/eafer/rdrview")
     (synopsis "Extract the main content from a webpage")
     (description
