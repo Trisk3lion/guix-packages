@@ -2,12 +2,36 @@
   #:use-module (guix packages)
   #:use-module (guix gexp)
   #:use-module (guix utils)
+  #:use-module (guix search-paths)
   #:use-module (guix download)
   #:use-module (guix build utils)
   #:use-module (guix build-system copy)
+  #:use-module (gnu packages gcc)
+  #:use-module (gnu packages commencement)
   #:use-module (gnu packages java)
   #:use-module (gnu packages compression)
   #:use-module ((guix licenses) #:prefix license:))
+
+
+(define %generic-search-paths
+  ;; This is the language-neutral search path for GCC.  Entries in $CPATH are
+  ;; not considered "system headers", which means GCC can raise warnings for
+  ;; issues in those headers.  'CPATH' is the only one that works for
+  ;; front-ends not in the C family.
+  (list (search-path-specification
+         (variable "CPATH")
+         (files '("include")))
+        (search-path-specification
+         (variable "LIBRARY_PATH")
+         (files '("lib" "lib64")))))
+
+(define-public gcobol-15
+   ((@@ (gnu packages gcc) custom-gcc) gcc-15 "gcobol" '("cobol")
+    %generic-search-paths))
+
+(define-public gcobol-toolchain-15
+  ((@@ (gnu packages commencement) make-gcc-toolchain) gcobol-15))
+
 
 (define-public che-lsp-for-cobol
   (package
