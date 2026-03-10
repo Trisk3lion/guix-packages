@@ -26,7 +26,7 @@
          (files '("lib" "lib64")))))
 
 (define-public gcobol-15
-   ((@@ (gnu packages gcc) custom-gcc) gcc-15 "gcobol" '("cobol")
+   ((@@ (gnu packages gcc) custom-gcc) gcc-15 "gcobol" '("c" "c++" "cobol")
     %generic-search-paths))
 
 (define-public gcobol-toolchain-15
