@@ -17,9 +17,8 @@
 
 (define-configuration/no-serialization powergfxd-configuration
   (powercfgd
-   (file-like powergfxctl)
+   (file-like supergfxctl)
    "Package to use."))
-
 
 (define (powergfxd-package config)
   (list (powergfxd-configuration-powercfgd config)))
