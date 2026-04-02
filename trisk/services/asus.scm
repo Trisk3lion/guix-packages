@@ -11,44 +11,44 @@
   #:use-module (guix store)
   #:use-module (ice-9 match)
   #:use-module (trisk packages asus)
-  #:export (powergfxd-service-type
-            powergfxd-configuration))
+  #:export (supergfxd-service-type
+            supergfxd-configuration))
 
 
-(define-configuration/no-serialization powergfxd-configuration
-  (powercfgd
+(define-configuration/no-serialization supergfxd-configuration
+  (supergfxctl
    (file-like supergfxctl)
    "Package to use."))
 
-(define (powergfxd-package config)
-  (list (powergfxd-configuration-powercfgd config)))
+(define (supergfxd-package config)
+  (list (supergfxd-configuration-supergfxctl config)))
 
-(define powergfxd-shepherd-service
-  (match-record-lambda <powergfxd-configuration>
-      (powergfxd)
+(define supergfxd-shepherd-service
+  (match-record-lambda <supergfxd-configuration>
+      (supergfxctl)
   (list (shepherd-service
-          (provision '(powergfxd))
+          (provision '(supergfxd))
           (requirement '(user-processes dbus))
           (start #~(make-forkexec-constructor
-                    (list #$(file-append powergfxd "/bin/powergfxd"))))
+                    (list #$(file-append supergfxctl "/bin/supergfxd"))))
           (stop #~(make-kill-destructor))))))
 
-(define powergfxd-service-type
+(define supergfxd-service-type
   (service-type
     (name 'power-profiles-daemon)
     (extensions (list
                  (service-extension shepherd-root-service-type
-                                    powergfxd-shepherd-service)
+                                    supergfxd-shepherd-service)
                  (service-extension dbus-root-service-type
-                                    powergfxd-package)
+                                    supergfxd-package)
                  (service-extension udev-service-type
-                                    powergfxd-package)
+                                    supergfxd-package)
                  ;; (service-extension polkit-service-type
                  ;;                    config->package)
                  (service-extension profile-service-type
-                                    powergfxd-package)
+                                    supergfxd-package)
                  ;; (service-extension activation-service-type
                  ;;                    (const %power-profiles-daemon-activation))
                  ))
-    (default-value (powergfxd-configuration))
+    (default-value (supergfxd-configuration))
     (description "Run the Power Profiles Daemon")))
