@@ -101,7 +101,7 @@
            python-pdfminer-six
            python-protobuf
            python-six
-           python-pyside-2
+           python-pyside-6
            python-pikepdf))
     (home-page "")
     (synopsis "")
