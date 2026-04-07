@@ -19,15 +19,15 @@
   (keyd
    (file-like keyd)
    "The keyd package.")
-
+  (log-file
+   (string "/var/log/keyd.log")
+   "Log file for keyd")
   (user
    (string "keyd")
    "The name of the user under which Keyd will be executed.")
-
   (group
    (string "keyd")
    "The name of the group under which Keyd will be executed.")
-
   (config
    (string "[ids]
 
@@ -44,7 +44,7 @@
 (define (keyd-shepherd-service config)
   "Return a <shepherd-service> for Forgejo with config."
   (match-record config <keyd-configuration>
-    (keyd user group)
+    (keyd log-file user group)
     (list (shepherd-service
            (documentation "Run the Keyd daemon.")
            (requirement '(user-processes))
@@ -54,7 +54,7 @@
                      (list #$(file-append keyd "/bin/keyd"))
                      ;; #:user #$user
                      ;; #:group #$group
-                     ))
+                     #:log-file #$log-file))
            (stop  #~(make-kill-destructor))))))
 
 (define %keyd-accounts
@@ -63,7 +63,7 @@
         (user-account
          (name "keyd")
          (group "keyd")
-         (supplementary-groups '("input"))
+         (supplementary-groups '("input" "uinput"))
          (system? #t)
          (comment "Keyd User")
          (home-directory "/var/empty"))))
@@ -72,15 +72,8 @@
   (with-imported-modules '((guix build utils))
   #~(begin
       (use-modules (guix build utils))
-      ;; (mkdir-p "/etc/keyd")
       (system* #$(file-append (keyd-configuration-keyd config) "/bin/keyd")
-               "reload"))
-
-      ;; (let ((user (getpwnam "keyd")))
-      ;;   (chown "/srv/keyd"
-      ;;          (passwd:uid user)
-      ;;          (passwd:gid user)))
-      ))
+               "reload"))))
 
 (define keyd-service-type
   (service-type (name 'keyd)
@@ -89,8 +82,8 @@
                                           keyd-shepherd-service)
                        (service-extension etc-service-type
                                           keyd-configuration-file)
-                       ;; (service-extension account-service-type
-                       ;;                    (const %keyd-accounts))
+                       (service-extension account-service-type
+                                          (const %keyd-accounts))
                        (service-extension activation-service-type
                                           keyd-activation)))
                 (default-value (keyd-configuration))

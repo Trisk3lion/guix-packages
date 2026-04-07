@@ -14,8 +14,8 @@
   #:use-module (srfi srfi-1))
 
 (define-public gubar
-  (let ((version "0.0.1")
-        (commit "4777186989dd2c619508917dd650b3dc740c8cec")
+  (let ((version "0.1.0")
+        (commit "25cea7e0c1f677abf7a8faee95fe19deeacd9af6")
         (revision "0"))
     (package
       (name "gubar")
@@ -28,7 +28,7 @@
                 (commit commit)))
          (file-name (git-file-name name version))
          (sha256
-          (base32 "19ipikcmw735qmq6wh3ydy1z778z1amsr4pi1fi1b878ii1zmgmc"))))
+          (base32 "1yrpc2qknzhwkwgi4g3sa3a4m9iivhlkq49w8zyza3lsmmrh1xi2"))))
       (build-system gnu-build-system)
       (arguments
        (list #:modules

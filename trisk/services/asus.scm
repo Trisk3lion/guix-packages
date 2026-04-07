@@ -20,24 +20,28 @@
 (define-configuration/no-serialization supergfxd-configuration
   (supergfxctl
    (file-like supergfxctl)
-   "Package to use."))
+   "Package to use.")
+  (log-file
+   (string "/var/log/supergfxd.log")
+   "Path to log-file"))
 
 (define (supergfxd-package config)
   (list (supergfxd-configuration-supergfxctl config)))
 
 (define supergfxd-shepherd-service
   (match-record-lambda <supergfxd-configuration>
-      (supergfxctl)
+      (supergfxctl log-file)
   (list (shepherd-service
           (provision '(supergfxd))
-          (requirement '(user-processes dbus))
+          (requirement '(user-processes))
           (start #~(make-forkexec-constructor
-                    (list #$(file-append supergfxctl "/bin/supergfxd"))))
+                    (list #$(file-append supergfxctl "/bin/supergfxd"))
+                    :log-file #$log-file))
           (stop #~(make-kill-destructor))))))
 
 (define supergfxd-service-type
   (service-type
-    (name 'power-profiles-daemon)
+    (name 'supergfxd)
     (extensions (list
                  (service-extension shepherd-root-service-type
                                     supergfxd-shepherd-service)
@@ -45,12 +49,7 @@
                                     supergfxd-package)
                  (service-extension udev-service-type
                                     supergfxd-package)
-                 ;; (service-extension polkit-service-type
-                 ;;                    config->package)
                  (service-extension profile-service-type
-                                    supergfxd-package)
-                 ;; (service-extension activation-service-type
-                 ;;                    (const %power-profiles-daemon-activation))
-                 ))
+                                    supergfxd-package)))
     (default-value (supergfxd-configuration))
     (description "Run the Power Profiles Daemon")))
