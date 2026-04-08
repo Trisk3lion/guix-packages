@@ -33,7 +33,7 @@
       (supergfxctl log-file)
   (list (shepherd-service
           (provision '(supergfxd))
-          (requirement '(user-processes dbus-system))
+          (requirement '(user-processes udev dbus-system))
           (start #~(make-forkexec-constructor
                     (list #$(file-append supergfxctl "/bin/supergfxd"))
                     :log-file #$log-file))
