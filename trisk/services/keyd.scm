@@ -44,36 +44,35 @@
 (define (keyd-shepherd-service config)
   "Return a <shepherd-service> for Forgejo with config."
   (match-record config <keyd-configuration>
-    (keyd log-file user group)
+                (keyd log-file user group)
     (list (shepherd-service
-           (documentation "Run the Keyd daemon.")
-           (requirement '(user-processes))
-           (provision '(keyd))
-           ;; (actions (list (shepherd-configuration-action keyd-reload)))
-           (start #~(make-forkexec-constructor
-                     (list #$(file-append keyd "/bin/keyd"))
-                     ;; #:user #$user
-                     ;; #:group #$group
-                     #:log-file #$log-file))
-           (stop  #~(make-kill-destructor))))))
+            (documentation "Run the Keyd daemon.")
+            (requirement '(user-processes))
+            (provision '(keyd))
+            ;; (actions (list (shepherd-configuration-action keyd-reload)))
+            (start #~(make-forkexec-constructor
+                      (list #$(file-append keyd "/bin/keyd"))
+                      #:log-file #$log-file))
+            (stop  #~(make-kill-destructor))))))
 
 (define %keyd-accounts
   (list (user-group (name "keyd")
                     (system? #t))
-        (user-account
-         (name "keyd")
-         (group "keyd")
-         (supplementary-groups '("input" "uinput"))
-         (system? #t)
-         (comment "Keyd User")
-         (home-directory "/var/empty"))))
+        ;; (user-account
+        ;;  (name "keyd")
+        ;;  (group "keyd")
+        ;;  (supplementary-groups '("input"))
+        ;;  (system? #t)
+        ;;  (comment "Keyd User")
+        ;;  (home-directory "/var/empty"))
+        ))
 
 (define (keyd-activation config)
   (with-imported-modules '((guix build utils))
-  #~(begin
-      (use-modules (guix build utils))
-      (system* #$(file-append (keyd-configuration-keyd config) "/bin/keyd")
-               "reload"))))
+    #~(begin
+        (use-modules (guix build utils))
+        (system* #$(file-append (keyd-configuration-keyd config) "/bin/keyd")
+                 "reload"))))
 
 (define keyd-service-type
   (service-type (name 'keyd)

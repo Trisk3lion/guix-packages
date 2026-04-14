@@ -49,8 +49,8 @@
      (origin
        (method git-fetch)
        (uri (git-reference
-             (url "https://gitlab.com/asus-linux/supergfxctl")
-             (commit version)))
+              (url "https://gitlab.com/asus-linux/supergfxctl")
+              (commit version)))
        (file-name (git-file-name name version))
        (sha256
         (base32 "0hxjla3yicdx9ysiwg61yl4npa416qpfnpxyh91i27985vicsy3p"))))
@@ -62,13 +62,18 @@
            #:phases
            #~(modify-phases %standard-phases
                (add-after 'install 'install-files
-                 (let ((out (assoc-reg outputs "out"))
-                       ;; (stage (string-append "src/" import-path "/build/stage"))
-                       )
-                   (install-file "data/90-supergfxd-nvidia-pm.rules" (string-append out "/lib/udev/rules.d/"))
-                   (install-file "data/99-nvidia-ac.rules" (string-append out "/lib/udev/rules.d/"))
-                   (install-file "data/org.supergfxctl.Daemon.conf" (string-append out "/share/dus-1/system.d"))
-                   (install-file "data/supergfxd.service") (string-append out "/lib/systemd/system/"))))))
+                 (lambda* (#:key outputs #:allow-other-keys)
+                   (let ((out (assoc-ref outputs "out")))
+                     (substitute* "data/99-nvidia-ac.rules"
+                       (("/usr/bin/systemctl --no-block stop nvidia-powerd.service")
+                        "/run/current-system/profile/bin/herd stop nvidia-powerd"))
+                     (substitute* "data/99-nvidia-ac.rules"
+                       (("/usr/bin/systemctl --no-block start nvidia-powerd.service")
+                        "/run/current-system/profile/bin/herd start nvidia-powerd"))
+                     (install-file "data/90-supergfxd-nvidia-pm.rules" (string-append out "/lib/udev/rules.d/"))
+                     (install-file "data/99-nvidia-ac.rules" (string-append out "/lib/udev/rules.d/"))
+                     (install-file "data/org.supergfxctl.Daemon.conf" (string-append out "/share/dus-1/system.d"))
+                     (install-file "data/supergfxd.service" (string-append out "/lib/systemd/system/"))))))))
     (native-inputs (list pkg-config))
     (inputs (cons* eudev
                    (cargo-inputs 'supergfxctl #:module '(trisk packages rust-crates))))
@@ -77,3 +82,6 @@
     (synopsis "")
     (description "")
     (license license:expat)))
+
+;; /usr/bin/systemctl --no-block stop nvidia-powerd.service
+;; /usr/bin/systemctl --no-block start nvidia-powerd.service
