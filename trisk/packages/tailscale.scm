@@ -33,7 +33,7 @@
          #:phases
          (modify-phases %standard-phases
            (delete 'check))
-         #:go ,go-1.23))
+         #:go ,go-1.24))
       (home-page "https://tailscale.com")
       (synopsis "Tailscale client")
       (description "Tailscale client")

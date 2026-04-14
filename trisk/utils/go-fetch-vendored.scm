@@ -38,8 +38,8 @@
             (origin
               (method git-fetch)
               (uri (git-reference
-                    (url url)
-                    (commit commit)))
+                     (url url)
+                     (commit commit)))
               (sha256 sha)))
            (($ <go-url-reference> url commit sha)
             (origin
@@ -53,7 +53,7 @@
        #~(begin
            (use-modules (guix build utils))
            (let ((inputs (list
-                          #+go-1.23
+                          #+go-1.24
                           #+tar
                           #+bzip2
                           #+gzip)))

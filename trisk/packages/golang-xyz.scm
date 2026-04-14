@@ -1525,15 +1525,15 @@ your face in git and during code review.")
      (origin
        (method git-fetch)
        (uri (git-reference
-             (url "https://github.com/kataras/blocks")
-             (commit (string-append "v" version))))
+              (url "https://github.com/kataras/blocks")
+              (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
         (base32 "07ka87lk19g07fjmkqrjc9hpw36zgybr4rcljya6xa4i008ynxkf"))))
     (build-system go-build-system)
     (arguments
      (list
-      #:go go-1.23
+      #:go go-1.24
       #:import-path "github.com/kataras/blocks"))
     (propagated-inputs (list go-github-com-valyala-bytebufferpool
                              go-github-com-russross-blackfriday-v2))

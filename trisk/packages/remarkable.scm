@@ -63,28 +63,28 @@
      (origin
        (method git-fetch)
        (uri (git-reference
-             (url "https://github.com/ddvk/rmapi")
-             (commit (string-append "v" version))))
+              (url "https://github.com/ddvk/rmapi")
+              (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
         (base32 "0yspx79jvmdiz4aiphhl8giq4m0501bl9dnnifybc57y5v99ds7x"))))
     (build-system go-build-system)
     (arguments
      (list
-      #:go go-1.23
+      #:go go-1.24
       ;; #:install-source? #f
       #:import-path "github.com/juruen/rmapi"))
     (propagated-inputs (list go-github-com-google-shlex
-                         go-gopkg-in-yaml-v2
-                         go-golang-org-x-sync
-                         go-github-com-unidoc-unipdf-v3
-                         go-github-com-stretchr-testify
-                         go-github-com-pkg-errors
-                         go-github-com-nfnt-resize
-                         go-github-com-google-uuid
-                         go-github-com-golang-jwt-jwt
-                         go-github-com-abiosoft-ishell
-                         go-github-com-ogier-pflag))
+                             go-gopkg-in-yaml-v2
+                             go-golang-org-x-sync
+                             go-github-com-unidoc-unipdf-v3
+                             go-github-com-stretchr-testify
+                             go-github-com-pkg-errors
+                             go-github-com-nfnt-resize
+                             go-github-com-google-uuid
+                             go-github-com-golang-jwt-jwt
+                             go-github-com-abiosoft-ishell
+                             go-github-com-ogier-pflag))
     (home-page "https://github.com/juruen/rmapi")
     (synopsis "rMAPI")
     (description
