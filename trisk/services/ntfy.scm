@@ -173,29 +173,29 @@
 (define (ntfy-activation config)
   (match-record config <ntfy-configuration>
     (cache-file attachment-cache-dir)
-    (with-imported-modules '((guix build utils))
-      #~(begin
-          (use-modules (guix build utils))
-          (let ((user (getpwnam "ntfy"))
-                (cache-dir (dirname $#cache-file)))
-            (for-each (lambda (dir)
-                        (mkdir-p dir)
-                        (chown dir (passwd:uid user)
-                               (passwd:gid user)))
-                      (list cache-dir
-                            #$attachment-cache-dir)))))))
+    (let ((cache-directory (dirname cache-file)))
+      (with-imported-modules '((guix build utils))
+        #~(begin
+            (use-modules (guix build utils))
+            (let ((user (getpw "ntfy")))
+              (for-each
+               (lambda (dir)
+                 (unless (file-exists? dir)
+                   (mkdir-p dir)
+                   (chown dir (passwd:uid user) (passwd:gid user))))
+               '#$(list cache-directory attachment-cache-dir))))))))
 
 (define %ntfy-accounts
   (list (user-group
-         (name "ntfy")
-         (system? #t))
+          (name "ntfy")
+          (system? #t))
         (user-account
-         (name "ntfy")
-         (group "ntfy")
-         (system? #t)
-         (comment "ntfy User")
-         (home-directory "/var/ntfy")
-         (shell (file-append shadow "/sbin/nologin")))))
+          (name "ntfy")
+          (group "ntfy")
+          (system? #t)
+          (comment "ntfy User")
+          (home-directory "/var/ntfy")
+          (shell (file-append shadow "/sbin/nologin")))))
 
 (define (ntfy-shepherd-service config)
   (match-record config <ntfy-configuration>
