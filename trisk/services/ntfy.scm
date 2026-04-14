@@ -201,19 +201,19 @@
   (match-record config <ntfy-configuration>
     (ntfy base-url listen-http cache-file attachment-cache-dir log-file)
     (list (shepherd-service
-           (documentation "nftfy notification service")
-           (provision '(ntfy))
-           (requirement '(user-processes networking))
-           (start #~(make-forexec-constructor
-                     (list #$(file-append ntfy "/bin/ntfy")
-                           "serve"
-                           "--base-url" #$base-url
-                           "--listen-http" #$listen-http
-                           "--cache-file" #$cache-file
-                           "--cache-startup-queries" "pragma journal_mode = WAL;"
-                           "--attachment-cache-dir" #$attachment-cache-dir)
-                     #:log-file #$log-file))
-           (stop #~(make-kill-destructor))))))
+            (documentation "nftfy notification service")
+            (provision '(ntfy))
+            (requirement '(user-processes networking))
+            (start #~(make-forkexec-constructor
+                      (list #$(file-append ntfy "/bin/ntfy")
+                            "serve"
+                            "--base-url" #$base-url
+                            "--listen-http" #$listen-http
+                            "--cache-file" #$cache-file
+                            "--cache-startup-queries" "pragma journal_mode = WAL;"
+                            "--attachment-cache-dir" #$attachment-cache-dir)
+                      #:log-file #$log-file))
+            (stop #~(make-kill-destructor))))))
 
 (define ntfy-service-type
   (service-type
