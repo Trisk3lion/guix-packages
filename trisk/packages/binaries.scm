@@ -16,10 +16,10 @@
          (binary (cond
                   ((equal? system "x86_64-linux") "linux_amd64")))
          (hash (cond
-                  ((equal? system "x86_64-linux") "13jg1hk5z2bzw8jaw0yb3c6q8390ic0407945dw4f9d7l1im56h1"))))
+                ((equal? system "x86_64-linux") "1kl9mm8c4aim2kgf46di4jph91hz1j97fzv6vc51ms4fv90qfy9i"))))
     (package
       (name "ntfy")
-      (version "2.15.0")
+      (version "2.21.0")
       (source (origin
                 (method url-fetch)
                 (uri (string-append "https://github.com/binwiederhier/ntfy/releases/download/v"
@@ -42,8 +42,7 @@ phone or desktop via scripts} from any computer, @@strong{without having to sign
 up or pay any fees}.  If you'd like to run your own instance of the service, you
 can easily do so since ntfy is open source.")
       (properties
-       '(;(hidden? . #t)
-         (release-monitoring-url . "https://github.com/binwiederhier/ntfy/releases")
+       '((release-monitoring-url . "https://github.com/binwiederhier/ntfy/releases")
          (upstream-name . "ntfy")))
       (supported-systems '("x86_64-linux"))
       (license license:bsd-3))))
