@@ -31,13 +31,13 @@
 (define supergfxd-shepherd-service
   (match-record-lambda <supergfxd-configuration>
       (supergfxctl log-file)
-  (list (shepherd-service
-          (provision '(supergfxd))
-          (requirement '(user-processes udev dbus-system))
-          (start #~(make-forkexec-constructor
-                    (list #$(file-append supergfxctl "/bin/supergfxd"))
-                    :log-file #$log-file))
-          (stop #~(make-kill-destructor))))))
+    (list (shepherd-service
+           (provision '(supergfxd))
+           (requirement '(user-processes udev dbus-system))
+           (start #~(make-forkexec-constructor
+                     (list #$(file-append supergfxctl "/bin/supergfxd"))
+                     #:log-file #$log-file))
+           (stop #~(make-kill-destructor))))))
 
 (define supergfxd-service-type
   (service-type
