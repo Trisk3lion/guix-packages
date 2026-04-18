@@ -47,8 +47,7 @@
 ;; relying on unstable/fork-specific features; these should be checked when
 ;; updating gamescope.  See:
 ;; <https://github.com/ValveSoftware/gamescope/commit/7741cd587fa2274989f3307a3c6f23ab08e98460>
-(define %gamescope-version "3.16.22")
-(define %gamescope-hash "0yja2cgn2w0bmdp096523alz2ymp8jc1sfrgqnfkvjck8rnbr228")
+(define %gamescope-version "3.16.17")
 
 (define libliftoff-for-gamescope
   (origin
@@ -121,7 +120,7 @@
              (commit version)))
        (file-name (git-file-name name version))
        (sha256
-        (base32 %gamescope-hash))
+        (base32 "1b0w3is5carascz3salxlp57m8qbs2p4y8n42j2y7gkh79qdi7c9"))
        (patches
         (parameterize
             ((%patch-path
