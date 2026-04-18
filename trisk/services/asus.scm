@@ -36,6 +36,9 @@
            (requirement '(user-processes udev dbus-system))
            (start #~(make-forkexec-constructor
                      (list #$(file-append supergfxctl "/bin/supergfxd"))
+                     #:environment-variables
+                     (cons* "IS_SERVICE=1"
+                            (default-environment-variables))
                      #:log-file #$log-file))
            (stop #~(make-kill-destructor))))))
 
