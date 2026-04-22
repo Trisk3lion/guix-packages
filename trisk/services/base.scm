@@ -12,6 +12,8 @@
   this-greetd-tuigreet-session
   (tuigreet greetd-tuigreet-session-tuigreet
             (default tuigreet))
+  (command greetd-tuigreet-session-command
+           (default (greetd-user-session)))
   (command-args greetd-tuigreet-session-args
                 (default '("--issue"
                            "--time"
@@ -25,8 +27,8 @@
 (define-gexp-compiler (greetd-tuigreet-session-compiler
                        (session <greetd-tuigreet-session>)
                        system target)
-  (match-record session <greetd-tuigreet-session> (tuigreet command-args)
+  (match-record session <greetd-tuigreet-session> (tuigreet command command-args)
     (let ((tuigreet (file-append tuigreet "/bin/tuigreet")))
       (lower-object
        (program-file "tuigreet-wrapper"
-         #~(execl #$tuigreet #$tuigreet #$@command-args))))))
+                     #~(execl #$tuigreet #$tuigreet "-c" #$command #$@command-args))))))
