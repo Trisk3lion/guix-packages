@@ -14,7 +14,7 @@
 (define-public nvtop
   (package
     (name "nvtop")
-    (version "3.1.0")
+    (version "3.3.2")
     (source (origin
               (method git-fetch)
               (uri (git-reference
@@ -23,7 +23,7 @@
               (file-name (git-file-name name version))
               (sha256
                (base32
-                "006gqk8jdmllbc84azmi113dc0xb2v9vyahkk5kmds6icdih2j9j"))))
+                "0b390h0xnjs3kkbbdw789g7pg3zm3xqh90f622mmmkyravskyy63"))))
     (build-system cmake-build-system)
     (arguments
      (list #:configure-flags #~(list "-DNVIDIA_SUPPORT=ON"
