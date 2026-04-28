@@ -1,4 +1,4 @@
-(define-module (shika packages steam)
+(define-module (trisk packages steam)
   #:use-module (nongnu packages game-client)
   #:use-module (trisk packages gamescope)
   #:use-module (nonguix utils)
