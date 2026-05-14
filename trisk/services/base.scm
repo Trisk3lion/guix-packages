@@ -17,6 +17,7 @@
   (command-args greetd-tuigreet-session-args
                 (default '("--issue"
                            "--time"
+                           "--sessions" "/run/current-system/profile/share/wayland-sessions/"
                            "--user-menu"
                            "--asterisks"
                            "--remember"

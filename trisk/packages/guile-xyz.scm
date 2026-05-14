@@ -13,10 +13,26 @@
   #:use-module (guix packages)
   #:use-module (srfi srfi-1))
 
+(define-public gubar-fork
+  (let ((version "0.1.0")
+        (commit "8c25dac1e09d7a85531fa9c86e4a2740ed01202e")
+        (revision "1"))
+    (package
+      (inherit gubar)
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+                (url "https://codeberg.org/Kribbstar/gubar")
+                (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32 "0vg249599g7d08bxi4gmm363nnm7x1hwm7ijjckav2y2av1ykvcg")))))))
+
 (define-public gubar
   (let ((version "0.1.0")
-        (commit "25cea7e0c1f677abf7a8faee95fe19deeacd9af6")
-        (revision "0"))
+        (commit "8c25dac1e09d7a85531fa9c86e4a2740ed01202e")
+        (revision "1"))
     (package
       (name "gubar")
       (version (git-version version revision commit))
@@ -24,11 +40,11 @@
        (origin
          (method git-fetch)
          (uri (git-reference
-                (url "https://codeberg.org/trevarj/gubar")
+                (url "https://codeberg.org/Kribbstar/gubar")
                 (commit commit)))
          (file-name (git-file-name name version))
          (sha256
-          (base32 "1yrpc2qknzhwkwgi4g3sa3a4m9iivhlkq49w8zyza3lsmmrh1xi2"))))
+          (base32 "0vg249599g7d08bxi4gmm363nnm7x1hwm7ijjckav2y2av1ykvcg"))))
       (build-system gnu-build-system)
       (arguments
        (list #:modules
