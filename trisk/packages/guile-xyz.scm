@@ -16,8 +16,8 @@
 
 (define-public gubar-fork
   (let ((version "0.1.0")
-        (commit "8c25dac1e09d7a85531fa9c86e4a2740ed01202e")
-        (revision "1"))
+        (commit "6d9f0c0d213f1ad658b982dfd1c7a2450c1f2ee0")
+        (revision "2"))
     (package
       (inherit gubar)
       (name "gubar-fork")
@@ -26,8 +26,8 @@
        (origin
          (method git-fetch)
          (uri (git-reference
-               (url "https://codeberg.org/Kribbstar/gubar")
-               (commit commit)))
+                (url "https://codeberg.org/Kribbstar/gubar")
+                (commit commit)))
          (file-name (git-file-name name version))
          (sha256
-          (base32 "0vg249599g7d08bxi4gmm363nnm7x1hwm7ijjckav2y2av1ykvcg")))))))
+          (base32 "0shjvb3dcjg8rlhys4jc5xgavl50155dgv7r2hswhrymhqkjfirg")))))))

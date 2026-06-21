@@ -19,9 +19,10 @@
   (calibre
    (file-like calibre)
    "Calibre package to use for the Calibre Content Server")
-  (library-path
-   (string "/mnt/storage/books")
-   "Path to the calibre library which includes the calibre db.")
+  (libraries
+   (list-of-strings '())
+   "List of paths to the calibre libaries.
+It is important that the user running calibre-server has read access to these libaries.")
   (url-prefix
    maybe-string
    "Serve all URL's prefixed by url-prefix.")
@@ -40,6 +41,16 @@
   (enable-auth
    (boolean #f)
    "Enable password based authentication to the server.")
+  (auth-mode
+   (string "auto")
+   "Type of authntication method if used, either:
+ - auto (default)
+ - basic
+ - digest
+")
+  (userdb
+   maybe-string
+   "User database file for authentication, needs to be initialized before hand.")
   (trusted-ips
    maybe-string
    "Allow un-authenticated connections from specific IP addresses to make changes.
@@ -49,60 +60,69 @@ Should be a comma separated list of address or network specifications.")
    "Path to PID-file.")
   (log-file
    (string "/var/log/calibre-server.log")
-   "Path to the log file"))
+   "Path to the log file")
+  (extra-flags
+   (list-of-strings? '())
+   "Extra flags as a list of strings"))
 
-(define (calibre-server-accounts config)
-  (list (user-group
-         (system? #t)
-         (name "calibre"))
-        (user-account
-         (name "calibre")
-         (comment "Calibre Server Service Account")
-         (group "calibre")
-         (supplementary-groups '("tty"))
-         (system? #t)
-         (home-directory "/var/empty")
-         (shell (file-append shadow "/sbin/nologin")))))
+   (define (calibre-server-accounts config)
+     (list (user-group
+            (system? #t)
+            (name "calibre"))
+           (user-account
+            (name "calibre")
+            (comment "Calibre Server Service Account")
+            (group "calibre")
+            (supplementary-groups '("tty"))
+            (system? #t)
+            (home-directory "/var/empty")
+            (shell (file-append shadow "/sbin/nologin")))))
 
-(define (calibre-server-activation config)
-  (match-record config <calibre-server-configuration>
-      (user group library-path)
-  #~(begin
-        (use-modules (guix build utils)
-        (let ((user (getpwnam "calibre"))
-              (uid (passwd:uid user))
-              (gid (passwd:gid user))
-              (dir #$library-path))
-          ;; Setup datadir
-          (unless (file-exists? dir)
-            (mkdir-p dir)
-            (chown datadir uid gid)
-            (chmod datadir #o770)))))))
+;; (define (calibre-server-activation config)
+;;   (match-record config <calibre-server-configuration>
+;;       (user group library-path)
+;;   #~(begin
+;;         (use-modules (guix build utils)
+;;         (let ((user (getpwnam "calibre"))
+;;               (uid (passwd:uid user))
+;;               (gid (passwd:gid user))
+;;               (dir #$library-path))
+;;           ;; Setup datadir
+;;           (unless (file-exists? dir)
+;;             (mkdir-p dir)
+;;             (chown datadir uid gid)
+;;             (chmod datadir #o770)))))))
 
 (define (calibre-server-shepherd-service config)
   (match-record config <calibre-server-configuration>
-                (calibre library-path url-prefix enable-auth user group trusted-ips pid-file log-file)
+    (calibre url-prefix enable-auth auth-mode user group
+             interface trusted-ips userdb log-file libraries port extra-flags)
     (list (shepherd-service
 	   (documentation "Run Calibre Content Server")
 	   (provision '(calibre-server))
 	   (requirement '(networking))
 	   (start #~(make-forkexec-constructor
 		     (list (string-append #$calibre "/bin/calibre-server")
-                           #$library-path
-                           #$@(if url-prefix
-                                  '("--url-prefix" url-prefix)
+                           "--listen-on" #$interface
+                           "--port" #$(number->string port)
+
+                           #$@(if (maybe-value-set? url-prefix)
+                                  (list "--url-prefix" url-prefix)
                                   '())
                            #$@(if enable-auth
                                   '("--enable-auth")
-                                  '())
+                                  '("--disable-auth"))
+                           "--auth-mode" #$auth-mode
                            #$@(if (maybe-value-set? trusted-ips)
-                                  '("--trusted-ips" trusted-ips)
+                                  (list "--trusted-ips" trusted-ips)
                                   '())
-			   "--daemonize"
-                           "--pid-file" #$pid-file)
+                           #$@(if (maybe-value-set? userdb)
+                                  (list "--userdb" userdb)
+                                  '())
+                           #$@extra-flags
+                           "--" #$@libraries)
 		     #:user #$user
 		     #:group #$group
-                     #:pid-file #$pid-file
 		     #:log-file #$log-file))
 	   (stop #~(make-kill-destructor))))))
 
@@ -120,8 +140,8 @@ Should be a comma separated list of address or network specifications.")
 			     calibre-server-shepherd-service)
           (service-extension account-service-type
                              calibre-server-accounts)
-          (service-extension activation-service-type
-                             calibre-server-activation)
+          ;; (service-extension activation-service-type
+          ;;                    calibre-server-activation)
           (service-extension log-rotation-service-type
                              calibre-server-log-rotations)))
    (default-value (calibre-server-configuration))))
