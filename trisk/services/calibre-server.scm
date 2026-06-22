@@ -62,21 +62,21 @@ Should be a comma separated list of address or network specifications.")
    (string "/var/log/calibre-server.log")
    "Path to the log file")
   (extra-flags
-   (list-of-strings? '())
+   (list-of-strings '())
    "Extra flags as a list of strings"))
 
-   (define (calibre-server-accounts config)
-     (list (user-group
-            (system? #t)
-            (name "calibre"))
-           (user-account
-            (name "calibre")
-            (comment "Calibre Server Service Account")
-            (group "calibre")
-            (supplementary-groups '("tty"))
-            (system? #t)
-            (home-directory "/var/empty")
-            (shell (file-append shadow "/sbin/nologin")))))
+(define (calibre-server-accounts config)
+  (list (user-group
+         (system? #t)
+         (name "calibre"))
+        (user-account
+         (name "calibre")
+         (comment "Calibre Server Service Account")
+         (group "calibre")
+         (supplementary-groups '("tty"))
+         (system? #t)
+         (home-directory "/var/empty")
+         (shell (file-append shadow "/sbin/nologin")))))
 
 ;; (define (calibre-server-activation config)
 ;;   (match-record config <calibre-server-configuration>
