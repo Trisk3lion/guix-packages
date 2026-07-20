@@ -12,7 +12,6 @@
   #:use-module ((guix licenses)
                 #:prefix license:))
 
-
 (define-public ciopfs
   (package
     (name "ciopfs")
@@ -32,11 +31,11 @@
                           "PREFIX="
                           (string-append "DESTDIR=" (assoc-ref %outputs "out")))
        #:phases (modify-phases %standard-phases
-                               (add-after 'unpack 'set-file-names
-                                          (lambda* (#:key inputs outputs #:allow-other-keys)
-                                            (substitute* "Makefile"
-                                                         (("@ln -sf \\$\\{PREFIX\\}/bin/ciopfs") "@ln -sf ${DESTDIR}/bin/ciopfs"))))
-                              (delete 'configure))))
+                  (add-after 'unpack 'set-file-names
+                    (lambda* (#:key inputs outputs #:allow-other-keys)
+                      (substitute* "Makefile"
+                        (("@ln -sf \\$\\{PREFIX\\}/bin/ciopfs") "@ln -sf ${DESTDIR}/bin/ciopfs"))))
+                  (delete 'configure))))
     (native-inputs (list pkg-config))
     (inputs (list fuse-2 glib attr))
     (synopsis "Case-insensitive FUSE file system,")

@@ -22,6 +22,8 @@
   #:use-module (gnu packages xorg)
   #:use-module ((guix licenses) #:prefix license:))
 
+
+
 (define* (trisk-override base
                          #:key
                          (name (package-name base))
@@ -45,8 +47,8 @@
      (origin
        (method git-fetch)
        (uri (git-reference
-             (commit commit)
-             (url url)))
+              (commit commit)
+              (url url)))
        (file-name (git-file-name name version))
        (sha256
         (base32 hash))))
@@ -166,6 +168,7 @@ complexity/hastle away from you! It's so simple!")
                   libdecor
                   libdisplay-info
                   libx11
+                  libei
                   libxcomposite
                   libxcursor
                   libxdamage
