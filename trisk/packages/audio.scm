@@ -17,47 +17,68 @@
   #:use-module (gnu packages tls))
 
 (define-public squeezelite
-  (package
-    (name "squeezelite")
-    (version "2.0.0.1488")
-    (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                    (url "https://github.com/ralph-irving/squeezelite")
-                    (commit "0e85ddfd79337cdc30b7d29922b1d790600bb6b4")))
-              (file-name (git-file-name name version))
-              (sha256
-               (base32 "0ys7y8g9ji6spdcp7k43h6fyms2iv1xldqhgscsds97qrvyshshl"))))
-    (build-system gnu-build-system)
-    (arguments
-     (list
-      #:tests? #f                      ; No check target.
-      #:make-flags
-      #~(list (string-append "PREFIX=" #$output)
-              (string-append "CC=" #$(cc-for-target)))
-      #:configure-flags #~(list "-DLINKALL" "-DGPIO" "-DFFMPEG" "-DUSE_SSL" "-DDSD" "-DRESAMPLE"
-                                "-DOPUS"
-                                )
-      #:phases
-      #~(modify-phases %standard-phases
-          (replace 'configure
-            (lambda* (#:key inputs parallel-build? configure-flags
-                      #:allow-other-keys)
-              (setenv "OPTS" (string-join configure-flags))))
-          (add-before 'build 'adjust-opus
-            (lambda _
-              (substitute* "opus.c"
-                (("<opusfile.h>") "<opus/opusfile.h>"))))
-          (replace 'install
-            (lambda* (#:key outputs #:allow-other-keys)
-              (let* ((out (assoc-ref outputs "out")))
-                (install-file #$name (string-append out "/bin")))
-              #t)))))
-    (native-inputs (list flac libmad libvorbis mpg123 alsa-lib faad2 ffmpeg opusfile openssl soxr))
-    (home-page "https://github.com/ralph-irving/squeezelite")
-    (synopsis "Lightweight headless squeezebox client emulator")
-    (description "")
-    (license license:expat)))
+  (let* ((system (or (%current-target-system) (%current-system)))
+         (is-arm? (or (eqv? system "aarch64-linux") (eqv? system "armhf-linux"))))
+    (package
+      (name "squeezelite")
+      (version "2.0.0.1577")
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                       (url "https://github.com/ralph-irving/squeezelite")
+                       (commit "d0d17404467bc18326d9de94eaf3949cf8fb8f59")))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32 "1783r9wdcbhb0lxkvmwx0nc65s55g95yqja0f81b2xhhmadjb8wq"))))
+      (build-system gnu-build-system)
+      (arguments
+       (list
+        #:tests? #f                      ; No check target.
+        #:make-flags
+        #~(list (string-append "PREFIX=" #$output)
+                (string-append "CC=" #$(cc-for-target)))
+        #:configure-flags #~(list "-DLINKALL"
+                                  "-DGPIO"
+                                  "-DFFMPEG"
+                                  "-DUSE_SSL"
+                                  "-DDSD"
+                                  "-DRESAMPLE"
+                                  "-DOPUS"
+                                  #$@(if is-arm?
+                                         (list "--DRPI")
+                                         '()))
+        #:phases
+        #~(modify-phases %standard-phases
+            (replace 'configure
+              (lambda* (#:key inputs parallel-build? configure-flags
+                        #:allow-other-keys)
+                (setenv "OPTS" (string-join configure-flags))))
+            (add-before 'build 'adjust-opus
+              (lambda _
+                (substitute* "opus.c"
+                  (("<opusfile.h>") "<opus/opusfile.h>"))))
+            (replace 'install
+              (lambda* (#:key outputs #:allow-other-keys)
+                (let* ((out (assoc-ref outputs "out")))
+                  (install-file #$name (string-append out "/bin")))
+                #t)))))
+      (native-inputs (cons* flac
+                            libmad
+                            libvorbis
+                            libmpg123
+                            alsa-lib
+                            faad2
+                            ffmpeg
+                            opusfile
+                            openssl
+                            soxr
+                            (if is-arm?
+                                (list libgpiod)
+                                '())))
+      (home-page "https://github.com/ralph-irving/squeezelite")
+      (synopsis "Lightweight headless squeezebox client emulator")
+      (description "")
+      (license license:expat))))
 
 (define-public squeezelite-pulse
   (package
