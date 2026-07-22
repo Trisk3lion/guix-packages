@@ -34,7 +34,11 @@
           (add-after 'install 'install-lib
             (lambda _
               (let ((lib (string-append #$output "/lib")))
-                (with-directory-excursion "target/release"
+                (with-directory-excursion (string-append "target/"
+                                                         #$(if (target-x86-32?)
+                                                               "i686-unknown-linux-gnu/"
+                                                               "")
+                                                         "release")
                   (install-file "libextest.so" lib))))))))
     (inputs (cargo-inputs 'extest #:module '(trisk packages rust-crates)))
     (home-page "https://github.com/Supreeeme/extest")
