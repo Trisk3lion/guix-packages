@@ -9,7 +9,7 @@
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages web)
   #:use-module (gnu packages c)
-  #:use-module (gnu packages wm)
+  #:use-module (gnu packages window-management)
   #:use-module (gnu packages cmake))
 
 (define-public vali
