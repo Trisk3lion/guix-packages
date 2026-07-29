@@ -53,9 +53,7 @@
                 (file-name (git-file-name name version))
                 (sha256
                  (base32
-                  "1y6rfdbqzwjjn4a2sy4i3mfr15qn01flcjmycgqh10y696imxdbh"))
-                ;; (patches (search-patches "guile-ac-d-bus-fix-tests.patch"))
-                ))
+                  "1y6rfdbqzwjjn4a2sy4i3mfr15qn01flcjmycgqh10y696imxdbh"))))
       (build-system guile-build-system)
       (arguments
        (list
@@ -92,7 +90,7 @@
                                          (string-append "d-bus/"
                                                         directory)))
                           '("compat" "protocol"))
-                ;; Compile libacdbuscompat
+                ;; Compile libacdbuscompat.so
                 (invoke #$(cc-for-target)
                         "-Wall" "-Os" "-g" "-fPIC" "-shared"
                         "-o" "libacdbuscompat.so" "d-bus/compat/acdbuscompat.c")
