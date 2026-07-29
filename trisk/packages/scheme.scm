@@ -111,7 +111,11 @@
           (add-after 'install 'copy-libs-for-static-compile
             (lambda _
               (let ((source "./.akku/lib")
-                    (dest (string-append #$output "/lib")))
+                    (dest (string-append #$output "/lib/loko")))
+                ;; TODO: Filter out:
+                ;; '*.chezscheme.sls'
+                ;; '*.ikarus.sls'
+                ;; 'scheme/*'
                 (copy-recursively source dest #:follow-symlinks? #t)))))))
     (native-inputs
      (list akku
