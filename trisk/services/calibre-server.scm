@@ -33,10 +33,10 @@ It is important that the user running calibre-server has read access to these li
    (number 8080)
    "The port which to listen to connections.")
   (user
-   (string "calibre")
+   (string "calibre-server")
    "User name for the user that should run the server. Should be the same user that owns the files in calibre library folder.")
   (group
-   (string "calibre")
+   (string "calibre-server")
    "Group name for the group that should run the server. Should be the same group that owns the files in calibre library folder.")
   (enable-auth
    (boolean #f)
@@ -66,65 +66,76 @@ Should be a comma separated list of address or network specifications.")
    "Extra flags as a list of strings"))
 
 (define (calibre-server-accounts config)
-  (list (user-group
-         (system? #t)
-         (name "calibre"))
-        (user-account
-         (name "calibre")
-         (comment "Calibre Server Service Account")
-         (group "calibre")
-         (supplementary-groups '("tty"))
-         (system? #t)
-         (home-directory "/var/empty")
-         (shell (file-append shadow "/sbin/nologin")))))
+  (match-record <calibre-server-configuration>
+      (user group)
+      (let* ((new-group (when (eqv? group "calibre-server")
+                          (user-group
+                            (system? #t)
+                            (name group))))
+             (new-account (when (eqv? user "calibre-server")
+                            (user-account
+                              (name "calibre")
+                              (comment "Calibre Server Service Account")
+                              (group group)
+                              (supplementary-groups '("tty"))
+                              (system? #t)
+                              (home-directory "/var/lib/calibre-server")
+                              (shell (file-append shadow "/sbin/nologin"))))))
+        (cond
+         ((and new-group new-account)
+          (list new-group new-account))
+         (new-account
+          (list new-account))
+         (t '())))))
 
-;; (define (calibre-server-activation config)
-;;   (match-record config <calibre-server-configuration>
-;;       (user group library-path)
-;;   #~(begin
-;;         (use-modules (guix build utils)
-;;         (let ((user (getpwnam "calibre"))
-;;               (uid (passwd:uid user))
-;;               (gid (passwd:gid user))
-;;               (dir #$library-path))
-;;           ;; Setup datadir
-;;           (unless (file-exists? dir)
-;;             (mkdir-p dir)
-;;             (chown datadir uid gid)
-;;             (chmod datadir #o770)))))))
+(define (calibre-server-activation config)
+  (match-record config <calibre-server-configuration>
+                (user group)
+    (when (eqv? user "calibre-server")
+      #~(begin
+          (use-modules (guix build utils)
+                       (let ((user (getpwnam "calibre-server"))
+                             (uid (passwd:uid user))
+                             (gid (passwd:gid user))
+                             (dir "/var/lib/calibre-server"))
+                         ;; Setup datadir
+                         (unless (file-exists? dir)
+                           (mkdir-p dir)
+                           (chown datadir uid gid)
+                           (chmod datadir #o770))))))))
 
 (define (calibre-server-shepherd-service config)
   (match-record config <calibre-server-configuration>
-    (calibre url-prefix enable-auth auth-mode user group
-             interface trusted-ips userdb log-file libraries port extra-flags)
+                (calibre url-prefix enable-auth auth-mode user group
+                         interface trusted-ips userdb log-file libraries port extra-flags)
     (list (shepherd-service
-	   (documentation "Run Calibre Content Server")
-	   (provision '(calibre-server))
-	   (requirement '(networking))
-	   (start #~(make-forkexec-constructor
-		     (list (string-append #$calibre "/bin/calibre-server")
-                           "--listen-on" #$interface
-                           "--port" #$(number->string port)
+	    (documentation "Run Calibre Content Server")
+	    (provision '(calibre-server))
+	    (requirement '(networking))
+	    (start #~(make-forkexec-constructor
+		      (list (string-append #$calibre "/bin/calibre-server")
+                            "--listen-on" #$interface
+                            "--port" #$(number->string port)
 
-                           #$@(if (maybe-value-set? url-prefix)
-                                  (list "--url-prefix" url-prefix)
-                                  '())
-                           #$@(if enable-auth
-                                  '("--enable-auth")
-                                  '("--disable-auth"))
-                           "--auth-mode" #$auth-mode
-                           #$@(if (maybe-value-set? trusted-ips)
-                                  (list "--trusted-ips" trusted-ips)
-                                  '())
-                           #$@(if (maybe-value-set? userdb)
-                                  (list "--userdb" userdb)
-                                  '())
-                           #$@extra-flags
-                           "--" #$@libraries)
-		     #:user #$user
-		     #:group #$group
-		     #:log-file #$log-file))
-	   (stop #~(make-kill-destructor))))))
+                            #$@(if (maybe-value-set? url-prefix)
+                                   (list "--url-prefix" url-prefix)
+                                   '())
+                            #$@(if enable-auth
+                                   '("--enable-auth")
+                                   '("--disable-auth"))
+                            "--auth-mode" #$auth-mode
+                            #$@(if (maybe-value-set? trusted-ips)
+                                   (list "--trusted-ips" trusted-ips)
+                                   '())
+                            #$@(if (maybe-value-set? userdb)
+                                   (list "--userdb" userdb)
+                                   '())
+                            #$@extra-flags
+                            "--" #$@libraries)
+		      #:user #$user
+		      #:group #$group
+		      #:log-file #$log-file))
+	    (stop #~(make-kill-destructor))))))
 
 (define (calibre-server-log-rotations config)
   (list (log-rotation
@@ -133,15 +144,15 @@ Should be a comma separated list of address or network specifications.")
 
 (define calibre-server-service-type
   (service-type
-   (name 'calibre-server)
-   (description "Calibre Content Server")
-   (extensions
-    (list (service-extension shepherd-root-service-type
-			     calibre-server-shepherd-service)
-          (service-extension account-service-type
-                             calibre-server-accounts)
-          ;; (service-extension activation-service-type
-          ;;                    calibre-server-activation)
-          (service-extension log-rotation-service-type
-                             calibre-server-log-rotations)))
-   (default-value (calibre-server-configuration))))
+    (name 'calibre-server)
+    (description "Calibre Content Server")
+    (extensions
+     (list (service-extension shepherd-root-service-type
+			      calibre-server-shepherd-service)
+           (service-extension account-service-type
+                              calibre-server-accounts)
+           (service-extension activation-service-type
+                              calibre-server-activation)
+           (service-extension log-rotation-service-type
+                              calibre-server-log-rotations)))
+    (default-value (calibre-server-configuration))))
