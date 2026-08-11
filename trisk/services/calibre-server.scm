@@ -66,7 +66,7 @@ Should be a comma separated list of address or network specifications.")
    "Extra flags as a list of strings"))
 
 (define (calibre-server-accounts config)
-  (match-record <calibre-server-configuration> config
+  (match-record config <calibre-server-configuration>
                 (user group)
     (let* ((new-group (when (eqv? group "calibre-server")
                         (user-group
