@@ -66,27 +66,27 @@ Should be a comma separated list of address or network specifications.")
    "Extra flags as a list of strings"))
 
 (define (calibre-server-accounts config)
-  (match-record <calibre-server-configuration>
-      (user group)
-      (let* ((new-group (when (eqv? group "calibre-server")
-                          (user-group
+  (match-record <calibre-server-configuration> config
+                (user group)
+    (let* ((new-group (when (eqv? group "calibre-server")
+                        (user-group
+                          (system? #t)
+                          (name group))))
+           (new-account (when (eqv? user "calibre-server")
+                          (user-account
+                            (name "calibre")
+                            (comment "Calibre Server Service Account")
+                            (group group)
+                            (supplementary-groups '("tty"))
                             (system? #t)
-                            (name group))))
-             (new-account (when (eqv? user "calibre-server")
-                            (user-account
-                              (name "calibre")
-                              (comment "Calibre Server Service Account")
-                              (group group)
-                              (supplementary-groups '("tty"))
-                              (system? #t)
-                              (home-directory "/var/lib/calibre-server")
-                              (shell (file-append shadow "/sbin/nologin"))))))
-        (cond
-         ((and new-group new-account)
-          (list new-group new-account))
-         (new-account
-          (list new-account))
-         (t '())))))
+                            (home-directory "/var/lib/calibre-server")
+                            (shell (file-append shadow "/sbin/nologin"))))))
+      (cond
+       ((and new-group new-account)
+        (list new-group new-account))
+       (new-account
+        (list new-account))
+       (else '())))))
 
 (define (calibre-server-activation config)
   (match-record config <calibre-server-configuration>
