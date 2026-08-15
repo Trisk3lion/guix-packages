@@ -116,7 +116,6 @@ Should be a comma separated list of address or network specifications.")
 		      (list (string-append #$calibre "/bin/calibre-server")
                             "--listen-on" #$interface
                             "--port" #$(number->string port)
-
                             #$@(if (maybe-value-set? url-prefix)
                                    (list "--url-prefix" url-prefix)
                                    '())
@@ -131,7 +130,8 @@ Should be a comma separated list of address or network specifications.")
                                    (list "--userdb" userdb)
                                    '())
                             #$@extra-flags
-                            "--" #$@libraries)
+                            "--"
+                            #$@libraries)
 		      #:user #$user
 		      #:group #$group
 		      #:log-file #$log-file))
