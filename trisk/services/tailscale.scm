@@ -219,25 +219,25 @@ This will prompt tailscale to overwrite your /etc/resolv.conf file.")
                       (thread-sleep! 1)
                       (lp (tailscale-status) state)))))))
           (list (shepherd-service
-                  (documentation "Run tailscale up")
-                  (provision '(tailscale))
-                  (requirement '(tailscaled))
-                  (one-shot? #t)
-                  (start #~(make-forkexec-constructor
-                            (list #$tailscale-up-wrapper)
-                            #:log-file #$log-file))
-                  (stop #~(const #f))))))
+                 (documentation "Run tailscale up")
+                 (provision '(tailscale))
+                 (requirement '(tailscaled))
+                 (one-shot? #t)
+                 (start #~(make-forkexec-constructor
+                           (list #$tailscale-up-wrapper)
+                           #:log-file #$log-file))
+                 (stop #~(const #f))))))))
 
-    (define (tailscale-up-log-rotations config)
-      (list (tailscale-up-configuration-log-file config)))
+(define (tailscale-up-log-rotations config)
+  (list (tailscale-up-configuration-log-file config)))
 
-    (define tailscale-up-service-type
-      (service-type
-        (name 'tailscale-up)
-        (extensions
-         (list (service-extension shepherd-root-service-type
-                                  tailscale-up-shepherd-service)
-               (service-extension log-rotation-service-type
-                                  tailscale-up-log-rotations)))
-        (default-value (tailscale-up-configuration))
-        (description "Run tailscale up")))
+(define tailscale-up-service-type
+  (service-type
+   (name 'tailscale-up)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             tailscale-up-shepherd-service)
+          (service-extension log-rotation-service-type
+                             tailscale-up-log-rotations)))
+   (default-value (tailscale-up-configuration))
+   (description "Run tailscale up")))
