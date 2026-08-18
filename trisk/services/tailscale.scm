@@ -65,7 +65,7 @@ to #f.")
         (mkdir-p (dirname #$(tailscaled-configuration-state-directory config)))
         (mkdir-p (dirname #$(tailscaled-configuration-socket config)))
         (system* #$(file-append (tailscaled-configuration-tailscale config)
-                                "/sbin/tailscaled") "--cleanup"))))
+                                "/bin/tailscaled") "--cleanup"))))
 
 (define (tailscaled-log-rotations config)
   (list (tailscaled-configuration-log-file config)))
@@ -74,32 +74,25 @@ to #f.")
   (match-record-lambda <tailscaled-configuration>
       (tailscale iptables log-file socket state-directory
                  upload-log? dev-net-tun? verbosity extra-options)
-    (let ((environment
-           #~(list (string-append "PATH="
-                                  (string-join
-                                   '(#$(file-append iptables "/sbin")
-                                     #$(file-append iproute "/sbin"))
-                                   ":")))))
-      (list (shepherd-service
-             (documentation "Run tailscaled")
-             (provision '(tailscaled))
-             (requirement '(user-processes networking))
-             (start #~(make-forkexec-constructor
-                       (list
-                        #$(file-append tailscale "/sbin/tailscaled")
-                        #$@(if upload-log?
-                               '()
-                               '("-no-logs-no-support"))
-                        #$@(if dev-net-tun?
+    (list (shepherd-service
+            (documentation "Run tailscaled")
+            (provision '(tailscaled))
+            (requirement '(user-processes networking))
+            (start #~(make-forkexec-constructor
+                      (list
+                       #$(file-append tailscale "/bin/tailscaled")
+                       #$@(if upload-log?
+                              '()
+                              '("-no-logs-no-support"))
+                       #$@(if dev-net-tun?
                               '()
                               '("--tun=userspace-networking"))
-                        "-socket" #$socket
-                        "-statedir" #$state-directory
-                        "-verbose" #$(number->string verbosity)
-                        #$@extra-options)
-                       #:environment-variables #$environment
-                       #:log-file #$log-file))
-             (stop #~(make-kill-destructor)))))))
+                       "-socket" #$socket
+                       "-statedir" #$state-directory
+                       "-verbose" #$(number->string verbosity)
+                       #$@extra-options)
+                      #:log-file #$log-file))
+            (stop #~(make-kill-destructor))))))
 
 (define tailscaled-service-type
   (service-type
@@ -124,7 +117,7 @@ to #f.")
 
   (operator
    (string "")
-    "Operator who can control tailscale.")
+   "Operator who can control tailscale.")
 
   (ssh?
    (boolean #f)
@@ -152,7 +145,7 @@ to #f.")
 
   (accept-dns?
    (boolean #t)
-  "Whatever to accept Tailscale DNS settings from the admin panel or not.
+   "Whatever to accept Tailscale DNS settings from the admin panel or not.
 This will prompt tailscale to overwrite your /etc/resolv.conf file.")
 
   (log-file
@@ -164,49 +157,87 @@ This will prompt tailscale to overwrite your /etc/resolv.conf file.")
    "List of extra options.")
   (no-serialization))
 
+
+;; (define %tailscale-up-cmd)
+
 (define tailscale-up-shepherd-service
   (match-record-lambda <tailscale-up-configuration>
       (tailscale ssh? subroutes? exit-node? authkey operator
                  accept-dns? socket login-server extra-options log-file)
-    (list (shepherd-service
-           (documentation "Run tailscale up")
-           (provision '(tailscale))
-           (requirement '(tailscaled))
-           (one-shot? #t)
-           (start #~(make-forkexec-constructor
-                     (list
-                      #$(file-append tailscale "/bin/tailscale")
-                      "--socket" #$socket
-                      "up"
-                      "--authkey" #$authkey
-                      "--operator" #$operator
-                      #$@(if ssh?
-                             '("--ssh")
-                             '())
-                      #$@(if subroutes?
-                             '("--accept-routes")
-                             '())
-                      #$@(if exit-node?
-                             '("--advertise-exit-node")
-                             '())
-                      #$@(if accept-dns?
-                             '("--accept-dns=true")
-                             '("--accept-dns=false"))
-                      "--login-server" #$login-server
-                      #$@extra-options)
-                     #:log-file #$log-file))
-           (stop #~(const #f))))))
+    (let ((tailscale-up-wrapper
+           (program-file
+            "tailscale-up-wrapper"
+            (with-imported-modules '((guix build utils))
+              (with-extensions (list guile-json-4)
+                #~(begin
+                    (use-modules (guix build utils)
+                                 (ice-9 popen)
+                                 (ice-9 rdelim)
+                                 (ice-9 match)
+                                 (json))
 
-(define (tailscale-up-log-rotations config)
-  (list (tailscale-up-configuration-log-file config)))
+                    (define (tailscale-status)
+                      (let* ((port (open-input-pipe (string-append #$tailscale "/bin/tailscale --socket " #$socket " status --json --peers=false"))
+                                   (output (json->scm port)))
+                             (close-port port)
+                             (assoc-ref output "BackendState"))))
 
-(define tailscale-up-service-type
-  (service-type
-   (name 'tailscale-up)
-   (extensions
-    (list (service-extension shepherd-root-service-type
-                             tailscale-up-shepherd-service)
-          (service-extension log-rotation-service-type
-                             tailscale-up-log-rotations)))
-   (default-value (tailscale-up-configuration))
-   (description "Run tailscale up")))
+                    (define (tailscale-connect)
+                      (apply invoke #$(file-append tailscale "/bin/tailscale")
+                             (list "--socket" #$socket
+                                   "up"
+                                   "--authkey" #$authkey
+                                   "--operator" #$operator
+                                   #$@(if ssh?
+                                          '("--ssh")
+                                          '())
+                                   #$@(if subroutes?
+                                          '("--accept-routes")
+                                          '())
+                                   #$@(if exit-node?
+                                          '("--advertise-exit-node")
+                                          '())
+                                   #$@(if accept-dns?
+                                          '("--accept-dns=true")
+                                          '("--accept-dns=false"))
+                                   "--login-server" #$login-server
+                                   #$@extra-options)))
+
+                    (define statuses '("NeedsLogin" "NeedsMachineAuth" "Stopped"))
+
+                    (let lp ((state (tailscale-status))
+                             (prev-state ""))
+                      (when (not (equal state prev-state))
+                        (match state
+                          ((or  "NeedsLogin" "NeedsMachineAuth" "Stopped")
+                           (tailscale-connect api-key))
+                          ("Running"
+                           (display "Tailscale is running!"))
+                          ("failed to connect to local tailscaled; it doesn't appear to be running"
+                           (display "Tailscaled is not running, exiting...")
+                           (exit 4))))
+                      (thread-sleep! 1)
+                      (lp (tailscale-status) state)))))))
+          (list (shepherd-service
+                  (documentation "Run tailscale up")
+                  (provision '(tailscale))
+                  (requirement '(tailscaled))
+                  (one-shot? #t)
+                  (start #~(make-forkexec-constructor
+                            (list #$tailscale-up-wrapper)
+                            #:log-file #$log-file))
+                  (stop #~(const #f))))))
+
+    (define (tailscale-up-log-rotations config)
+      (list (tailscale-up-configuration-log-file config)))
+
+    (define tailscale-up-service-type
+      (service-type
+        (name 'tailscale-up)
+        (extensions
+         (list (service-extension shepherd-root-service-type
+                                  tailscale-up-shepherd-service)
+               (service-extension log-rotation-service-type
+                                  tailscale-up-log-rotations)))
+        (default-value (tailscale-up-configuration))
+        (description "Run tailscale up")))
