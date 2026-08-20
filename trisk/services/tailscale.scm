@@ -217,16 +217,16 @@ This will prompt tailscale to overwrite your /etc/resolv.conf file.")
                            (display "Tailscaled is not running, exiting...")
                            (exit 4))))
                       (thread-sleep! 1)
-                      (lp (tailscale-status) state)))))))
-          (list (shepherd-service
-                 (documentation "Run tailscale up")
-                 (provision '(tailscale))
-                 (requirement '(tailscaled))
-                 (one-shot? #t)
-                 (start #~(make-forkexec-constructor
-                           (list #$tailscale-up-wrapper)
-                           #:log-file #$log-file))
-                 (stop #~(const #f))))))))
+                      (lp (tailscale-status) state))))))))
+      (list (shepherd-service
+             (documentation "Run tailscale up")
+             (provision '(tailscale))
+             (requirement '(tailscaled))
+             (one-shot? #t)
+             (start #~(make-forkexec-constructor
+                       (list #$tailscale-up-wrapper)
+                       #:log-file #$log-file))
+             (stop #~(const #f)))))))
 
 (define (tailscale-up-log-rotations config)
   (list (tailscale-up-configuration-log-file config)))
