@@ -137,11 +137,6 @@ Should be a comma separated list of address or network specifications.")
 		      #:log-file #$log-file))
 	    (stop #~(make-kill-destructor))))))
 
-(define (calibre-server-log-rotations config)
-  (list (log-rotation
-         (files (list (calibre-server-configuration-log-file config)))
-         (frequency 'weekly))))
-
 (define calibre-server-service-type
   (service-type
     (name 'calibre-server)
@@ -152,7 +147,5 @@ Should be a comma separated list of address or network specifications.")
            (service-extension account-service-type
                               calibre-server-accounts)
            (service-extension activation-service-type
-                              calibre-server-activation)
-           (service-extension log-rotation-service-type
-                              calibre-server-log-rotations)))
+                              calibre-server-activation)))
     (default-value (calibre-server-configuration))))
