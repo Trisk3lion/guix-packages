@@ -23,6 +23,7 @@
   #:use-module (gnu packages xml)
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages zig)
+  #:use-module (gnu packages regex)
   #:use-module (guix build-system zig)
   #:use-module (guix download)
   #:use-module (guix gexp)

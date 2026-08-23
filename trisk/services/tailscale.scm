@@ -158,9 +158,6 @@ This will prompt tailscale to overwrite your /etc/resolv.conf file.")
    "List of extra options.")
   (no-serialization))
 
-
-;; (define %tailscale-up-cmd)
-
 (define tailscale-up-shepherd-service
   (match-record-lambda <tailscale-up-configuration>
       (tailscale ssh? subroutes? exit-node? authkey operator
@@ -220,14 +217,14 @@ This will prompt tailscale to overwrite your /etc/resolv.conf file.")
                       (thread-sleep! 1)
                       (lp (tailscale-status) state))))))))
       (list (shepherd-service
-             (documentation "Run tailscale up")
-             (provision '(tailscale))
-             (requirement '(tailscaled))
-             (one-shot? #t)
-             (start #~(make-forkexec-constructor
-                       (list #$tailscale-up-wrapper)
-                       #:log-file #$log-file))
-             (stop #~(const #f)))))))
+              (documentation "Run tailscale up")
+              (provision '(tailscale))
+              (requirement '(tailscaled))
+              (one-shot? #t)
+              (start #~(make-forkexec-constructor
+                        (list #$tailscale-up-wrapper)
+                        #:log-file #$log-file))
+              (stop #~(const #f)))))))
 
 (define (tailscale-up-log-rotations config)
   (list (tailscale-up-configuration-log-file config)))
