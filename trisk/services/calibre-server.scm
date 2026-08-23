@@ -67,7 +67,7 @@ Should be a comma separated list of address or network specifications.")
 
 (define (calibre-server-accounts config)
   (match-record config <calibre-server-configuration>
-                (user group)
+    (user group)
     (let* ((new-group (when (eqv? group "calibre-server")
                         (user-group
                           (system? #t)
@@ -90,19 +90,20 @@ Should be a comma separated list of address or network specifications.")
 
 (define (calibre-server-activation config)
   (match-record config <calibre-server-configuration>
-    (user group)
-    (when (eqv? user "calibre-server")
-      #~(begin
-          (use-modules (guix build utils))
-          (let* ((user (getpwnam "calibre-server"))
-                 (uid (passwd:uid user))
-                 (gid (passwd:gid user))
-                 (dir "/var/lib/calibre-server"))
-            ;; Setup datadir
-            (unless (file-exists? dir)
-              (mkdir-p dir)
-              (chown datadir uid gid)
-              (chmod datadir #o770)))))))
+                (user group)
+    (if (eqv? user "calibre-server")
+        #~(begin
+            (use-modules (guix build utils))
+            (let* ((user (getpwnam "calibre-server"))
+                   (uid (passwd:uid user))
+                   (gid (passwd:gid user))
+                   (dir "/var/lib/calibre-server"))
+              ;; Setup datadir
+              (unless (file-exists? dir)
+                (mkdir-p dir)
+                (chown datadir uid gid)
+                (chmod datadir #o770))))
+        #~())))
 
 (define (calibre-server-shepherd-service config)
   (match-record config <calibre-server-configuration>
