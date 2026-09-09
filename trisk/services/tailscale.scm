@@ -205,7 +205,7 @@ This will prompt tailscale to overwrite your /etc/resolv.conf file.")
 
                     (let lp ((state (tailscale-status))
                              (prev-state ""))
-                      (when (not (equal state prev-state))
+                      (when (not (eqv? state prev-state))
                         (match state
                           ((or  "NeedsLogin" "NeedsMachineAuth" "Stopped")
                            (tailscale-connect api-key))
