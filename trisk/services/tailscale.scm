@@ -204,18 +204,22 @@ This will prompt tailscale to overwrite your /etc/resolv.conf file.")
                     (define statuses '("NeedsLogin" "NeedsMachineAuth" "Stopped"))
 
                     (let lp ((state (tailscale-status))
-                             (prev-state ""))
+                             (prev-state "")
+                             (cnt 0))
                       (when (not (eqv? state prev-state))
                         (match state
                           ((or  "NeedsLogin" "NeedsMachineAuth" "Stopped")
-                           (tailscale-connect api-key))
+                           (tailscale-connect))
                           ("Running"
                            (display "Tailscale is running!"))
                           ("failed to connect to local tailscaled; it doesn't appear to be running"
                            (display "Tailscaled is not running, exiting...")
-                           (exit 4))))
-                      (thread-sleep! 1)
-                      (lp (tailscale-status) state))))))))
+                           (exit 4))
+                          (_ (if (> cnt 5)
+                                 (begin (display "Tried 6 times, exiting..")
+                                        (exit 4))
+                                 (thread-sleep! 1)
+                                 (lp (tailscale-status) state (+ cnt 1)))))))))))))
       (list (shepherd-service
               (documentation "Run tailscale up")
               (provision '(tailscale))
