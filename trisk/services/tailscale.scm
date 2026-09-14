@@ -188,13 +188,13 @@ This will prompt tailscale to overwrite your /etc/resolv.conf file.")
                                    "--operator" #$operator
                                    #$@(if ssh?
                                           '("--ssh")
-                                          '())
+                                          '("--ssh=false"))
                                    #$@(if subroutes?
                                           '("--accept-routes")
-                                          '())
+                                          '("--accept-routes=false"))
                                    #$@(if exit-node?
                                           '("--advertise-exit-node")
-                                          '())
+                                          '("--advertise-exit-node=false"))
                                    #$@(if accept-dns?
                                           '("--accept-dns=true")
                                           '("--accept-dns=false"))
@@ -219,14 +219,14 @@ This will prompt tailscale to overwrite your /etc/resolv.conf file.")
                       (thread-sleep! 1)
                       (lp (tailscale-status) state))))))))
       (list (shepherd-service
-             (documentation "Run tailscale up")
-             (provision '(tailscale))
-             (requirement '(tailscaled))
-             (one-shot? #t)
-             (start #~(make-forkexec-constructor
-                       (list #$tailscale-up-wrapper)
-                       #:log-file #$log-file))
-             (stop #~(const #f)))))))
+              (documentation "Run tailscale up")
+              (provision '(tailscale))
+              (requirement '(tailscaled))
+              (one-shot? #t)
+              (start #~(make-forkexec-constructor
+                        (list #$tailscale-up-wrapper)
+                        #:log-file #$log-file))
+              (stop #~(const #f)))))))
 
 (define (tailscale-up-log-rotations config)
   (list (tailscale-up-configuration-log-file config)))
