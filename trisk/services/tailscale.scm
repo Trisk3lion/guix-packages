@@ -215,7 +215,7 @@ This will prompt tailscale to overwrite your /etc/resolv.conf file.")
                           ("failed to connect to local tailscaled; it doesn't appear to be running"
                            (display "Tailscaled is not running, exiting...")
                            (exit 4))
-                          (_ (display (format "Unknown state: ~a" state)))))
+                          (_ (display (format #f "Unknown state: ~a" state)))))
                       (thread-sleep! 1)
                       (lp (tailscale-status) state))))))))
       (list (shepherd-service

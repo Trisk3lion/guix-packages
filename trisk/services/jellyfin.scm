@@ -64,24 +64,25 @@
       (cache-directory config-directory proxy-url log-file requirement extra-options)
     (oci-extension
      (containers
-      (list (oci-container-configuration
-           (user "jellyfin")
-           (group "docker")
-           (environment
-            (if (maybe-value-set? proxy-url)
-                `(("http_proxy" . ,proxy-url)
-                  ("https_proxy" . ,proxy-url))
-                '()))
-           (image "jellyfin/jellyfin:latest")
-           (provision "jellyfin")
-           (log-file log-file)
-           (respawn? #t)
-           (requirement requirement)
-           (network "host")
-           (volumes
-            `((,cache-directory . "/cache")
-              (,config-directory . "/config")))
-           (extra-arguments extra-options)))))))
+      (list
+       (oci-container-configuration
+        (user "jellyfin")
+        (group "docker")
+        (environment
+         (if (maybe-value-set? proxy-url)
+             `(("http_proxy" . ,proxy-url)
+               ("https_proxy" . ,proxy-url))
+             '()))
+        (image "jellyfin/jellyfin:latest")
+        (provision "jellyfin")
+        (log-file log-file)
+        (respawn? #t)
+        (requirement requirement)
+        (network "host")
+        (volumes
+         `((,cache-directory . "/cache")
+           (,config-directory . "/config")))
+        (extra-arguments extra-options)))))))
 
 (define jellyfin-service-type
   (service-type
