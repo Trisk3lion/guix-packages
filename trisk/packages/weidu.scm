@@ -174,24 +174,25 @@ mutable strings and cannot be updated to use modern OCaml string handling.")))
 (define-public weidu
   (package
     (name "weidu")
-    (version "249.00")
+    (version "251.00")
     (source (origin
               (method git-fetch)
               (uri (git-reference
-                    (url "https://github.com/WeiDUorg/weidu")
-                    (commit (string-append "v" version))))
+                     (url "https://github.com/WeiDUorg/weidu")
+                     (commit (string-append "v" version))))
               (file-name (git-file-name name version))
               (sha256
                (base32
-                "0vp2kcpfvwqagidwz0l66a2z3w6h02g9kznjv7c0qx2r657hmygs"))
-              (patches
-               (list
-                ;; Patch for OCaml 4.14 compatibility
-                (origin
-                  (method url-fetch)
-                  (uri "https://github.com/WeiDUorg/weidu/commit/bb90190d8bf7d102952c07d8288a7dc6c7a3322e.patch")
-                  (sha256
-                   (base32 "0cfywl6cza0kvaf84zplvw4m2zj0lvciw7mpyn22slckshhi8mc1")))))))
+                "126g7kvm9lrvi8wwaiwcj47afh08iw1ik2s0z34lg9va408ihm51"))
+              ;; (patches
+              ;;  (list
+              ;;   ;; Patch for OCaml 4.14 compatibility
+              ;;   (origin
+              ;;     (method url-fetch)
+              ;;     (uri "https://github.com/WeiDUorg/weidu/commit/bb90190d8bf7d102952c07d8288a7dc6c7a3322e.patch")
+              ;;     (sha256
+              ;;      (base32 "0cfywl6cza0kvaf84zplvw4m2zj0lvciw7mpyn22slckshhi8mc1")))))
+              ))
     (build-system gnu-build-system)
     (arguments
      (list
@@ -206,7 +207,7 @@ mutable strings and cannot be updated to use modern OCaml string handling.")))
           (add-after 'unpack 'patch-and-config
             (lambda* (#:key inputs #:allow-other-keys)
               ;; Create Configuration file from sample
-              (copy-file "sample.Configuration" "Configuration")
+              ;; (copy-file "sample.Configuration" "Configuration")
 
               ;; Set correct paths in Configuration file
               (let ((ocaml-bin (string-append (assoc-ref inputs "ocaml-unsafe-string") "/bin"))
@@ -238,14 +239,14 @@ mutable strings and cannot be updated to use modern OCaml string handling.")))
                 (for-each
                  (lambda (prog)
                    (let* ((exe-name (string-append prog ".asm.exe"))
-                         (dest-name (string-append bin "/" exe-name))
-                         (new-name (string-append bin "/" prog)))
-                       (install-file exe-name bin)
-                       ;; Rename from .asm.exe to just the program name
-                       (rename-file dest-name new-name)
-                       ;; Make executable
-                       (unless (executable-file? new-name)
-                         (chmod new-name #o555))))
+                          (dest-name (string-append bin "/" exe-name))
+                          (new-name (string-append bin "/" prog)))
+                     (install-file exe-name bin)
+                     ;; Rename from .asm.exe to just the program name
+                     (rename-file dest-name new-name)
+                     ;; Make executable
+                     (unless (executable-file? new-name)
+                       (chmod new-name #o555))))
                  '("weidu" "weinstall" "tolower"))
                 ;; Install documentation
                 (for-each

@@ -55,6 +55,12 @@ It is important that the user running calibre-server has read access to these li
    maybe-string
    "Allow un-authenticated connections from specific IP addresses to make changes.
 Should be a comma separated list of address or network specifications.")
+  (use-sendfile?
+   (boolean #t)
+   "Use zero-copy in-kernel transfer when sending files over the network or not")
+  (local-write?
+   (boolean? #f)
+   "Allow un-authenticated local connections to make changes.")
   (pid-file
    (string "/var/log/calibre-server.pid")
    "Path to PID-file.")
@@ -107,8 +113,9 @@ Should be a comma separated list of address or network specifications.")
 
 (define (calibre-server-shepherd-service config)
   (match-record config <calibre-server-configuration>
-                (calibre url-prefix enable-auth auth-mode user group
-                         interface trusted-ips userdb log-file libraries port extra-flags)
+    (calibre url-prefix enable-auth auth-mode user group
+             interface trusted-ips userdb log-file libraries
+             use-sendfile? local-write? port extra-flags)
     (list (shepherd-service
 	    (documentation "Run Calibre Content Server")
 	    (provision '(calibre-server))
@@ -123,6 +130,12 @@ Should be a comma separated list of address or network specifications.")
                             #$@(if enable-auth
                                    '("--enable-auth")
                                    '("--disable-auth"))
+                            #$@(if use-sendfile?
+                                   '("--enable-use-sendfile")
+                                   '("--disable-use-sendfile"))
+                            #$@(if local-write?
+                                   '("--enable-local-write")
+                                   '("--disable-local-write"))
                             "--auth-mode" #$auth-mode
                             #$@(if (maybe-value-set? trusted-ips)
                                    (list "--trusted-ips" trusted-ips)
