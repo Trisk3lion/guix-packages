@@ -59,7 +59,7 @@ Should be a comma separated list of address or network specifications.")
    (boolean #t)
    "Use zero-copy in-kernel transfer when sending files over the network or not")
   (local-write?
-   (boolean? #f)
+   (boolean #f)
    "Allow un-authenticated local connections to make changes.")
   (pid-file
    (string "/var/log/calibre-server.pid")
